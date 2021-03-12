@@ -18,10 +18,10 @@ public class Logout implements Command{
 		HttpSession session = request.getSession();
 		
 		if(session != null) {
-			session.removeAttribute("auth");
+			session.invalidate();
 		}
-		
-		response.sendRedirect("Controller?command=gotoindexpage&message=logout ok");
+
+		response.sendRedirect("/lei-shoes");
 		
 	}
 

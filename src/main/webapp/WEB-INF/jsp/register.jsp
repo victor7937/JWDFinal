@@ -31,36 +31,37 @@
         <p class="divider-text">
             <span class="bg-light">OR</span>
         </p>
-        <form>
+        <form action="Controller" method="post">
+            <input type="hidden" name="command" value="savenewuser">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input name="" class="form-control" placeholder="Full name" type="text">
+                <input name="name" class="form-control" placeholder="Full name" type="text" required>
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input name="" class="form-control" placeholder="Email address" type="email">
+                <input name="email" class="form-control" placeholder="Email address" type="email" required>
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                 </div>
-                <select class="custom-select" style="max-width: 120px;">
+                <select name="phone" class="custom-select" style="max-width: 120px;">
                     <option selected="">+375</option>
-                    <option value="1">+972</option>
-                    <option value="2">+198</option>
-                    <option value="3">+701</option>
+                    <option>+972</option>
+                    <option>+198</option>
+                    <option>+701</option>
                 </select>
-                <input name="" class="form-control" placeholder="Phone number" type="text">
+                <input name="phone" class="form-control" placeholder="Phone number" type="text">
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
                 </div>
-                <select class="form-control">
+                <select name="country" class="form-control">
                     <option selected="">Belarus</option>
                     <option>Russia</option>
                     <option>Ukraine</option>
@@ -70,25 +71,25 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
                 </div>
-                <input name="" class="form-control" placeholder="City" type="text">
+                <input name="city" class="form-control" placeholder="City" type="text">
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
                 </div>
-                <input name="" class="form-control" placeholder="Address" type="text">
+                <input name="address" class="form-control" placeholder="Address" type="text">
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input class="form-control" placeholder="Create password" type="password">
+                <input name="password" class="form-control" placeholder="Create password" type="password" required>
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input class="form-control" placeholder="Repeat password" type="password">
+                <input name="password" class="form-control" placeholder="Repeat password" type="password" required>
             </div> <!-- form-group// -->
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>

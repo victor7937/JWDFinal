@@ -20,6 +20,7 @@ public class CommandProvider {
 		commands.put(CommandName.GOTOCONTACT, new GoToContact());
 		commands.put(CommandName.GOTOPRODUCT, new GoToProduct());
 		commands.put(CommandName.GOTOSIGNINPAGE, new GoToSignInPage());
+		commands.put(CommandName.GOTOPROFILE, new GoToProfile());
 	}
 	
 	

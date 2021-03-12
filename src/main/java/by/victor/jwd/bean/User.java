@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String password;
     private String country;
     private String city;
+    private String address;
 
     public User (){ }
 
@@ -21,12 +22,21 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public User(String name, String email, String password, String country, String city) {
+    public User(String name, String email, String password, String country, String city, String address) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.country = country;
         this.city = city;
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getName() {

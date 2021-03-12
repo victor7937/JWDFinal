@@ -69,8 +69,8 @@
                                 <a  class="nav-link dropdown-toggle" href="#" role="button" id="user_email" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         ${sessionScope.get('email')}</a>
                                 <div class="dropdown-menu" aria-labelledby="user_email">
-                                    <a class="dropdown-item" href="#">Logout</a>
-                                    <a class="dropdown-item" href="#">Profile</a>
+                                    <a class="dropdown-item" href="Controller?command=gotoprofile">Profile</a>
+                                    <a class="dropdown-item" href="Controller?command=logout">Logout</a>
                                 </div>
                             </li>
                         </c:when>
