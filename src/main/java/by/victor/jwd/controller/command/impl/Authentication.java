@@ -37,7 +37,7 @@ public class Authentication implements Command {
 			}
 
 			HttpSession session = request.getSession(true);
-			session.setAttribute("email", email);
+			session.setAttribute("user", user);
 			response.sendRedirect("/lei-shoes");
 
 		} catch (ServiceException e) {

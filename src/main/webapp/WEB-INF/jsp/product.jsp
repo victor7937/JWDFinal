@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Free Bootstrap 4 Ecommerce Template</title>
+    <title>Product Page</title>
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
 
@@ -17,7 +17,7 @@
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">E-COMMERCE PRODUCT</h1>
-        <p class="lead text-muted mb-0">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500...</p>
+        <p class="lead text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci consequatur ea error expedita illo in quam? Doloribus esse est, hic iste nostrum officiis perspiciatis repudiandae similique tempora temporibus vitae?</p>
     </div>
 </section>
 <div class="container">
@@ -25,7 +25,7 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="lei-shoes">Home</a></li>
                     <li class="breadcrumb-item"><a href="Controller?command=gotocategory">Category</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Product</li>
                 </ol>
@@ -115,10 +115,10 @@
                 <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-align-justify"></i> Description</div>
                 <div class="card-body">
                     <p class="card-text">
-                        Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum iusto molestiae nesciunt odio quis quo, unde. Aspernatur assumenda doloribus inventore quaerat quam sapiente, sed suscipit? Laudantium quidem sint sit voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto mollitia nobis praesentium quidem suscipit temporibus ullam voluptate. Adipisci, at consectetur doloribus facere ipsa magni odio ut voluptates? Nihil, perferendis, voluptates.
                     </p>
                     <p class="card-text">
-                        Contrairement à une opinion répandue, le Lorem Ipsum n'est pas simplement du texte aléatoire. Il trouve ses racines dans une oeuvre de la littérature latine classique datant de 45 av. J.-C., le rendant vieux de 2000 ans. Un professeur du Hampden-Sydney College, en Virginie, s'est intéressé à un des mots latins les plus obscurs, consectetur, extrait d'un passage du Lorem Ipsum, et en étudiant tous les usages de ce mot dans la littérature classique, découvrit la source incontestable du Lorem Ipsum. Il provient en fait des sections 1.10.32 et 1.10.33 du "De Finibus Bonorum et Malorum" (Des Suprêmes Biens et des Suprêmes Maux) de Cicéron. Cet ouvrage, très populaire pendant la Renaissance, est un traité sur la théorie de l'éthique. Les premières lignes du Lorem Ipsum, "Lorem ipsum dolor sit amet...", proviennent de la section 1.10.32.
+                       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, beatae deserunt eveniet excepturi, facilis illo in laboriosam maxime minus modi nesciunt nulla, odit qui quis quo reprehenderit sequi ut velit? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias asperiores debitis excepturi facilis fugit illum laudantium maxime suscipit tempore, veniam. Architecto, asperiores cum distinctio dolorum eligendi eum inventore molestias possimus?
                     </p>
                 </div>
             </div>
@@ -131,7 +131,7 @@
                 <div class="card-body">
                     <div class="review">
                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        <meta itemprop="datePublished" content="01-01-2016">January 01, 2018
+                        <meta itemprop="datePublished" content="02-11-2020">November 02, 2020
 
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
@@ -140,13 +140,13 @@
                         <span class="fa fa-star"></span>
                         by Paul Smith
                         <p class="blockquote">
-                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, beatae deserunt eveniet excepturi, facilis illo in laboriosam maxime</p>
                         </p>
                         <hr>
                     </div>
                     <div class="review">
                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        <meta itemprop="datePublished" content="01-01-2016">January 01, 2018
+                        <meta itemprop="datePublished" content="02-03-2021">March 02, 2021
 
                         <span class="fa fa-star" aria-hidden="true"></span>
                         <span class="fa fa-star" aria-hidden="true"></span>
@@ -155,7 +155,7 @@
                         <span class="fa fa-star" aria-hidden="true"></span>
                         by Paul Smith
                         <p class="blockquote">
-                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                            <p class="mb-0"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, beatae deserunt eveniet excepturi, facilis illo in laboriosam maxime</p>
                         </p>
                         <hr>
                     </div>

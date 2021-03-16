@@ -17,8 +17,8 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">E-COMMERCE CATEGORY</h1>
-        <p class="lead text-muted mb-0">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte...</p>
+        <h1 class="jumbotron-heading">CATEGORY</h1>
+        <p class="lead text-muted mb-0">Choose shoes as you like</p>
     </div>
 </section>
 <div class="container">
@@ -26,7 +26,7 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="../../index.jsp">Home</a></li>
+                    <li class="breadcrumb-item"><a href="lei-shoes">Home</a></li>
                     <li class="breadcrumb-item"><a href="Controller?command=gotocategory">Category</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Sub-category</li>
                 </ol>

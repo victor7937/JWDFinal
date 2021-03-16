@@ -17,13 +17,13 @@ public class SaveNewUser implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("name"));
-		System.out.println(request.getParameter("email"));
-		System.out.println(Arrays.toString(request.getParameterValues("phone")));
-		System.out.println(request.getParameter("country"));
-		System.out.println(request.getParameter("city"));
-		System.out.println(request.getParameter("address"));
-		System.out.println(Arrays.toString(request.getParameterValues("password")));
+//		System.out.println(request.getParameter("name"));
+//		System.out.println(request.getParameter("email"));
+//		System.out.println(Arrays.toString(request.getParameterValues("phone")));
+//		System.out.println(request.getParameter("country"));
+//		System.out.println(request.getParameter("city"));
+//		System.out.println(request.getParameter("address"));
+//		System.out.println(Arrays.toString(request.getParameterValues("password")));
 
 		if (request.getParameter("email") == null || request.getParameter("password") == null ||
 		request.getParameter("name") == null) {
@@ -42,7 +42,7 @@ public class SaveNewUser implements Command {
 		}
 
 		User user = new User(request.getParameter("name"), request.getParameter("email"),
-				request.getParameterValues("password")[0], request.getParameter("country"),
+				request.getParameterValues("password")[0], request.getParameterValues("phone")[0] + request.getParameterValues("phone")[1],  request.getParameter("country"),
 				request.getParameter("city"),request.getParameter("address"));
 
 		UserService userService = ServiceProvider.getInstance().getUserService();

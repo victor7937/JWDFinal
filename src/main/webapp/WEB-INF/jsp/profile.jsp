@@ -36,37 +36,37 @@
                             <div class="form-group row">
                                 <label for="name" class="col-4 col-form-label">Name</label>
                                 <div class="col-6">
-                                    <input id="name" name="name" value="Tom" placeholder="Name" class="form-control" type="text">
+                                    <input id="name" name="name" value="${user.name}" placeholder="Name" class="form-control" type="text">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="country" class="col-4 col-form-label">Country</label>
                                 <div class="col-6">
-                                    <input id="country" name="country" placeholder="Country" class="form-control" type="text" value="Belarus">
+                                    <input id="country" name="country" placeholder="Country" class="form-control" type="text" value="${user.country}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="city" class="col-4 col-form-label">City</label>
                                 <div class="col-6">
-                                    <input id="city" name="city" placeholder="City" class="form-control" type="text" value="Minsk">
+                                    <input id="city" name="city" placeholder="City" class="form-control" type="text" value="${user.city}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="address" class="col-4 col-form-label">Address</label>
                                 <div class="col-6">
-                                    <input id="address" name="address" placeholder="Address" class="form-control" type="text" value="Mendeleev st.17,32">
+                                    <input id="address" name="address" placeholder="Address" class="form-control" type="text" value="${user.address}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-4 col-form-label">Phone number</label>
-                                <div class="input-group col-6" >
-                                    <select name="phone" id="phonecode" class="custom-select" style="max-width: 120px;">
+                                <div class="col-6" >
+                                    <!--<select name="phone" id="phonecode" class="custom-select" style="max-width: 120px;">
                                         <option selected="">+375</option>
                                         <option>+972</option>
                                         <option>+198</option>
                                         <option>+701</option>
-                                    </select>
-                                    <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="">
+                                    </select> -->
+                                    <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="${user.phone}" maxlength="11">
                                 </div>
                             </div>
 
@@ -75,7 +75,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-4 col-form-label">Email</label>
                                 <div class="col-6">
-                                    <input id="email" name="email" placeholder="Email" value="tom@mail.ru" class="form-control" required="required" type="email">
+                                    <input id="email" name="email" placeholder="Email" value="${user.email}" class="form-control" required="required" type="email">
                                 </div>
                             </div>
                             <div class="form-group row">

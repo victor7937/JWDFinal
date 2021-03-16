@@ -55,7 +55,7 @@
                     <option>+198</option>
                     <option>+701</option>
                 </select>
-                <input name="phone" class="form-control" placeholder="Phone number" type="text">
+                <input name="phone" class="form-control" placeholder="Phone number" type="number" maxlength="7">
             </div> <!-- form-group// -->
             <div class="form-group input-group">
                 <div class="input-group-prepend">
