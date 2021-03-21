@@ -1,7 +1,11 @@
-package by.victor.jwd.dao;
+package by.victor.jwd.dao.exceptions;
+
+import java.io.Serial;
 
 public class DAOException extends Exception {
-	private static final long serialVersionUID = 5579627996438039829L;
+
+	@Serial
+	private static final long serialVersionUID = -7583928808489935508L;
 
 	public DAOException() {
 		super();

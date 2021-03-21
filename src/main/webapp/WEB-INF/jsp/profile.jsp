@@ -36,25 +36,25 @@
                             <div class="form-group row">
                                 <label for="name" class="col-4 col-form-label">Name</label>
                                 <div class="col-6">
-                                    <input id="name" name="name" value="${user.name}" placeholder="Name" class="form-control" type="text">
+                                    <input id="name" name="name" value="${customer.name}" placeholder="Name" class="form-control" type="text">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="country" class="col-4 col-form-label">Country</label>
                                 <div class="col-6">
-                                    <input id="country" name="country" placeholder="Country" class="form-control" type="text" value="${user.country}">
+                                    <input id="country" name="country" placeholder="Country" class="form-control" type="text" value="${customer.country}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="city" class="col-4 col-form-label">City</label>
                                 <div class="col-6">
-                                    <input id="city" name="city" placeholder="City" class="form-control" type="text" value="${user.city}">
+                                    <input id="city" name="city" placeholder="City" class="form-control" type="text" value="${customer.city}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="address" class="col-4 col-form-label">Address</label>
                                 <div class="col-6">
-                                    <input id="address" name="address" placeholder="Address" class="form-control" type="text" value="${user.address}">
+                                    <input id="address" name="address" placeholder="Address" class="form-control" type="text" value="${customer.address}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -66,7 +66,7 @@
                                         <option>+198</option>
                                         <option>+701</option>
                                     </select> -->
-                                    <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="${user.phone}" maxlength="11">
+                                    <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="${customer.phone}" maxlength="11">
                                 </div>
                             </div>
 
@@ -75,7 +75,7 @@
                             <div class="form-group row">
                                 <label for="email" class="col-4 col-form-label">Email</label>
                                 <div class="col-6">
-                                    <input id="email" name="email" placeholder="Email" value="${user.email}" class="form-control" required="required" type="email">
+                                    <input id="email" name="email" placeholder="Email" value="${customer.email}" class="form-control" required="required" type="email">
                                 </div>
                             </div>
                             <div class="form-group row">

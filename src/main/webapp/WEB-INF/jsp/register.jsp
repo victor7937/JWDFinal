@@ -32,7 +32,7 @@
             <span class="bg-light">OR</span>
         </p>
         <form action="Controller" method="post">
-            <input type="hidden" name="command" value="savenewuser">
+            <input type="hidden" name="command" value="savenewcustomer">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>

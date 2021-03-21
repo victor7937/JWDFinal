@@ -6,7 +6,6 @@ import java.util.List;
 
 import by.victor.jwd.bean.News;
 import by.victor.jwd.controller.command.Command;
-import by.victor.jwd.service.NewsService;
 import by.victor.jwd.service.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
 import javax.servlet.RequestDispatcher;
@@ -19,7 +18,7 @@ public class GoToIndexPage implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ServiceProvider provider = ServiceProvider.getInstance();
+		/*ServiceProvider provider = ServiceProvider.getInstance();
 		NewsService newsService = provider.getNewsService();
 		
 		try {
@@ -33,7 +32,7 @@ public class GoToIndexPage implements Command {
 		} catch (ServiceException e) {
 			// TODO перейти на глобальную страницу ошибок
 			e.printStackTrace();
-		}	
+		}	*/
 	
 
 	}

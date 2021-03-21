@@ -1,19 +1,18 @@
 package by.victor.jwd.controller.command.impl;
 
 import java.io.IOException;
-import java.util.Arrays;
 
-import by.victor.jwd.bean.User;
+import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.service.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
-import by.victor.jwd.service.UserService;
+import by.victor.jwd.service.CustomerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SaveNewUser implements Command {
+public class SaveNewCustomer implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,15 +40,15 @@ public class SaveNewUser implements Command {
 			return;
 		}
 
-		User user = new User(request.getParameter("name"), request.getParameter("email"),
+		Customer customer = new Customer(request.getParameter("name"), request.getParameter("email"),
 				request.getParameterValues("password")[0], request.getParameterValues("phone")[0] + request.getParameterValues("phone")[1],  request.getParameter("country"),
 				request.getParameter("city"),request.getParameter("address"));
 
-		UserService userService = ServiceProvider.getInstance().getUserService();
+		CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
 		try {
-			if (userService.registration(user)) {
-				response.sendRedirect("Controller?command=auth&email=" + user.getEmail() + "&password=" +
-						user.getPassword());
+			if (customerService.registration(customer)) {
+				response.sendRedirect("Controller?command=auth&email=" + customer.getEmail() + "&password=" +
+						customer.getPassword());
 				return;
 			}
 		} catch (ServiceException e) {

@@ -1,6 +1,9 @@
 package by.victor.jwd.service;
 
+import java.io.Serial;
+
 public class ServiceException extends Exception{
+	@Serial
 	private static final long serialVersionUID = -2795804103099775537L;
 
 	public ServiceException() {

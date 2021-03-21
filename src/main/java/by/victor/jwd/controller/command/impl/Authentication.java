@@ -3,11 +3,11 @@ package by.victor.jwd.controller.command.impl;
 import java.io.IOException;
 
 
-import by.victor.jwd.bean.User;
+import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.service.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
-import by.victor.jwd.service.UserService;
+import by.victor.jwd.service.CustomerService;
 import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
@@ -23,21 +23,20 @@ public class Authentication implements Command {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
-		ServiceProvider provider = ServiceProvider.getInstance();
-		UserService userService = provider.getUserService();
+		CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
 
-		User user = null;
+		Customer customer = null;
 		RequestDispatcher requestDispatcher = null;
 		try {
-			user = userService.authorization(email, password);
+			customer = customerService.authorization(email, password);
 			
-			if (user == null) {
+			if (customer == null) {
 				response.sendRedirect("Controller?command=gotosigninpage&message=no_such_user");
 				return;
 			}
 
 			HttpSession session = request.getSession(true);
-			session.setAttribute("user", user);
+			session.setAttribute("customer", customer);
 			response.sendRedirect("/lei-shoes");
 
 		} catch (ServiceException e) {

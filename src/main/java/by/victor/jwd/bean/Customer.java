@@ -3,7 +3,7 @@ package by.victor.jwd.bean;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Serializable {
+public class Customer implements Serializable {
 
     private static final long serialVersionUID = -1018632074131042436L;
 
@@ -16,15 +16,15 @@ public class User implements Serializable {
     private String address;
 
 
-    public User (){ }
+    public Customer(){ }
 
-    public User(String name, String email, String password) {
+    public Customer(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
     }
 
-    public User(String name, String email, String password, String phone, String country, String city, String address) {
+    public Customer(String name, String email, String password, String phone, String country, String city, String address) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -94,8 +94,8 @@ public class User implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return email.equals(user.email);
+        Customer customer = (Customer) o;
+        return email.equals(customer.email);
     }
 
     @Override

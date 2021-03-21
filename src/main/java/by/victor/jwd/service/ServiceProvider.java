@@ -1,7 +1,6 @@
 package by.victor.jwd.service;
 
-import by.victor.jwd.service.impl.NewsServiceImpl;
-import by.victor.jwd.service.impl.UserServiceImpl;
+import by.victor.jwd.service.impl.CustomerServiceImpl;
 
 public final class ServiceProvider {
 	
@@ -9,19 +8,13 @@ public final class ServiceProvider {
 
 	private ServiceProvider() {}
 	
-	private final UserService userService = new UserServiceImpl();
-	private final NewsService newsService = new NewsServiceImpl();
-	
+	private final CustomerService customerService = new CustomerServiceImpl();
+
 	public static ServiceProvider getInstance() {
 		return instance;
 	}
 
-	public UserService getUserService() {
-		return userService;
+	public CustomerService getCustomerService() {
+		return customerService;
 	}
-
-	public NewsService getNewsService() {
-		return newsService;
-	}
-	
 }

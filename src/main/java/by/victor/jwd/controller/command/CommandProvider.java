@@ -11,7 +11,7 @@ public class CommandProvider {
 	public CommandProvider() {
 		commands.put(CommandName.AUTH, new Authentication());
 		commands.put(CommandName.REGISTRATION, new GoToRegistrationPage());
-		commands.put(CommandName.SAVENEWUSER, new SaveNewUser());
+		commands.put(CommandName.SAVENEWCUSTOMER, new SaveNewCustomer());
 		commands.put(CommandName.GOTOINDEXPAGE, new GoToIndexPage());
 		commands.put(CommandName.GOTOMAINPAGE, new GoToMainPage());
 		commands.put(CommandName.LOGOUT, new Logout());
