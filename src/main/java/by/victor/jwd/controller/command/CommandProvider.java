@@ -21,6 +21,7 @@ public class CommandProvider {
 		commands.put(CommandName.GOTOPRODUCT, new GoToProduct());
 		commands.put(CommandName.GOTOSIGNINPAGE, new GoToSignInPage());
 		commands.put(CommandName.GOTOPROFILE, new GoToProfile());
+		commands.put(CommandName.UPDATEPROFILE, new UpdateProfile());
 	}
 	
 	

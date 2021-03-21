@@ -32,7 +32,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form>
+                        <form action="Controller" method="post">
+                            <input type="hidden" name="command" value="updateprofile">
                             <div class="form-group row">
                                 <label for="name" class="col-4 col-form-label">Name</label>
                                 <div class="col-6">
@@ -69,8 +70,6 @@
                                     <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="${customer.phone}" maxlength="11">
                                 </div>
                             </div>
-
-
 
                             <div class="form-group row">
                                 <label for="email" class="col-4 col-form-label">Email</label>

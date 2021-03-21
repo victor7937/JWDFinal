@@ -11,6 +11,7 @@ import by.victor.jwd.service.CustomerService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class SaveNewCustomer implements Command {
 
@@ -47,25 +48,14 @@ public class SaveNewCustomer implements Command {
 		CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
 		try {
 			if (customerService.registration(customer)) {
-				response.sendRedirect("Controller?command=auth&email=" + customer.getEmail() + "&password=" +
-						customer.getPassword());
-				return;
+				HttpSession session = request.getSession(true);
+				session.setAttribute("customer", customer);
+				response.sendRedirect("/lei-shoes");
 			}
 		} catch (ServiceException e) {
 			response.sendRedirect("Controller?command=registration&message=reg_fail");
-			return;
 		}
 
-
-		//regInfo - show in console
-		//System.out.println("class SaveNewUser implements Command");
-		
-		//request.setAttribute("message", "Registration OK");
-		
-		response.sendRedirect("/lei-shoes");
-		//RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-		//requestDispatcher.forward(request, response);
-		
 	}
 
 }
