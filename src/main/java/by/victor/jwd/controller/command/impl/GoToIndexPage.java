@@ -1,14 +1,10 @@
 package by.victor.jwd.controller.command.impl;
 
 import java.io.IOException;
-import java.util.List;
 
 
-import by.victor.jwd.bean.News;
 import by.victor.jwd.controller.command.Command;
-import by.victor.jwd.service.ServiceException;
-import by.victor.jwd.service.ServiceProvider;
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

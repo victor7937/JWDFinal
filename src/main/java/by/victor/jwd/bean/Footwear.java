@@ -1,0 +1,115 @@
+package by.victor.jwd.bean;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Footwear implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -2715865691919819338L;
+
+    private String art;
+    private String name;
+    private Float price;
+    private String color;
+    private Category category;
+    private String description;
+    private String imageLink;
+
+    public Footwear (String art) {
+        this.art = art;
+    }
+
+    public Footwear(String art, String name, Float price, String color, Category category, String description, String imageLink) {
+        this.art = art;
+        this.name = name;
+        this.price = price;
+        this.color = color;
+        this.category = category;
+        this.description = description;
+        this.imageLink = imageLink;
+    }
+
+    public String getArt() {
+        return art;
+    }
+
+    public void setArt(String art) {
+        this.art = art;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Footwear footwear = (Footwear) o;
+        return Objects.equals(art, footwear.art);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(art);
+    }
+
+    @Override
+    public String toString() {
+        return "Footwear{" +
+                "art='" + art + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", color='" + color + '\'' +
+                ", category=" + category +
+                ", description='" + description + '\'' +
+                ", imageLink='" + imageLink + '\'' +
+                '}';
+    }
+}

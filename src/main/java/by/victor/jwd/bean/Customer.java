@@ -1,10 +1,12 @@
 package by.victor.jwd.bean;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Customer implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -1018632074131042436L;
 
     private String name;
