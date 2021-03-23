@@ -17,13 +17,6 @@ public class SaveNewCustomer implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		System.out.println(request.getParameter("name"));
-//		System.out.println(request.getParameter("email"));
-//		System.out.println(Arrays.toString(request.getParameterValues("phone")));
-//		System.out.println(request.getParameter("country"));
-//		System.out.println(request.getParameter("city"));
-//		System.out.println(request.getParameter("address"));
-//		System.out.println(Arrays.toString(request.getParameterValues("password")));
 
 		if (request.getParameter("email") == null || request.getParameter("password") == null ||
 		request.getParameter("name") == null) {

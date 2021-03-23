@@ -2,6 +2,7 @@ package by.victor.jwd.controller.listner;
 
 import by.victor.jwd.dao.connection.ConnectionPool;
 import by.victor.jwd.dao.exceptions.ConnectionException;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -15,6 +16,10 @@ public class ContextListener implements ServletContextListener {
     private static final String DB_USER = db_bundle.getString("db.user");
     private static final String DB_PASSWORD = db_bundle.getString("db.password");
     private static final String DB_DRIVER_NAME = db_bundle.getString("db.driver.name");
+    private static final int CONNECTION_LIMIT = 10;
+    private static final int IDLE_CONNECTION_LIMIT = 5;
+    private final static Logger logger = Logger.getLogger(ContextListener.class);
+
 
     public ContextListener() { }
 
@@ -26,18 +31,21 @@ public class ContextListener implements ServletContextListener {
         pool.setPassword(DB_PASSWORD);
         pool.setDriverName(DB_DRIVER_NAME);
         try {
-            pool.init(10,5);
+            pool.init(CONNECTION_LIMIT,IDLE_CONNECTION_LIMIT);
+            logger.info("Pool has been created");
         } catch (ConnectionException e) {
-            System.out.println("Error while initializing pool");
+            logger.fatal("Error while initializing pool " + e.toString());
         }
+
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         try {
             ConnectionPool.getInstance().destroy();
+            logger.info("Pool has been destroyed");
         } catch (ConnectionException e) {
-            System.out.println("Error while destroying pool");
+            logger.fatal("Error while destroying pool " + e.toString());
         }
     }
 

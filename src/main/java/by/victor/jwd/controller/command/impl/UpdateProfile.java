@@ -2,9 +2,11 @@ package by.victor.jwd.controller.command.impl;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.listner.ContextListener;
 import by.victor.jwd.service.CustomerService;
 import by.victor.jwd.service.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class UpdateProfile implements Command {
+    private final static Logger logger = Logger.getLogger(UpdateProfile.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
@@ -46,15 +50,9 @@ public class UpdateProfile implements Command {
             }
         } catch (ServiceException e) {
             //goToExceptionsPage
-            System.out.println("Error updating user");
+            logger.error("Can't update customer",e);
             response.sendRedirect("/lei-shoes");
         }
-
-        //regInfo - show in console
-        //System.out.println("class SaveNewUser implements Command");
-
-        //request.setAttribute("message", "Registration OK");
-
 
     }
 

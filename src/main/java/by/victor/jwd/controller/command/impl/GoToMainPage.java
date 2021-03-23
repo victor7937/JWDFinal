@@ -16,7 +16,7 @@ public class GoToMainPage implements Command {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
+		/*HttpSession session = request.getSession();
 
 		if(session == null) {
 			response.sendRedirect("Controller?command=gotoindexpage&message=eeerrror2");
@@ -31,7 +31,7 @@ public class GoToMainPage implements Command {
 		}
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
-		requestDispatcher.forward(request, response);
+		requestDispatcher.forward(request, response);*/
 
 	}
 
