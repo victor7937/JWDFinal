@@ -13,7 +13,7 @@ public class Footwear implements Serializable {
     private String name;
     private Float price;
     private String color;
-    private Category category;
+    private String category;
     private String description;
     private String imageLink;
 
@@ -21,7 +21,7 @@ public class Footwear implements Serializable {
         this.art = art;
     }
 
-    public Footwear(String art, String name, Float price, String color, Category category, String description, String imageLink) {
+    public Footwear(String art, String name, Float price, String color, String category, String description, String imageLink) {
         this.art = art;
         this.name = name;
         this.price = price;
@@ -63,11 +63,11 @@ public class Footwear implements Serializable {
         this.color = color;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

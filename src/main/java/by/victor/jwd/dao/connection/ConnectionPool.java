@@ -48,7 +48,7 @@ public final class ConnectionPool {
     
     private void loadDriver() throws ConnectionException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(driverName);
         } catch (ClassNotFoundException e) {
             throw new ConnectionException(DB_CONNECTION_EXCEPTION_TEXT, e);
         }
