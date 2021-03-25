@@ -25,7 +25,17 @@
     <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
         <hr>
-        <p class="text-success text-center">Some message goes here</p>
+        <c:choose>
+            <c:when test="${param.message.equals('wrong_e_or_p')}">
+                <p class="text-danger text-center">Wrong email or password<br/>
+                Please try again</p>
+            </c:when>
+            <c:otherwise>
+                <p class="text-info text-center">Input your email and password</p>
+            </c:otherwise>
+
+        </c:choose>
+
         <form action="Controller" method="post">
             <input type="hidden" name="command" value="auth">
             <div class="form-group">
@@ -33,20 +43,20 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input class="form-control" placeholder="Email" type="email" name="email">
-                </div> <!-- input-group.// -->
-            </div> <!-- form-group// -->
+                    <input class="form-control" placeholder="Email" type="email" name="email" required="required">
+                </div>
+            </div>
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input class="form-control" placeholder="Password" type="password" name="password">
-                </div> <!-- input-group.// -->
-            </div> <!-- form-group// -->
+                    <input class="form-control" placeholder="Password" type="password" name="password" required="required">
+                </div>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block"> Login  </button>
-            </div> <!-- form-group// -->
+            </div>
         </form>
             <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>
             <p class="text-center">Don't have an account? <a href="Controller?command=registration">Register</a> </p>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="http://lei-shoes/region-functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: victor
@@ -38,33 +39,33 @@
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
                 <input name="name" class="form-control" placeholder="Full name" type="text" required>
-            </div> <!-- form-group// -->
+            </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
                 <input name="email" class="form-control" placeholder="Email address" type="email" required>
-            </div> <!-- form-group// -->
+            </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                 </div>
                 <select name="phone" class="custom-select" style="max-width: 120px;">
-                    <option selected="">+375</option>
-                    <option>+972</option>
-                    <option>+198</option>
-                    <option>+701</option>
+                    <c:forEach var="code" items="${r:displayCodes()}">
+                        <option value="${code}">${r:getCountryFlag(code)}${code}</option>
+                    </c:forEach>
                 </select>
-                <input name="phone" class="form-control" placeholder="Phone number" type="number" maxlength="7">
-            </div> <!-- form-group// -->
+                <input name="phone" class="form-control" placeholder="Phone number" type="tel" maxlength="12">
+            </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
                 </div>
+
                 <select name="country" class="form-control">
-                    <option selected="">Belarus</option>
-                    <option>Russia</option>
-                    <option>Ukraine</option>
+                   <c:forEach var="re" items="${r:displayCountries(sessionScope.lang)}">
+                       <option>${re}</option>
+                   </c:forEach>
                 </select>
             </div> <!-- form-group end.// -->
             <div class="form-group input-group">

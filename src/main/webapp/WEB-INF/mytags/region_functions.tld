@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <display-name>Region Functions</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>r</short-name>
+    <uri>http://lei-shoes/region-functions</uri>
+
+    <function>
+        <name>displayCountries</name>
+        <function-class>by.victor.jwd.controller.util.RegionsAssistant</function-class>
+        <function-signature>java.util.List displayCountries(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <name>displayCodes</name>
+        <function-class>by.victor.jwd.controller.util.RegionsAssistant</function-class>
+        <function-signature>java.util.List displayCodes()</function-signature>
+    </function>
+    <function>
+        <name>getCountryFlag</name>
+        <function-class>by.victor.jwd.controller.util.RegionsAssistant</function-class>
+        <function-signature>java.lang.String getCountryFlag(java.lang.String)</function-signature>
+    </function>
+</taglib>
