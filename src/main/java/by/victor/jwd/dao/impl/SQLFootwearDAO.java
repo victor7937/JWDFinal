@@ -3,7 +3,7 @@ package by.victor.jwd.dao.impl;
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.Footwear;
 import by.victor.jwd.dao.FootwearDAO;
-import by.victor.jwd.dao.exceptions.DAOException;
+import by.victor.jwd.dao.exception.DAOException;
 
 import java.util.List;
 

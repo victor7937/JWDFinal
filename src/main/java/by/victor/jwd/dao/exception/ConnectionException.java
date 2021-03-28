@@ -1,4 +1,4 @@
-package by.victor.jwd.dao.exceptions;
+package by.victor.jwd.dao.exception;
 
 import java.io.Serial;
 

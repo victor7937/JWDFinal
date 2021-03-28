@@ -1,4 +1,4 @@
-package by.victor.jwd.service;
+package by.victor.jwd.service.exception;
 
 import java.io.Serial;
 

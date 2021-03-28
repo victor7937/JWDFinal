@@ -34,31 +34,31 @@ public class RegionsAssistant {
                 new Locale.Builder().setLanguage(lang).build())).collect(Collectors.toList());
     }
 
-    public static boolean isPhoneValid(String phone){
+    public static boolean isPhoneValid(String countryCode, String phone){
         boolean phoneValid = false;
+        String region = convertCountryCodeToRegion(countryCode);
         try {
-            for (String region : regions) {
-                Phonenumber.PhoneNumber phonenumber = phoneNumberUtil.parse(phone,region);
-                if (phoneNumberUtil.isValidNumber(phonenumber)){
-                    phoneValid = true;
-                    break;
-                }
+            Phonenumber.PhoneNumber phonenumber = phoneNumberUtil.parse(phone, region);
+            if (phoneNumberUtil.isValidNumber(phonenumber)){
+                phoneValid = true;
             }
-
         } catch (NumberParseException e) {
             logger.error("Error while parsing phone number" + e);
             phoneValid = false;
         }
         return phoneValid;
-
     }
 
     public static String getCountryFlag (String countryCode) {
-        String country = phoneNumberUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
+        String region = convertCountryCodeToRegion(countryCode);
 
-        int firstChar = Character.codePointAt(country, 0) - asciiOffset + flagOffset;
-        int secondChar = Character.codePointAt(country, 1) - asciiOffset + flagOffset;
+        int firstChar = Character.codePointAt(region, 0) - asciiOffset + flagOffset;
+        int secondChar = Character.codePointAt(region, 1) - asciiOffset + flagOffset;
 
         return new String(Character.toChars(firstChar)) + new String(Character.toChars(secondChar));
+    }
+
+    private static String convertCountryCodeToRegion (String countryCode) {
+        return phoneNumberUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
     }
 }

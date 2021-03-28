@@ -67,10 +67,10 @@
 
 
                     <c:choose>
-                        <c:when test="${customer != null}">
+                        <c:when test="${sessionScope.email != null}">
                             <li class="nav-item dropdown">
                                 <a  class="nav-link dropdown-toggle" href="#" role="button" id="user_email" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ${customer.email}</a>
+                                        ${sessionScope.email}</a>
                                 <div class="dropdown-menu" aria-labelledby="user_email">
                                     <a class="dropdown-item" href="Controller?command=gotoprofile"><fmt:message key="header.profile"/></a>
                                     <a class="dropdown-item" href="Controller?command=logout"><fmt:message key="header.logout"/></a>

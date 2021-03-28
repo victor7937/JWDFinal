@@ -1,6 +1,6 @@
 package by.victor.jwd.dao.connection;
 
-import by.victor.jwd.dao.exceptions.ConnectionException;
+import by.victor.jwd.dao.exception.ConnectionException;
 
 
 import java.sql.Connection;

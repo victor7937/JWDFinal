@@ -1,8 +1,8 @@
 package by.victor.jwd.dao.util;
 
 import by.victor.jwd.dao.connection.ConnectionPool;
-import by.victor.jwd.dao.exceptions.ConnectionException;
-import by.victor.jwd.dao.exceptions.DAOException;
+import by.victor.jwd.dao.exception.ConnectionException;
+import by.victor.jwd.dao.exception.DAOException;
 
 
 import java.sql.*;

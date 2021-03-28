@@ -2,7 +2,7 @@ package by.victor.jwd.dao;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.Footwear;
-import by.victor.jwd.dao.exceptions.DAOException;
+import by.victor.jwd.dao.exception.DAOException;
 
 import java.util.List;
 

@@ -5,22 +5,24 @@ import java.io.IOException;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
-import by.victor.jwd.service.ServiceException;
+import by.victor.jwd.service.exception.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.CustomerService;
-import javax.servlet.RequestDispatcher;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static by.victor.jwd.controller.constant.ParamValues.*;
+
 public class Authentication implements Command {
 
-	private static final String EMAIL_PARAM = "email";
-	private static final String PASSWORD_PARAM = "password";
-	private static final String SESSION_ATTRIBUTE = "CUSTOMER";
-	private static final String REGISTR_SUCCESS_REDIRECT = "/lei-shoes";
+	private final static Logger logger = Logger.getLogger(Authentication.class);
+
+	private static final String SESSION_ATTRIBUTE = "email";
+	private static final String AUTH_SUCCESS_REDIRECT = "/lei-shoes";
 	private static final String WRONG_E_OR_P_REDIRECT = "Controller?command=gotosigninpage&message=wrong_e_or_p";
 
 
@@ -41,11 +43,12 @@ public class Authentication implements Command {
 			}
 
 			HttpSession session = request.getSession(true);
-			session.setAttribute(SESSION_ATTRIBUTE, customer);
-			response.sendRedirect(REGISTR_SUCCESS_REDIRECT);
+			session.setAttribute(SESSION_ATTRIBUTE, customer.getEmail());
+			response.sendRedirect(AUTH_SUCCESS_REDIRECT);
 
 		} catch (ServiceException e) {
 			response.sendRedirect("Controller?command=gotosigninpage&message=error");
+			logger.error("Authentication error " + e );
 		}
 
 	}

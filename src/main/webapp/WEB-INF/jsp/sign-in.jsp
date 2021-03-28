@@ -30,8 +30,11 @@
                 <p class="text-danger text-center">Wrong email or password<br/>
                 Please try again</p>
             </c:when>
+            <c:when test="${param.message.equals('register_success')}">
+                <p class="text-success text-center">Registration completed successfully</p>
+            </c:when>
             <c:otherwise>
-                <p class="text-info text-center">Input your email and password</p>
+                <p class="text-info text-center">Input email and password</p>
             </c:otherwise>
 
         </c:choose>
@@ -62,7 +65,7 @@
             <p class="text-center">Don't have an account? <a href="Controller?command=registration">Register</a> </p>
 
     </article>
-</div> <!-- card.// -->
+</div>
 
 <jsp:include page="footer.jsp"/>
 

@@ -3,41 +3,65 @@ import by.victor.jwd.bean.Customer;
 
 import by.victor.jwd.dao.CustomerDAO;
 import by.victor.jwd.dao.DAOProvider;
-import by.victor.jwd.dao.exceptions.DAOException;
-import by.victor.jwd.service.ServiceException;
+import by.victor.jwd.dao.exception.DAOException;
+import by.victor.jwd.service.exception.EmailExistsException;
+import by.victor.jwd.service.exception.ServiceException;
 import by.victor.jwd.service.CustomerService;
+import org.apache.log4j.Logger;
+
 
 
 public class CustomerServiceImpl implements CustomerService {
 
 	private static CustomerDAO customerDAO;
-
+	private static final Logger logger = Logger.getLogger(CustomerServiceImpl.class);
 	public CustomerServiceImpl () {
 		customerDAO = DAOProvider.getInstance().getCustomerDAO();
 	}
 
+	private static final String EMAIL_EXISTS = "Such email exists in database";
+
 	@Override
 	public Customer authorization(String email, String password) throws ServiceException {
-
-		Customer customer = null;
 		try {
-			customer = customerDAO.getCustomerByEmail(email);
-			if (customer != null && password.equals(customer.getPassword())) {
+			Customer customer = customerDAO.getCustomerByEmailAndPassword(email, password);
+			if (customer != null) {
 				return customer;
 			}
 		} catch (DAOException e) {
-			throw new ServiceException("Can't get data from database", e);
+			logger.error("Auth DAO error ", e);
+			throw new ServiceException(e.getMessage(), e);
 		}
 
 		return null;
 	}
 
 	@Override
-	public boolean registration(Customer customer) throws ServiceException {
-		boolean successAdding = false;
+	public Customer getByEmail(String email) throws ServiceException {
 		try {
-			successAdding = customerDAO.addNewCustomer(customer);
+			Customer customer = customerDAO.getCustomerByEmail(email);
+			if (customer != null) {
+				return customer;
+			}
 		} catch (DAOException e) {
+			logger.error("Get by email DAO error ", e);
+			throw new ServiceException(e.getMessage(), e);
+		}
+		return null;
+	}
+
+	@Override
+	public boolean registration(Customer customer) throws ServiceException {
+		boolean successAdding;
+
+		try {
+			if (!customerDAO.isCustomerExists(customer.getEmail())) {
+				successAdding = customerDAO.addNewCustomer(customer);
+			} else {
+				throw new EmailExistsException(EMAIL_EXISTS);
+			}
+		} catch (DAOException e) {
+			logger.error("Registration DAO error", e);
 			throw new ServiceException(e.getMessage(), e);
 		}
 		return successAdding;
@@ -46,10 +70,15 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public boolean update(String email, Customer customer) throws ServiceException {
-		boolean successUpdating = false;
+		boolean successUpdating;
 		try {
-			successUpdating = customerDAO.updateCustomer(email, customer);
+			if (!email.equals(customer.getEmail()) && customerDAO.isCustomerExists(customer.getEmail())) {
+				throw new EmailExistsException(EMAIL_EXISTS);
+			} else {
+				successUpdating = customerDAO.updateCustomer(email, customer);
+			}
 		} catch (DAOException e) {
+			logger.error("Update DAO error", e);
 			throw new ServiceException(e.getMessage(), e);
 		}
 		return successUpdating;
@@ -57,11 +86,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public boolean delete(String email) throws ServiceException {
-		boolean successDeleting = false;
+		boolean successDeleting;
 		try {
 			successDeleting = customerDAO.deleteCustomer(email);
 		} catch (DAOException e) {
-			throw new ServiceException("Can't delete customer", e);
+			logger.error("Delete DAO error", e);
+			throw new ServiceException(e.getMessage(), e);
 		}
 		return successDeleting;
 	}

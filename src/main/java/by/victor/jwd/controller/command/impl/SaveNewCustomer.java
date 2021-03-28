@@ -4,51 +4,58 @@ import java.io.IOException;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
-import by.victor.jwd.service.ServiceException;
+import by.victor.jwd.controller.validator.RequestValidator;
+import by.victor.jwd.controller.validator.ValidationProvider;
+import by.victor.jwd.service.exception.EmailExistsException;
+import by.victor.jwd.service.exception.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.CustomerService;
+import org.apache.log4j.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import static by.victor.jwd.controller.constant.ParamValues.*;
 
 public class SaveNewCustomer implements Command {
+	Logger logger = Logger.getLogger(SaveNewCustomer.class);
+	private static final String CUSTOMER_ATTRIBUTE = "email";
+	private static final String INCORRECT_CUSTOMER_ATTRIBUTE = "incorrect_customer";
+	private static final String ERROR_MSG_ATTRIBUTE = "err_message";
+	private static final String ERROR_MSG_TEXT_EMAIL = "Sorry, this email has already taken";
+	private static final String ERROR_PATH = "Controller?command=registration";
+	private static final String SUCCESS_PATH = "Controller?command=gotosigninpage&message=register_success";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if (request.getParameter("email") == null || request.getParameter("password") == null ||
-		request.getParameter("name") == null) {
-			response.sendRedirect("Controller?command=registration&message=wrong_input");
-			return;
-		}
-		if (request.getParameter("email").isEmpty() || request.getParameter("password").isEmpty() ||
-				request.getParameter("name").isEmpty()) {
-			response.sendRedirect("Controller?command=registration&message=wrong_input");
-			return;
-		}
+		RequestValidator requestValidator = ValidationProvider.getInstance().getRegistrationValidator();
 
-		if (!request.getParameterValues("password")[0].equals(request.getParameterValues("password")[1])){
-			response.sendRedirect("Controller?command=registration&message=wrong_passw");
+		Customer customer = new Customer(request.getParameter(NAME_PARAM), request.getParameter(EMAIL_PARAM),
+				request.getParameterValues(PASSWORD_PARAM)[0], request.getParameterValues(PHONE_PARAM)[0] + request.getParameterValues(PHONE_PARAM)[1],  request.getParameter(COUNTRY_PARAM),
+				request.getParameter(CITY_PARAM),request.getParameter(ADDRESS_PARAM));
+
+		if (!requestValidator.validate(request)){
+			logger.info("Registration data is incorrect");
+			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PATH);
+			requestDispatcher.forward(request, response);
 			return;
 		}
-
-		Customer customer = new Customer(request.getParameter("name"), request.getParameter("email"),
-				request.getParameterValues("password")[0], request.getParameterValues("phone")[0] + request.getParameterValues("phone")[1],  request.getParameter("country"),
-				request.getParameter("city"),request.getParameter("address"));
 
 		CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
 		try {
 			if (customerService.registration(customer)) {
-				HttpSession session = request.getSession(true);
-				session.setAttribute("customer", customer);
-				response.sendRedirect("/lei-shoes");
+				response.sendRedirect(SUCCESS_PATH);
 			}
+		} catch (EmailExistsException e) {
+			request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMAIL);
+			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PATH);
+			requestDispatcher.forward(request, response);
 		} catch (ServiceException e) {
 			response.sendRedirect("Controller?command=registration&message=reg_fail");
 		}
-
 	}
-
 }

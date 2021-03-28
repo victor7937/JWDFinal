@@ -1,7 +1,7 @@
 package by.victor.jwd.controller.listner;
 
 import by.victor.jwd.dao.connection.ConnectionPool;
-import by.victor.jwd.dao.exceptions.ConnectionException;
+import by.victor.jwd.dao.exception.ConnectionException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;

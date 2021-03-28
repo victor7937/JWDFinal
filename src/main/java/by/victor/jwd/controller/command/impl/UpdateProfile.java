@@ -3,7 +3,8 @@ package by.victor.jwd.controller.command.impl;
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.service.CustomerService;
-import by.victor.jwd.service.ServiceException;
+import by.victor.jwd.service.exception.EmailExistsException;
+import by.victor.jwd.service.exception.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
 import org.apache.log4j.Logger;
 
@@ -32,14 +33,14 @@ public class UpdateProfile implements Command {
             response.sendRedirect(EMAIL_EMPTY);
             return;
         }
-        Customer customer = (Customer) request.getSession().getAttribute("customer");
-        String currentEmail = customer.getEmail();
-        String[] passwords = request.getParameterValues(PASSWORD_PARAM);
 
+        String[] passwords = request.getParameterValues(PASSWORD_PARAM);
         if (!Objects.equals(passwords[0], passwords[1])) {
             response.sendRedirect("Controller?command=gotoprofile&message=password_not_equals");
             return;
         }
+        String currentEmail = (String) request.getSession().getAttribute("email");
+        Customer customer = new Customer();
         customerSetter(customer, request);
 
         if (!((passwords[0] == null ) || ("".equals(passwords[0])))) {
@@ -49,13 +50,15 @@ public class UpdateProfile implements Command {
         CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
         try {
             if (customerService.update(currentEmail, customer)){
-                request.getSession().removeAttribute("customer");
-                request.getSession().setAttribute("customer", customer);
+                request.getSession().setAttribute("email", customer.getEmail());
                 response.sendRedirect("/lei-shoes");
             }
             else {
                 response.sendRedirect("Controller?command=gotoprofile&message=smth_is_wrong");
             }
+        } catch (EmailExistsException e) {
+            logger.info("Email exists");
+            response.sendRedirect("Controller?command=gotoprofile&message=email_exists");
         } catch (ServiceException e) {
             //goToExceptionsPage
             logger.error("Can't update customer",e);

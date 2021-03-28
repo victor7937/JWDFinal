@@ -1,8 +1,8 @@
 package by.victor.jwd.dao.impl;
 
 import by.victor.jwd.bean.Customer;
-import by.victor.jwd.dao.exceptions.ConnectionException;
-import by.victor.jwd.dao.exceptions.DAOException;
+import by.victor.jwd.dao.exception.ConnectionException;
+import by.victor.jwd.dao.exception.DAOException;
 import by.victor.jwd.dao.CustomerDAO;
 import by.victor.jwd.dao.util.DAOResourceProvider;
 
@@ -25,9 +25,13 @@ public class SQLCustomerDAO implements CustomerDAO {
 	private static final String SQL_GET_CUSTOMER_BY_EMAIL =
 			"SELECT * FROM customers WHERE cu_email = ?";
 
+	private static final String SQL_GET_CUSTOMER_BY_EMAIL_AND_PASSWORD =
+			"SELECT * FROM customers WHERE cu_email = ? AND cu_password = ?";
+
 	private static final String SQL_INSERT_CUSTOMER =
 			"INSERT INTO customers (cu_firstname, cu_email, cu_password, cu_phone, cu_country, cu_city, cu_address) VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
+	private static final String SQL_CHECK_EMAIL = "SELECT EXISTS (SELECT 1 FROM customers WHERE cu_email = ?) AS has_email";
 
 	private static final String SQL_UPDATE_CUSTOMER =
 			"UPDATE customers SET cu_firstname = ?, cu_email = ?, cu_password = ?, cu_phone = ?, cu_country = ?, cu_city = ?, cu_address = ? "
@@ -65,6 +69,37 @@ public class SQLCustomerDAO implements CustomerDAO {
 			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
 		}
 		return customer;
+	}
+
+	@Override
+	public Customer getCustomerByEmailAndPassword(String email, String password) throws DAOException {
+		Customer customer = null;
+		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+			ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_CUSTOMER_BY_EMAIL_AND_PASSWORD, ps -> {
+				ps.setString(1, email);
+				ps.setString(2, password);
+			});
+			if (resultSet.next()) {
+				customer = buildCustomer(resultSet);
+			}
+		} catch (SQLException | ConnectionException e) {
+			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+		}
+		return customer;
+	}
+
+	@Override
+	public boolean isCustomerExists(String email) throws DAOException {
+		boolean isEmailExists = false;
+		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+			ResultSet resultSet = resourceProvider.createResultSet(SQL_CHECK_EMAIL, ps -> ps.setString(1, email));
+			if (resultSet.next() && resultSet.getInt("has_email") == 1) {
+				isEmailExists = true;
+			}
+		} catch (SQLException | ConnectionException e) {
+			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+		}
+		return isEmailExists;
 	}
 
 	@Override
