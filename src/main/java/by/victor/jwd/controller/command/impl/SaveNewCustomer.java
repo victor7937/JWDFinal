@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.controller.validator.RequestValidator;
 import by.victor.jwd.controller.validator.ValidationProvider;
 import by.victor.jwd.service.exception.EmailExistsException;
@@ -55,7 +56,8 @@ public class SaveNewCustomer implements Command {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PATH);
 			requestDispatcher.forward(request, response);
 		} catch (ServiceException e) {
-			response.sendRedirect("Controller?command=registration&message=reg_fail");
+			logger.error("Registration fail",e);
+			throw new ControllerException("Registration fail");
 		}
 	}
 }

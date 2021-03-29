@@ -8,4 +8,5 @@ public class ParamValues {
     public final static String CITY_PARAM = "city";
     public final static String ADDRESS_PARAM = "address";
     public final static String PASSWORD_PARAM = "password";
+    public final static String NEW_PASSWORD_PARAM = "newpass";
 }

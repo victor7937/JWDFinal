@@ -1,12 +1,10 @@
 package by.victor.jwd.controller.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebFilter(filterName = "InternationalizationFilter", urlPatterns = "/*")
 public class InternationalizationFilter implements Filter {
     private static final String LANG_ATTRIBUTE = "lang";
 

@@ -48,6 +48,23 @@
             <taglib-location>/WEB-INF/mytags/region_functions.tld</taglib-location>
         </taglib>
     </jsp-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/jsp/error-page.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/jsp/error-page.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>by.victor.jwd.controller.exception.ControllerException</exception-type>
+        <location>/WEB-INF/jsp/error-page.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/WEB-INF/jsp/error-page.jsp</location>
+    </error-page>
+
 
     <session-config>
         <session-timeout>10</session-timeout>

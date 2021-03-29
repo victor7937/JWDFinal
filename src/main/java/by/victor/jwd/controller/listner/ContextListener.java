@@ -1,5 +1,6 @@
 package by.victor.jwd.controller.listner;
 
+import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.dao.connection.ConnectionPool;
 import by.victor.jwd.dao.exception.ConnectionException;
 import org.apache.log4j.Logger;
@@ -35,6 +36,7 @@ public class ContextListener implements ServletContextListener {
             logger.info("Pool has been created");
         } catch (ConnectionException e) {
             logger.fatal("Error while initializing pool " + e.toString());
+            throw new ControllerException("Sorry, we have some technical problems and working to fix them soon.\n Please try to connect later.");
         }
 
     }
@@ -46,6 +48,7 @@ public class ContextListener implements ServletContextListener {
             logger.info("Pool has been destroyed");
         } catch (ConnectionException e) {
             logger.fatal("Error while destroying pool " + e.toString());
+            throw new ControllerException("Sorry, we have some technical problems and working to fix them soon.\n Please try to connect later.");
         }
     }
 

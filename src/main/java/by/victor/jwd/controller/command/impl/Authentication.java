@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.service.exception.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.CustomerService;
@@ -47,8 +48,8 @@ public class Authentication implements Command {
 			response.sendRedirect(AUTH_SUCCESS_REDIRECT);
 
 		} catch (ServiceException e) {
-			response.sendRedirect("Controller?command=gotosigninpage&message=error");
-			logger.error("Authentication error " + e );
+			logger.error("Authentication error ", e );
+			throw new ControllerException("Authentication error");
 		}
 
 	}

@@ -2,6 +2,7 @@ package by.victor.jwd.controller.command.impl;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.service.CustomerService;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.exception.ServiceException;
@@ -24,12 +25,12 @@ public class GoToProfile implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = (String) request.getSession().getAttribute(EMAIL_ATTRIBUTE);
         CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
-        Customer customer = null;
+        Customer customer;
         try {
             customer = customerService.getByEmail(email);
         } catch (ServiceException e) {
             logger.error("Getting profile info error", e);
-            response.sendRedirect("/lei-shoes");
+            throw new ControllerException("Error while getting profile info");
         }
         if (customer != null) {
             request.setAttribute(CUSTOMER_ATTRIBUTE, customer);
@@ -37,7 +38,8 @@ public class GoToProfile implements Command {
             requestDispatcher.forward(request, response);
         }
         else {
-            response.sendRedirect("/lei-shoes");
+            logger.error("Getting profile info error, user doesn't exist");
+            throw new ControllerException("Error while getting profile info, user doesn't exist");
         }
     }
 }

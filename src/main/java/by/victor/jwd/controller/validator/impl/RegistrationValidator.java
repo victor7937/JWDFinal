@@ -5,13 +5,10 @@ import by.victor.jwd.controller.validator.RequestValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.regex.Pattern;
 import static by.victor.jwd.controller.constant.ParamValues.*;
 
 public class RegistrationValidator implements RequestValidator {
 
-    private final static String EMAIL_PATTERN = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-    private final static String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9-_!@]{7,40}$";
     private static final String ERROR_MSG_ATTRIBUTE = "err_message";
     private static final String ERROR_MSG_TEXT_EMPTY = "Sorry, necessary field are empty!";
     private static final String ERROR_MSG_TEXT_E_OR_P = "Sorry, email or password is invalid!";
@@ -36,7 +33,7 @@ public class RegistrationValidator implements RequestValidator {
             logger.info("Empty fields");
             return false;
         }
-        if (!password.equals(passwordRepeat) || !isEmailValid(email) || !isPasswordValid(password)){
+        if (!password.equals(passwordRepeat) || !RequestValidator.isEmailValid(email) || !RequestValidator.isPasswordValid(password)){
             request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_E_OR_P);
             logger.info("Email or password is invalid");
             return false;
@@ -50,13 +47,4 @@ public class RegistrationValidator implements RequestValidator {
         return true;
     }
 
-    public static boolean isEmailValid(String email) {
-        Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
-        return pattern.matcher(email).matches();
-    }
-
-    public static boolean isPasswordValid(String password) {
-        Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
-        return pattern.matcher(password).matches();
-    }
 }

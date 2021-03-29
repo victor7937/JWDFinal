@@ -14,9 +14,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public final class ConnectionPool {
 
     private static final String DB_CONNECTION_EXCEPTION_TEXT = "Connection data is incorrect";
-//    private final static String URL = "jdbc:mysql://localhost:3306/footware_db";
-//    private final static String USER = "root";
-//    private final static String PASSWORD = "123";
 
     private final static int MAX_CONNECTIONS_DEFAULT = 20;
     private final static int MAX_IDLE_CONNECTIONS_DEFAULT = 10;

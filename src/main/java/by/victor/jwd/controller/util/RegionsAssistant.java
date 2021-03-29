@@ -19,6 +19,7 @@ public class RegionsAssistant {
     private final static Logger logger = Logger.getLogger(RegionsAssistant.class);
     private final static int flagOffset = 0x1F1E6;
     private final static int asciiOffset = 0x41;
+    private final static String DEFAULT_REGION = "BY";
 
     static {
         regions = Arrays.asList(bundle.getString("regions").split(","));
@@ -35,18 +36,12 @@ public class RegionsAssistant {
     }
 
     public static boolean isPhoneValid(String countryCode, String phone){
-        boolean phoneValid = false;
         String region = convertCountryCodeToRegion(countryCode);
-        try {
-            Phonenumber.PhoneNumber phonenumber = phoneNumberUtil.parse(phone, region);
-            if (phoneNumberUtil.isValidNumber(phonenumber)){
-                phoneValid = true;
-            }
-        } catch (NumberParseException e) {
-            logger.error("Error while parsing phone number" + e);
-            phoneValid = false;
-        }
-        return phoneValid;
+        return isPhoneValidForRegion(phone, region);
+    }
+
+    public static boolean isPhoneValid(String phone){
+       return isPhoneValidForRegion(phone, DEFAULT_REGION);
     }
 
     public static String getCountryFlag (String countryCode) {
@@ -60,5 +55,19 @@ public class RegionsAssistant {
 
     private static String convertCountryCodeToRegion (String countryCode) {
         return phoneNumberUtil.getRegionCodeForCountryCode(Integer.parseInt(countryCode));
+    }
+
+    private static boolean isPhoneValidForRegion(String phone, String region){
+        boolean phoneValid = false;
+        try {
+            Phonenumber.PhoneNumber phonenumber = phoneNumberUtil.parse(phone, region);
+            if (phoneNumberUtil.isValidNumber(phonenumber)){
+                phoneValid = true;
+            }
+        } catch (NumberParseException e) {
+            logger.error("Error while parsing phone number" + e);
+            phoneValid = false;
+        }
+        return phoneValid;
     }
 }
