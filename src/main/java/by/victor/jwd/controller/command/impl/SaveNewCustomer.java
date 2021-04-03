@@ -21,7 +21,6 @@ import static by.victor.jwd.controller.constant.ParamValues.*;
 
 public class SaveNewCustomer implements Command {
 	Logger logger = Logger.getLogger(SaveNewCustomer.class);
-	private static final String CUSTOMER_ATTRIBUTE = "email";
 	private static final String INCORRECT_CUSTOMER_ATTRIBUTE = "incorrect_customer";
 	private static final String ERROR_MSG_ATTRIBUTE = "err_message";
 	private static final String ERROR_MSG_TEXT_EMAIL = "Sorry, this email has already taken";

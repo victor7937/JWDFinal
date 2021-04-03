@@ -16,12 +16,15 @@ public class Footwear implements Serializable {
     private String category;
     private String description;
     private String imageLink;
+    private String brand;
+    private ForEnum forWhom;
 
-    public Footwear (String art) {
+    public Footwear(String art) {
         this.art = art;
     }
 
-    public Footwear(String art, String name, Float price, String color, String category, String description, String imageLink) {
+    public Footwear(String art, String name, Float price, String color, String category,
+                    String description, String imageLink, String brand, ForEnum forWhom) {
         this.art = art;
         this.name = name;
         this.price = price;
@@ -29,6 +32,8 @@ public class Footwear implements Serializable {
         this.category = category;
         this.description = description;
         this.imageLink = imageLink;
+        this.brand = brand;
+        this.forWhom = forWhom;
     }
 
     public String getArt() {
@@ -87,6 +92,22 @@ public class Footwear implements Serializable {
         this.imageLink = imageLink;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public ForEnum getForWhom() {
+        return forWhom;
+    }
+
+    public void setForWhom(ForEnum forWhom) {
+        this.forWhom = forWhom;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,9 +128,11 @@ public class Footwear implements Serializable {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", color='" + color + '\'' +
-                ", category=" + category +
+                ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
                 ", imageLink='" + imageLink + '\'' +
+                ", brand='" + brand + '\'' +
+                ", forWhom=" + forWhom +
                 '}';
     }
 }

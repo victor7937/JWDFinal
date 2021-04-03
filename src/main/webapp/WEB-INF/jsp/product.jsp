@@ -8,6 +8,7 @@
     <title>Product Page</title>
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
+    <link href="<c:url value='/css/product.css'/>" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -20,7 +21,7 @@
         <p class="lead text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci consequatur ea error expedita illo in quam? Doloribus esse est, hic iste nostrum officiis perspiciatis repudiandae similique tempora temporibus vitae?</p>
     </div>
 </section>
-<div class="container">
+<<div class="container">
     <div class="row">
         <div class="col">
             <nav aria-label="breadcrumb">
@@ -36,50 +37,127 @@
 <div class="container">
     <div class="row">
         <!-- Image -->
+<%--        <div class="col-12 col-lg-6">--%>
+<%--            <div class="card bg-light mb-3">--%>
+<%--                <div class="card-body">--%>
+<%--                    <a href="" data-toggle="modal" data-target="#productModal">--%>
+<%--                        <img class="img-fluid" src="https://dummyimage.com/800x800/55595c/fff" />--%>
+<%--                        <p class="text-center">Zoom</p>--%>
+<%--                    </a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
         <div class="col-12 col-lg-6">
-            <div class="card bg-light mb-3">
-                <div class="card-body">
-                    <a href="" data-toggle="modal" data-target="#productModal">
-                        <img class="img-fluid" src="https://dummyimage.com/800x800/55595c/fff" />
-                        <p class="text-center">Zoom</p>
-                    </a>
+            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel" data-touch="false" data-interval="false">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleFade" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleFade" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleFade" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+<%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
+                        <a href="" data-toggle="modal" data-target="#productModal">
+                            <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008729_1000.jpg"  alt="1"/>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
+                        <a href="" data-toggle="modal" data-target="#productModal">
+                            <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008727_1000.jpg"  alt="2"/>
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
+                        <a href="" data-toggle="modal" data-target="#productModal">
+                            <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008728_1000.jpg" alt="3" />
+                        </a>
+                    </div>
                 </div>
+                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon bg-secondary" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon bg-secondary" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
 
         <!-- Add to cart -->
         <div class="col-12 col-lg-6 add_to_cart_block">
-            <div class="card bg-light mb-3">
+            <div class="card mb-3">
                 <div class="card-body">
-                    <p class="price">99.00 $</p>
-                    <p class="price_discounted">149.90 $</p>
+<%--                    <p class="price">99.00 $</p>--%>
+<%--                    <p class="price_discounted">149.90 $</p>--%>
+                    <div class="product-title-brand mb-1">Balenciaga</div>
+                    <div class="product-title-name mb-1">Track</div>
+                    <div class="price-title mb-2">$ 980.00<span>$ 1100.00</span></div>
+                    <hr class="mb-2">
+<%--    <p><span class="price mr-1"><strong>$12.99</strong></span></p>--%>
+                    <div class="table-responsive mb-2">
+                        <table class="table table-sm table-borderless mb-0">
+                            <tbody>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><div class="product-header">Model</div></th>
+                                <td><div class="product-value">Xa11T</div></td>
+                            </tr>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><div class="product-header">Color</div></th>
+                                <td><div class="product-value">Black</div></td>
+                            </tr>
+                            <tr>
+                                <th class="pl-0 w-25" scope="row"><div class="product-header">Category</div></th>
+                                <td><div class="product-value">Sneakers</div></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr class="mb-2">
+
                     <form method="get" action="Controller?command=gotocart">
-                        <div class="form-group">
-                            <label for="colors">Color</label>
-                            <select class="custom-select" id="colors">
-                                <option selected>Select</option>
-                                <option value="1">Blue</option>
-                                <option value="2">Red</option>
-                                <option value="3">Green</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Quantity :</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1">
-                                <div class="input-group-append">
-                                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
+                        <div class="form-group mb-2">
+                            <div class="radio-toolbar">
+                                <input type="radio" id="37" name="radioFruit" value="apple">
+                                <label for="37">37</label>
+
+                                <input type="radio" id="35" name="radioFruit" value="banana">
+                                <label for="35">35</label>
+
+                                <input type="radio" id="36" name="radioFruit" value="orange">
+                                <label for="36">36</label>
                             </div>
                         </div>
-                        <a href="Controller?command=gotocart" class="btn btn-success btn-lg btn-block text-uppercase">
+
+
+
+
+<%--                       <label for="colors">Color</label>--%>
+<%--                            <select class="custom-select" id="colors">--%>
+<%--                                <option selected>Select</option>--%>
+<%--                                <option value="1">Blue</option>--%>
+<%--                                <option value="2">Red</option>--%>
+<%--                                <option value="3">Green</option>--%>
+<%--                            </select>--%>
+<%--                        </div>--%>
+<%--                        <div class="form-group">--%>
+<%--                            <label>Quantity :</label>--%>
+<%--                            <div class="input-group mb-3">--%>
+<%--                                <div class="input-group-prepend">--%>
+<%--                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">--%>
+<%--                                        <i class="fa fa-minus"></i>--%>
+<%--                                    </button>--%>
+<%--                                </div>--%>
+<%--                                <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1">--%>
+<%--                                <div class="input-group-append">--%>
+<%--                                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">--%>
+<%--                                        <i class="fa fa-plus"></i>--%>
+<%--                                    </button>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+
+                        <a href="Controller?command=gotocart" class="btn add-to-card-btn btn-lg btn-block">
                             <i class="fa fa-shopping-cart"></i> Add To Cart
                         </a>
                     </form>
@@ -87,7 +165,7 @@
                         <ul class="list-inline">
                             <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Fast delivery</li>
                             <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>Secure payment</li>
-                            <li class="list-inline-item"><i class="fa fa-phone fa-2x"></i><br/>+33 1 22 54 65 60</li>
+                            <li class="list-inline-item"><i class="fa fa-phone fa-2x"></i><br/>+375 29 180-25-50</li>
                         </ul>
                     </div>
                     <div class="reviews_product p-3 mb-2 ">
@@ -100,9 +178,9 @@
                         (4/5)
                         <a class="pull-right" href="#reviews">View all reviews</a>
                     </div>
-                    <div class="datasheet p-3 mb-2 bg-info text-white">
-                        <a href="" class="text-white"><i class="fa fa-file-text"></i> Download DataSheet</a>
-                    </div>
+<%--                    <div class="datasheet p-3 mb-2 bg-info text-white">--%>
+<%--                        <a href="" class="text-white"><i class="fa fa-file-text"></i> Download DataSheet</a>--%>
+<%--                    </div>--%>
                 </div>
             </div>
         </div>
@@ -112,7 +190,7 @@
         <!-- Description -->
         <div class="col-12">
             <div class="card border-light mb-3">
-                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-align-justify"></i> Description</div>
+                <div class="card-header text-white text-uppercase"><i class="fa fa-align-justify"></i> Description</div>
                 <div class="card-body">
                     <p class="card-text">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum iusto molestiae nesciunt odio quis quo, unde. Aspernatur assumenda doloribus inventore quaerat quam sapiente, sed suscipit? Laudantium quidem sint sit voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto mollitia nobis praesentium quidem suscipit temporibus ullam voluptate. Adipisci, at consectetur doloribus facere ipsa magni odio ut voluptates? Nihil, perferendis, voluptates.
@@ -127,7 +205,7 @@
         <!-- Reviews -->
         <div class="col-12" id="reviews">
             <div class="card border-light mb-3">
-                <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-comment"></i> Reviews</div>
+                <div class="card-header text-white text-uppercase"><i class="fa fa-comment"></i> Reviews</div>
                 <div class="card-body">
                     <div class="review">
                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
@@ -172,17 +250,17 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="productModalLabel">Product title</h5>
+                <h5 class="modal-title text-center" id="productModalLabel">Product title</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <img class="img-fluid" src="https://dummyimage.com/1200x1200/55595c/fff" />
+                <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008727_1000.jpg" data-dismiss="modal" />
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+<%--            <div class="modal-footer">--%>
+<%--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
+<%--            </div>--%>
         </div>
     </div>
 </div>

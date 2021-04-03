@@ -153,7 +153,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 	}
 
 	private Customer buildCustomer(ResultSet resultSet) throws DAOException {
-		Customer Customer = null;
+		Customer customer = null;
 		try {
 			String name = resultSet.getString("cu_firstname");
 			String email = resultSet.getString("cu_email");
@@ -162,11 +162,11 @@ public class SQLCustomerDAO implements CustomerDAO {
 			String country = resultSet.getString("cu_country");
 			String city = resultSet.getString("cu_city");
 			String address = resultSet.getString("cu_address");
-			Customer = new Customer(name, email, password, phone, country, city, address);
+			customer = new Customer(name, email, password, phone, country, city, address);
 
 		} catch (SQLException e) {
 			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
 		}
-		return Customer;
+		return customer;
 	}
 }
