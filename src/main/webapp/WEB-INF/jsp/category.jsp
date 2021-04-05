@@ -39,22 +39,30 @@
             <div class="card bg-light mb-3">
                 <div class="card-header bg-card-header text-white text-uppercase"><i class="fa fa-list"></i> Categories</div>
                 <ul class="list-group category_block">
-                    <li class="list-group-item"><a href="Controller?command=gotocategory">Boots</a></li>
-                    <li class="list-group-item"><a href="Controller?command=gotocategory">Loafers</a></li>
-                    <li class="list-group-item"><a href="Controller?command=gotocategory">Sport</a></li>
-                    <li class="list-group-item"><a href="Controller?command=gotocategory">Oxford</a></li>
-                    <li class="list-group-item"><a href="Controller?command=gotocategory">Monks</a></li>
+                    <li class="list-group-item"><a href="Controller?command=gotocategory&category=all">All</a></li>
+                    <c:forEach var="category" items="${requestScope.categoryList}" >
+                        <li class="list-group-item"><a href="Controller?command=gotocategory&category=${category}">${category}</a></li>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="card bg-light mb-3">
-                <div class="card-header text-white text-uppercase">Last product</div>
-                <div class="card-body">
-                    <img class="img-fluid" src="https://dummyimage.com/600x400/55595c/fff" />
-                    <h5 class="card-title">Product title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <p class="bloc_left_price">99.00 $</p>
-                </div>
+                <div class="card-header bg-card-header text-white text-uppercase"><i class="fa fa-list"></i> Brands</div>
+                <ul class="list-group category_block">
+                    <li class="list-group-item"><a href="Controller?command=gotocategory&brand=all">All</a></li>
+                    <c:forEach var="brand" items="${requestScope.brandList}" >
+                        <li class="list-group-item"><a href="Controller?command=gotocategory&brand=${brand}">${brand}</a></li>
+                    </c:forEach>
+                </ul>
             </div>
+<%--            <div class="card bg-light mb-3">--%>
+<%--                <div class="card-header text-white text-uppercase">Last product</div>--%>
+<%--                <div class="card-body">--%>
+<%--                    <img class="img-fluid" src="https://dummyimage.com/600x400/55595c/fff" />--%>
+<%--                    <h5 class="card-title">Product title</h5>--%>
+<%--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--%>
+<%--                    <p class="bloc_left_price">99.00 $</p>--%>
+<%--                </div>--%>
+<%--            </div>--%>
         </div>
         <div class="col">
             <div class="row">
@@ -75,12 +83,12 @@
                         </div>
                     </div>
                 </div>-->
-                <c:forEach begin="1" step="1" end="6">
+                <c:forEach var="footwear" items="${requestScope.footwearList}">
                     <div class="col-md-4 col-sm-6 my-3">
                         <div class="product-card">
                             <div class="product-image">
-                                    <img class="pic-1" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008729_1000.jpg">
-                                    <img class="pic-2" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008727_1000.jpg">
+                                    <img class="pic-1" src="${footwear.imageLink}">
+                                    <img class="pic-2" src="${footwear.imageLink}">
                                 <ul class="social">
                                    <!-- <li><a href="" class="fa fa-search"></a></li>
                                     <li><a href="" class="fa fa-shopping-bag"></a></li> -->
@@ -89,13 +97,13 @@
                                 <!--<span class="product-discount-label">-20%</span>-->
                             </div>
                             <div class="product-content">
-                                <div class="price">$ 100.00
-                                    <span>$ 150.00</span>
+                                <div class="price">${footwear.price}
+                                    <span>${footwear.price}</span>
                                 </div>
-                                <h2 class="brand">Balenciaga</h2>
-                                <span class="model">Track</span>
-                                <h3 class="category"><a href="Controller?command=gotoproduct">Sneakers</a></h3>
-                                <a class="details" href="Controller?command=gotoproduct">More Details<i class="fa fa-angle-right icon"></i></a>
+                                <h2 class="brand">${footwear.brand}</h2>
+                                <span class="model">${footwear.name}</span>
+                                <h3 class="category"><a href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></h3>
+                                <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fa fa-angle-right icon"></i></a>
                             </div>
                         </div>
                     </div>

@@ -42,12 +42,12 @@
                     <c:choose>
                         <c:when test="${param.get('command').equals('gotocategory')}">
                             <li class="nav-item active">
-                                <a class="nav-link" href="Controller?command=gotocategory"><fmt:message key="header.categories"/></a>
+                                <a class="nav-link" href="Controller?command=gotocategory&category=all&brand=all"><fmt:message key="header.categories"/></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="nav-item">
-                                <a class="nav-link" href="Controller?command=gotocategory"><fmt:message key="header.categories"/></a>
+                                <a class="nav-link" href="Controller?command=gotocategory&category=all&brand=all"><fmt:message key="header.categories"/></a>
                             </li>
                         </c:otherwise>
                     </c:choose>

@@ -9,6 +9,7 @@
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
     <link href="<c:url value='/css/product.css'/>" rel="stylesheet" type="text/css">
+    <c:set var="footwear" value="${requestScope.footwear}" scope="request"/>
 
 </head>
 <body>
@@ -58,19 +59,19 @@
                     <div class="carousel-item active">
 <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
                         <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008729_1000.jpg"  alt="1"/>
+                            <img class="img-fluid" src="${footwear.imageLink}"  alt="1"/>
                         </a>
                     </div>
                     <div class="carousel-item">
                         <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
                         <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008727_1000.jpg"  alt="2"/>
+                            <img class="img-fluid" src="${footwear.imageLink}"  alt="2"/>
                         </a>
                     </div>
                     <div class="carousel-item">
                         <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
                         <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008728_1000.jpg" alt="3" />
+                            <img class="img-fluid" src="${footwear.imageLink}" alt="3" />
                         </a>
                     </div>
                 </div>
@@ -91,9 +92,9 @@
                 <div class="card-body">
 <%--                    <p class="price">99.00 $</p>--%>
 <%--                    <p class="price_discounted">149.90 $</p>--%>
-                    <div class="product-title-brand mb-1">Balenciaga</div>
-                    <div class="product-title-name mb-1">Track</div>
-                    <div class="price-title mb-2">$ 980.00<span>$ 1100.00</span></div>
+                    <div class="product-title-brand mb-1">${footwear.brand}</div>
+                    <div class="product-title-name mb-1">${footwear.name}</div>
+                    <div class="price-title mb-2">${footwear.price}<span>${footwear.price}</span></div>
                     <hr class="mb-2">
 <%--    <p><span class="price mr-1"><strong>$12.99</strong></span></p>--%>
                     <div class="table-responsive mb-2">
@@ -101,15 +102,15 @@
                             <tbody>
                             <tr>
                                 <th class="pl-0 w-25" scope="row"><div class="product-header">Model</div></th>
-                                <td><div class="product-value">Xa11T</div></td>
+                                <td><div class="product-value">${footwear.art}</div></td>
                             </tr>
                             <tr>
                                 <th class="pl-0 w-25" scope="row"><div class="product-header">Color</div></th>
-                                <td><div class="product-value">Black</div></td>
+                                <td><div class="product-value">${footwear.color}</div></td>
                             </tr>
                             <tr>
                                 <th class="pl-0 w-25" scope="row"><div class="product-header">Category</div></th>
-                                <td><div class="product-value">Sneakers</div></td>
+                                <td><a class="product-value" href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -193,10 +194,7 @@
                 <div class="card-header text-white text-uppercase"><i class="fa fa-align-justify"></i> Description</div>
                 <div class="card-body">
                     <p class="card-text">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum iusto molestiae nesciunt odio quis quo, unde. Aspernatur assumenda doloribus inventore quaerat quam sapiente, sed suscipit? Laudantium quidem sint sit voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto mollitia nobis praesentium quidem suscipit temporibus ullam voluptate. Adipisci, at consectetur doloribus facere ipsa magni odio ut voluptates? Nihil, perferendis, voluptates.
-                    </p>
-                    <p class="card-text">
-                       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, beatae deserunt eveniet excepturi, facilis illo in laboriosam maxime minus modi nesciunt nulla, odit qui quis quo reprehenderit sequi ut velit? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias asperiores debitis excepturi facilis fugit illum laudantium maxime suscipit tempore, veniam. Architecto, asperiores cum distinctio dolorum eligendi eum inventore molestias possimus?
+                       ${footwear.description}
                     </p>
                 </div>
             </div>

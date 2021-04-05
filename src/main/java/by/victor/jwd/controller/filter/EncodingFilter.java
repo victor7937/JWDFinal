@@ -15,12 +15,12 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-       // if(!ENCODING.equals(request.getCharacterEncoding())) {
+        if(!ENCODING.equals(request.getCharacterEncoding())) {
             request.setCharacterEncoding(ENCODING);
-        //}
-       // if (!ENCODING.equals(response.getCharacterEncoding())){
+        }
+        if (!ENCODING.equals(response.getCharacterEncoding())){
             response.setCharacterEncoding(ENCODING);
-        //}
+        }
         chain.doFilter(request, response);
     }
 }
