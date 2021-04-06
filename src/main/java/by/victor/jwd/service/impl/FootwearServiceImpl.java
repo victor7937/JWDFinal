@@ -21,10 +21,10 @@ public class FootwearServiceImpl implements FootwearService {
     }
 
     @Override
-    public List<Footwear> getAll(String lang) throws ServiceException {
+    public List<Footwear> getAll(ForEnum forEnum, String lang) throws ServiceException {
         List<Footwear> footwearList;
         try {
-            footwearList = footwearDAO.getAll(lang);
+            footwearList = footwearDAO.getAll(forEnum, lang);
         } catch (DAOException e) {
             logger.error("Get all DAO error", e);
             throw new ServiceException(e.getMessage(), e);
@@ -33,10 +33,10 @@ public class FootwearServiceImpl implements FootwearService {
     }
 
     @Override
-    public List<Footwear> getByCategory(String category, String lang) throws ServiceException {
+    public List<Footwear> getByCategory(String category,ForEnum forEnum, String lang) throws ServiceException {
         List<Footwear> footwearList;
         try {
-            footwearList = footwearDAO.getByCategory(category, lang);
+            footwearList = footwearDAO.getByCategory(category,forEnum, lang);
         } catch (DAOException e) {
             logger.error("Get by category DAO error ", e);
             throw new ServiceException(e.getMessage(), e);
@@ -45,23 +45,35 @@ public class FootwearServiceImpl implements FootwearService {
     }
 
     @Override
-    public List<Footwear> getByForEnum(ForEnum forWhom, String lang) throws ServiceException {
+    public List<Footwear> getByCategoryAndBrand(String category, String brand, ForEnum forEnum, String lang) throws ServiceException {
         List<Footwear> footwearList;
         try {
-            footwearList = footwearDAO.getByForEnum(forWhom, lang);
+            footwearList = footwearDAO.getByCategoryAndBrand(category, brand, forEnum, lang);
         } catch (DAOException e) {
-            logger.error("Get by forEnum DAO error ", e);
+            logger.error("Get by category and brand DAO error ", e);
             throw new ServiceException(e.getMessage(), e);
         }
         return footwearList;
     }
 
+//    @Override
+//    public List<Footwear> getByForEnum(ForEnum forWhom, String lang) throws ServiceException {
+//        List<Footwear> footwearList;
+//        try {
+//            footwearList = footwearDAO.getByForEnum(forWhom, lang);
+//        } catch (DAOException e) {
+//            logger.error("Get by forEnum DAO error ", e);
+//            throw new ServiceException(e.getMessage(), e);
+//        }
+//        return footwearList;
+//    }
+
 
     @Override
-    public List<Footwear> getByBrand(String brand, String lang) throws ServiceException {
+    public List<Footwear> getByBrand(String brand, ForEnum forEnum, String lang) throws ServiceException {
         List<Footwear> footwearList;
         try {
-            footwearList = footwearDAO.getByBrand(brand, lang);
+            footwearList = footwearDAO.getByBrand(brand, forEnum, lang);
         } catch (DAOException e) {
             logger.error("Get by brand DAO error ", e);
             throw new ServiceException(e.getMessage(), e);

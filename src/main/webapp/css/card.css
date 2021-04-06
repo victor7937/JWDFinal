@@ -10,7 +10,7 @@
     transition: all .3s ease 0s;
 }
 .product-card:hover .product-image {
-    box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 .product-card .product-image a {
     display: block;
@@ -179,6 +179,15 @@
 .category_block li:hover {
     background-color: #4e565c;
 }
+
+/*.list-group-item .active{*/
+/*    background-color: #4e565c!important;*/
+/*}*/
+
+/*.list-group-item .active a{*/
+/*    color: #ffffff!important;*/
+/*}*/
+
 .category_block li:hover a {
     color: #ffffff;
 }

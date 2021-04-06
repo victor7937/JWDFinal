@@ -94,7 +94,9 @@
 <%--                    <p class="price_discounted">149.90 $</p>--%>
                     <div class="product-title-brand mb-1">${footwear.brand}</div>
                     <div class="product-title-name mb-1">${footwear.name}</div>
-                    <div class="price-title mb-2">${footwear.price}<span>${footwear.price}</span></div>
+                    <div class="price-title mb-2">$ ${footwear.price}
+<%--                        <span>${footwear.price}</span>--%>
+                    </div>
                     <hr class="mb-2">
 <%--    <p><span class="price mr-1"><strong>$12.99</strong></span></p>--%>
                     <div class="table-responsive mb-2">
@@ -120,13 +122,13 @@
                     <form method="get" action="Controller?command=gotocart">
                         <div class="form-group mb-2">
                             <div class="radio-toolbar">
-                                <input type="radio" id="37" name="radioFruit" value="apple">
+                                <input type="radio" id="37" name="radioSize" value="37">
                                 <label for="37">37</label>
 
-                                <input type="radio" id="35" name="radioFruit" value="banana">
+                                <input type="radio" id="35" name="radioSize" value="35">
                                 <label for="35">35</label>
 
-                                <input type="radio" id="36" name="radioFruit" value="orange">
+                                <input type="radio" id="36" name="radioSize" value="36">
                                 <label for="36">36</label>
                             </div>
                         </div>
@@ -254,7 +256,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img class="img-fluid" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008727_1000.jpg" data-dismiss="modal" />
+                <img class="img-fluid" src="${footwear.imageLink}" data-dismiss="modal" />
             </div>
 <%--            <div class="modal-footer">--%>
 <%--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
@@ -263,26 +265,26 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    //Plus & Minus for Quantity product
-    $(document).ready(function(){
-        var quantity = 1;
+<%--<script type="text/javascript">--%>
+<%--    //Plus & Minus for Quantity product--%>
+<%--    $(document).ready(function(){--%>
+<%--        var quantity = 1;--%>
 
-        $('.quantity-right-plus').click(function(e){
-            e.preventDefault();
-            var quantity = parseInt($('#quantity').val());
-            $('#quantity').val(quantity + 1);
-        });
+<%--        $('.quantity-right-plus').click(function(e){--%>
+<%--            e.preventDefault();--%>
+<%--            var quantity = parseInt($('#quantity').val());--%>
+<%--            $('#quantity').val(quantity + 1);--%>
+<%--        });--%>
 
-        $('.quantity-left-minus').click(function(e){
-            e.preventDefault();
-            var quantity = parseInt($('#quantity').val());
-            if(quantity > 1){
-                $('#quantity').val(quantity - 1);
-            }
-        });
+<%--        $('.quantity-left-minus').click(function(e){--%>
+<%--            e.preventDefault();--%>
+<%--            var quantity = parseInt($('#quantity').val());--%>
+<%--            if(quantity > 1){--%>
+<%--                $('#quantity').val(quantity - 1);--%>
+<%--            }--%>
+<%--        });--%>
 
-    });
-</script>
+<%--    });--%>
+<%--</script>--%>
 </body>
 </html>

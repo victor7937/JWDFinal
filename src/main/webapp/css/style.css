@@ -42,4 +42,42 @@ footer a {
     background-color: #6f828e;
 }
 
+.page-link {
+    color: #4e565c!important;
+}
+
+.page-link:hover {
+    color: #fff!important;
+    background-color: #343a40!important;
+}
+
+.active .page-link {
+    border-color: #343a40!important;
+    color: #fff!important;
+    background-color: #343a40!important;
+}
+
+.btn-primary {
+    color: #fff!important;
+    background-color: #343a40!important;
+    border-color: #343a40!important;
+    font-weight: 500!important;
+    transition: all .5s ease 0s;
+}
+
+.btn-primary:hover {
+    background-color: #4e565c!important;
+    border-color: #4e565c!important;
+}
+
+.list-group .active{
+    background-color: #e9ecef!important;
+    border-color: #e9ecef!important;
+}
+
+.list-group .active a {
+    font-weight: 600;
+}
+
+
 

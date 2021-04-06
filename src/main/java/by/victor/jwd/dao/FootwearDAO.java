@@ -9,10 +9,11 @@ import java.util.List;
 
 public interface FootwearDAO {
 
-    List<Footwear> getAll(String lang) throws DAOException;
-    List<Footwear> getByCategory(String category, String lang) throws DAOException;
-    List<Footwear> getByForEnum(ForEnum forWhom, String lang) throws DAOException;
-    List<Footwear> getByBrand(String brand, String lang) throws DAOException;
+    List<Footwear> getAll(ForEnum forEnum, String lang) throws DAOException;
+    List<Footwear> getByCategory(String category, ForEnum forEnum, String lang) throws DAOException;
+    List<Footwear> getByCategoryAndBrand(String category, String brand, ForEnum forEnum, String lang) throws DAOException;
+    //List<Footwear> getByForEnum(ForEnum forWhom, String lang) throws DAOException;
+    List<Footwear> getByBrand(String brand, ForEnum forEnum, String lang) throws DAOException;
     Footwear getFootwearByArt(String art, String lang) throws DAOException;
     List<String> getCategories (String lang) throws DAOException;
     List<String> getBrands () throws DAOException;

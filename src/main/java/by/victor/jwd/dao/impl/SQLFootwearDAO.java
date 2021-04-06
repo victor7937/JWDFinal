@@ -26,7 +26,9 @@ public class SQLFootwearDAO implements FootwearDAO {
 
     private static final String SQL_BY_CATEGORY = " WHERE c_name_%s = ?";
     private static final String SQL_BY_BRAND = " WHERE b_name = ?";
-    private static final String SQL_BY_FOR_WHOM = " WHERE f_for = ?";
+    private static final String SQL_BY_CATEGORY_AND_BRAND = " WHERE c_name_%s = ? AND b_name = ?";
+    private static final String SQL_FOR_ADDING = " AND f_for = ?";
+    private static final String SQL_FOR = " WHERE f_for = ?";
     private static final String SQL_BY_ART = " WHERE f_art = ?";
 
     private static final String SQL_GET_CATEGORIES = "SELECT c_name_%s AS name FROM categories";
@@ -38,10 +40,17 @@ public class SQLFootwearDAO implements FootwearDAO {
                     + "or return the connection back";
 
     @Override
-    public List<Footwear> getAll(String lang) throws DAOException {
+    public List<Footwear> getAll(ForEnum forEnum, String lang) throws DAOException {
         List<Footwear> footwearList = new ArrayList<>();
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
-            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang));
+            ResultSet resultSet;
+            if (forEnum == ForEnum.ALL) {
+                resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang));
+            }
+            else {
+                resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + SQL_FOR,
+                        ps -> ps.setString(1, forEnum.toString()));
+            }
             while (resultSet.next()) {
                 Footwear footwear = buildFootwear(resultSet);
                 footwearList.add(footwear);
@@ -53,11 +62,18 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
-    public List<Footwear> getByCategory(String category, String lang) throws DAOException {
+    public List<Footwear> getByCategory(String category, ForEnum forEnum, String lang) throws DAOException {
         List<Footwear> footwearList = new ArrayList<>();
+        String adding = forEnum == ForEnum.ALL ? "" : SQL_FOR_ADDING;
+
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
-            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang) +
-                    String.format(SQL_BY_CATEGORY, lang), ps -> ps.setString(1, category));
+            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang)
+                    + String.format(SQL_BY_CATEGORY, lang) + adding, ps -> {
+
+                ps.setString(1, category);
+                if (forEnum != ForEnum.ALL)
+                    ps.setString(2, forEnum.toString());
+            });
             while (resultSet.next()) {
                 Footwear footwear = buildFootwear(resultSet);
                 footwearList.add(footwear);
@@ -69,11 +85,35 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
+    public List<Footwear> getByCategoryAndBrand(String category, String brand, ForEnum forEnum, String lang) throws DAOException {
+        List<Footwear> footwearList = new ArrayList<>();
+        String adding = forEnum == ForEnum.ALL ? "" : SQL_FOR_ADDING;
+
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang)
+                    + String.format(SQL_BY_CATEGORY_AND_BRAND, lang) + adding, ps -> {
+
+                ps.setString(1, category);
+                ps.setString(2, brand);
+                if (forEnum != ForEnum.ALL)
+                    ps.setString(3, forEnum.toString());
+            });
+            while (resultSet.next()) {
+                Footwear footwear = buildFootwear(resultSet);
+                footwearList.add(footwear);
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+        }
+        return footwearList;
+    }
+
+   /*  @Override
     public List<Footwear> getByForEnum(ForEnum forWhom, String lang) throws DAOException {
-        List<Footwear> footwearList = new ArrayList<>();
+       List<Footwear> footwearList = new ArrayList<>();
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
             ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + SQL_BY_FOR_WHOM,
-                    ps -> ps.setString(1, forWhom.toString().toLowerCase()));
+                    ps -> ps.setString(1, forWhom.toString()));
             while (resultSet.next()) {
                 Footwear footwear = buildFootwear(resultSet);
                 footwearList.add(footwear);
@@ -81,15 +121,22 @@ public class SQLFootwearDAO implements FootwearDAO {
         } catch (SQLException | ConnectionException e) {
             throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
         }
-        return footwearList;
-    }
+        return footwearList;*/
+    //}
 
     @Override
-    public List<Footwear> getByBrand(String brand, String lang) throws DAOException {
+    public List<Footwear> getByBrand(String brand, ForEnum forEnum, String lang) throws DAOException {
         List<Footwear> footwearList = new ArrayList<>();
+        String adding = forEnum == ForEnum.ALL ? "" : SQL_FOR_ADDING;
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
-            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + SQL_BY_BRAND,
-                    ps -> ps.setString(1, brand));
+            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang)
+                            + SQL_BY_BRAND + adding, ps -> {
+
+                ps.setString(1, brand);
+                if (forEnum != ForEnum.ALL)
+                    ps.setString(2, forEnum.toString());
+            });
+
             while (resultSet.next()) {
                 Footwear footwear = buildFootwear(resultSet);
                 footwearList.add(footwear);
@@ -174,7 +221,7 @@ public class SQLFootwearDAO implements FootwearDAO {
             String brand = resultSet.getString("brand");
             String forWhom = resultSet.getString("f_for");
             footwear = new Footwear(art, name, price, color, category,
-                    description, imageLink, brand,  ForEnum.valueOf(forWhom.toUpperCase()));
+                    description, imageLink, brand,  ForEnum.valueOf(forWhom));
 
         } catch (SQLException e) {
             throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);

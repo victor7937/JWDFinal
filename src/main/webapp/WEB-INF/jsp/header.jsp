@@ -26,45 +26,15 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
                 <ul class="navbar-nav m-auto">
-                    <c:choose>
-                        <c:when test="${param.size() == 0}">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="lei-shoes"><fmt:message key="header.home"/><span class="sr-only">(current)</span></a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item">
-                                <a class="nav-link" href="lei-shoes"><fmt:message key="header.home"/><span class="sr-only">(current)</span></a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-
-                    <c:choose>
-                        <c:when test="${param.get('command').equals('gotocategory')}">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="Controller?command=gotocategory&category=all&brand=all"><fmt:message key="header.categories"/></a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item">
-                                <a class="nav-link" href="Controller?command=gotocategory&category=all&brand=all"><fmt:message key="header.categories"/></a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-
-                    <c:choose>
-                        <c:when test="${param.get('command').equals('gotocontact')}">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="Controller?command=gotocontact"><fmt:message key="header.contact"/></a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="nav-item">
-                                <a class="nav-link" href="Controller?command=gotocontact"><fmt:message key="header.contact"/></a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-
+                    <li class="nav-item ${param.size() == 0 ? 'active' : ''}">
+                        <a class="nav-link" href="lei-shoes"><fmt:message key="header.home"/><span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ${param.get('command').equals('gotocategory') ? 'active' : ''}">
+                        <a class="nav-link" href="Controller?command=gotocategory"><fmt:message key="header.categories"/></a>
+                    </li>
+                    <li class="nav-item ${param.get('command').equals('gotocontact') ? 'active' : ''}">
+                        <a class="nav-link" href="Controller?command=gotocontact"><fmt:message key="header.contact"/></a>
+                    </li>
 
                     <c:choose>
                         <c:when test="${sessionScope.email != null}">

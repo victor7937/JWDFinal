@@ -9,6 +9,9 @@
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
     <link href="<c:url value='/css/card.css'/>" rel="stylesheet" type="text/css">
+    <c:set var="forWhom" value="${requestScope.forWhom}"/>
+    <c:set var="brandParam" value="${requestScope.brand}"/>
+    <c:set var="categoryParam" value="${requestScope.category}"/>
 </head>
 <body>
 
@@ -37,20 +40,28 @@
     <div class="row">
         <div class="col-12 col-sm-3">
             <div class="card bg-light mb-3">
+<%--                <div class="card-header bg-card-header text-white text-uppercase"><i class="fa fa-list"></i> Categories</div>--%>
+                <ul class="list-group category_block">
+                    <li class="list-group-item ${'all'.equals(forWhom) ? 'active' : ''}"><a href="Controller?command=gotocategory&for=all&category=${categoryParam}&brand=${brandParam}">All</a></li>
+                    <li class="list-group-item ${'him'.equals(forWhom) ? 'active' : ''}"><a href="Controller?command=gotocategory&for=him&category=${categoryParam}&brand=${brandParam}">For Him</a></li>
+                    <li class="list-group-item ${'her'.equals(forWhom) ? 'active' : ''}"><a href="Controller?command=gotocategory&for=her&category=${categoryParam}&brand=${brandParam}">For Her</a></li>
+                </ul>
+            </div>
+            <div class="card bg-light mb-3">
                 <div class="card-header bg-card-header text-white text-uppercase"><i class="fa fa-list"></i> Categories</div>
                 <ul class="list-group category_block">
-                    <li class="list-group-item"><a href="Controller?command=gotocategory&category=all">All</a></li>
+                    <li class="list-group-item ${'all'.equals(categoryParam) ? 'active' : ''}"><a href="Controller?command=gotocategory&category=all&brand=${brandParam}&for=${forWhom}">All</a></li>
                     <c:forEach var="category" items="${requestScope.categoryList}" >
-                        <li class="list-group-item"><a href="Controller?command=gotocategory&category=${category}">${category}</a></li>
+                        <li class="list-group-item ${categoryParam.equals(category) ? 'active' : ''}"><a href="Controller?command=gotocategory&category=${category}&brand=${brandParam}&for=${forWhom}">${category}</a></li>
                     </c:forEach>
                 </ul>
             </div>
             <div class="card bg-light mb-3">
                 <div class="card-header bg-card-header text-white text-uppercase"><i class="fa fa-list"></i> Brands</div>
                 <ul class="list-group category_block">
-                    <li class="list-group-item"><a href="Controller?command=gotocategory&brand=all">All</a></li>
+                    <li class="list-group-item ${'all'.equals(brandParam) ? 'active' : ''}"><a href="Controller?command=gotocategory&brand=all&category=${categoryParam}&for=${forWhom}">All</a></li>
                     <c:forEach var="brand" items="${requestScope.brandList}" >
-                        <li class="list-group-item"><a href="Controller?command=gotocategory&brand=${brand}">${brand}</a></li>
+                        <li class="list-group-item ${brandParam.equals(brand) ? 'active' : ''}"><a href="Controller?command=gotocategory&brand=${brand}&category=${categoryParam}&for=${forWhom}">${brand}</a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -97,8 +108,8 @@
                                 <!--<span class="product-discount-label">-20%</span>-->
                             </div>
                             <div class="product-content">
-                                <div class="price">${footwear.price}
-                                    <span>${footwear.price}</span>
+                                <div class="price">$ ${footwear.price}
+<%--                                    <span>${footwear.price}</span>--%>
                                 </div>
                                 <h2 class="brand">${footwear.brand}</h2>
                                 <span class="model">${footwear.name}</span>

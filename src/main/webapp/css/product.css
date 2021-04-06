@@ -68,6 +68,11 @@
     font-size: 15px;
     font-weight: 600;
 }
+
+.product-value:hover {
+    color: #343a40;
+}
+
 .product-header:before {
     content: '';
     height: 1px;
