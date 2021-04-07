@@ -33,6 +33,7 @@ public class SQLFootwearDAO implements FootwearDAO {
 
     private static final String SQL_GET_CATEGORIES = "SELECT c_name_%s AS name FROM categories";
     private static final String SQL_GET_BRANDS = "SELECT b_name FROM brands";
+    private static final String SQL_GET_SIZES = "SELECT DISTINCT fi_size FROM footwear_items where fi_art = ?";
 
     private static final String DATA_ACCESS_EXCEPTION_TEXT =
             "It's impossible to get a connection from the connection pool, "
@@ -190,6 +191,21 @@ public class SQLFootwearDAO implements FootwearDAO {
             throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
         }
         return brandList;
+    }
+
+    @Override
+    public List<Float> getSizes(String art) throws DAOException {
+        List<Float> sizesList = new ArrayList<>();
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+            ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_SIZES, ps -> ps.setString(1, art));
+            while (resultSet.next()) {
+                Float size = resultSet.getFloat("fi_size");
+                sizesList.add(size);
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+        }
+        return sizesList;
     }
 
 

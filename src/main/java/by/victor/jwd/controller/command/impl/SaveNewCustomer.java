@@ -49,6 +49,9 @@ public class SaveNewCustomer implements Command {
 			if (customerService.registration(customer)) {
 				response.sendRedirect(SUCCESS_PATH);
 			}
+			else {
+				throw new ControllerException("Registration fail");
+			}
 		} catch (EmailExistsException e) {
 			request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMAIL);
 			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);

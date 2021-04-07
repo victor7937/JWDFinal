@@ -119,50 +119,20 @@
                     </div>
                     <hr class="mb-2">
 
-                    <form method="get" action="Controller?command=gotocart">
+                    <form method="post" action="Controller">
+                        <input type="hidden" name="command" value="addtocart">
+                        <input type="hidden" name="art" value="${footwear.art}">
                         <div class="form-group mb-2">
                             <div class="radio-toolbar">
-                                <input type="radio" id="37" name="radioSize" value="37">
-                                <label for="37">37</label>
-
-                                <input type="radio" id="35" name="radioSize" value="35">
-                                <label for="35">35</label>
-
-                                <input type="radio" id="36" name="radioSize" value="36">
-                                <label for="36">36</label>
+                                <c:forEach var="size" items="${requestScope.sizes}">
+                                    <input type="radio" id="${size}" name="size" value="${size}">
+                                    <label for="${size}">${size % 1 == 0 ? size.intValue() : size}</label>
+                                </c:forEach>
                             </div>
                         </div>
-
-
-
-
-<%--                       <label for="colors">Color</label>--%>
-<%--                            <select class="custom-select" id="colors">--%>
-<%--                                <option selected>Select</option>--%>
-<%--                                <option value="1">Blue</option>--%>
-<%--                                <option value="2">Red</option>--%>
-<%--                                <option value="3">Green</option>--%>
-<%--                            </select>--%>
-<%--                        </div>--%>
-<%--                        <div class="form-group">--%>
-<%--                            <label>Quantity :</label>--%>
-<%--                            <div class="input-group mb-3">--%>
-<%--                                <div class="input-group-prepend">--%>
-<%--                                    <button type="button" class="quantity-left-minus btn btn-danger btn-number"  data-type="minus" data-field="">--%>
-<%--                                        <i class="fa fa-minus"></i>--%>
-<%--                                    </button>--%>
-<%--                                </div>--%>
-<%--                                <input type="text" class="form-control"  id="quantity" name="quantity" min="1" max="100" value="1">--%>
-<%--                                <div class="input-group-append">--%>
-<%--                                    <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">--%>
-<%--                                        <i class="fa fa-plus"></i>--%>
-<%--                                    </button>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-                        <a href="Controller?command=gotocart" class="btn add-to-card-btn btn-lg btn-block">
+                        <button type="submit" class="btn add-to-card-btn btn-lg btn-block">
                             <i class="fa fa-shopping-cart"></i> Add To Cart
-                        </a>
+                        </button>
                     </form>
                     <div class="product_rassurance">
                         <ul class="list-inline">
@@ -264,6 +234,39 @@
         </div>
     </div>
 </div>
+
+<div class="toast" id="cartToast" style="position: absolute; top: 10px; right: 10px;">
+    <div class="toast-header">
+        <strong class="mr-auto"><i class="fa fa-shopping-cart"></i> Cart Message</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="toast-body">
+        <c:choose>
+            <c:when test="${'no'.equals(param.get('added'))}">
+                <span class="text-success">Item was successfully added to cart!<a href="Controller?command=gotocart"><br/>Check it!</a></span>
+            </c:when>
+            <c:when test="${'no_size'.equals(param.get('added'))}">
+                <span class="text-warning">Please, pick the size as you want</span>
+            </c:when>
+            <c:otherwise>
+                <span class="text-warning">The item has already added, please change quantity in the cart<a href="Controller?command=gotocart"><br/>Shopping Cart</a></span>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        if (${param.get('show') == 'yes'})
+        {
+            $("#cartToast").toast({delay: 5000});
+            $("#cartToast").toast('show');
+        }
+    });
+</script>
 
 <%--<script type="text/javascript">--%>
 <%--    //Plus & Minus for Quantity product--%>

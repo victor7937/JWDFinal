@@ -116,4 +116,16 @@ public class FootwearServiceImpl implements FootwearService {
         }
         return brandList;
     }
+
+    @Override
+    public List<Float> getSizesByArt(String art) throws ServiceException {
+        List<Float> sizesList;
+        try {
+            sizesList = footwearDAO.getSizes(art);
+        } catch (DAOException e) {
+            logger.error("Get sizes by art DAO error", e);
+            throw new ServiceException(e.getMessage(), e);
+        }
+        return sizesList;
+    }
 }

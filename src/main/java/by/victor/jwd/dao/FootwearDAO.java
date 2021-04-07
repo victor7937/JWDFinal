@@ -17,6 +17,9 @@ public interface FootwearDAO {
     Footwear getFootwearByArt(String art, String lang) throws DAOException;
     List<String> getCategories (String lang) throws DAOException;
     List<String> getBrands () throws DAOException;
+
+    List<Float> getSizes(String art) throws DAOException;
+
     boolean addNewFootwear(Footwear footwear) throws DAOException;
     boolean deleteFootwear(String art) throws DAOException;
     boolean updateFootwear(String art, Customer footwear) throws DAOException;

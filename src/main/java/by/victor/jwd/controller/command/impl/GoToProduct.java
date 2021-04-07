@@ -12,23 +12,33 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class GoToProduct implements Command {
+
+    private static final String FOOTWEAR_ATTRIBUTE = "footwear";
+    private static final String SIZES_ATTRIBUTE = "sizes";
+    private static final String ART_PARAM = "art";
+    private static final String LANG_PARAM = "lang";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String art = request.getParameter("art");
+        String art = request.getParameter(ART_PARAM);
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
-        String lang = (String)request.getSession().getAttribute("lang");
+        String lang = (String)request.getSession().getAttribute(LANG_PARAM);
         Footwear footwear;
+        List<Float> sizes;
         try {
             footwear = footwearService.getByArt(art,lang);
+            sizes = footwearService.getSizesByArt(art);
         } catch (ServiceException e) {
             throw new ControllerException("Error while loading footwears");
         }
         if (footwear == null) {
             response.sendError(404);
         } else {
-            request.setAttribute("footwear", footwear);
+            request.setAttribute(FOOTWEAR_ATTRIBUTE, footwear);
+            request.setAttribute(SIZES_ATTRIBUTE, sizes);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/product.jsp");
             requestDispatcher.forward(request, response);
         }
