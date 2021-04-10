@@ -1,6 +1,7 @@
 package by.victor.jwd.dao.impl;
 
 import by.victor.jwd.bean.Customer;
+import by.victor.jwd.bean.UserRole;
 import by.victor.jwd.dao.exception.ConnectionException;
 import by.victor.jwd.dao.exception.DAOException;
 import by.victor.jwd.dao.CustomerDAO;
@@ -123,7 +124,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 
 	@Override
 	public boolean deleteCustomer(String email) throws DAOException {
-		boolean operationSuccess = false;
+		boolean operationSuccess;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
 			operationSuccess = resourceProvider.updateAction(SQL_DELETE_CUSTOMER_BY_EMAIL, ps -> ps.setString(1, email));
 		} catch (SQLException | ConnectionException e) {
@@ -162,7 +163,11 @@ public class SQLCustomerDAO implements CustomerDAO {
 			String country = resultSet.getString("cu_country");
 			String city = resultSet.getString("cu_city");
 			String address = resultSet.getString("cu_address");
+			String role = resultSet.getString("cu_role");
 			customer = new Customer(name, email, password, phone, country, city, address);
+			if (UserRole.ADMIN == UserRole.valueOf(role.toUpperCase())) {
+				customer.setRole(UserRole.ADMIN);
+			}
 
 		} catch (SQLException e) {
 			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);

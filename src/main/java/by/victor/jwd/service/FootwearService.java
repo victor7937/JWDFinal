@@ -19,4 +19,5 @@ public interface FootwearService {
     List<String> getCategories (String lang) throws ServiceException;
     List<String> getBrands () throws ServiceException;
     List<Float> getSizesByArt(String art) throws ServiceException;
+    Integer getQuantity (String art, Float size) throws ServiceException;
 }

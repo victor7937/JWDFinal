@@ -16,14 +16,17 @@ public class Customer implements Serializable {
     private String country;
     private String city;
     private String address;
+    private UserRole role;
 
-
-    public Customer(){ }
+    public Customer(){
+        this.role = UserRole.USER;
+    }
 
     public Customer(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = UserRole.USER;
     }
 
     public Customer(String name, String email, String password, String phone, String country, String city, String address) {
@@ -34,6 +37,7 @@ public class Customer implements Serializable {
         this.country = country;
         this.city = city;
         this.address = address;
+        this.role = UserRole.USER;
     }
 
     public String getPhone() {
@@ -90,6 +94,14 @@ public class Customer implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     @Override

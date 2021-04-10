@@ -23,6 +23,8 @@ public class CommandProvider {
 		commands.put(CommandName.UPDATEPROFILE, new UpdateProfile());
 		commands.put(CommandName.ADDTOCART, new AddToCart());
 		commands.put(CommandName.DELETECARTITEM, new DeleteCartItem());
+		commands.put(CommandName.GOTOADMINPAGE, new GoToAdminPage());
+		commands.put(CommandName.DELETECUSTOMER, new DeleteCustomer());
 	}
 	
 	

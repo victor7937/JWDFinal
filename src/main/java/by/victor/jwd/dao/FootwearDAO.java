@@ -20,6 +20,8 @@ public interface FootwearDAO {
 
     List<Float> getSizes(String art) throws DAOException;
 
+    Integer getQuantity(String art, Float size) throws DAOException;
+
     boolean addNewFootwear(Footwear footwear) throws DAOException;
     boolean deleteFootwear(String art) throws DAOException;
     boolean updateFootwear(String art, Customer footwear) throws DAOException;

@@ -42,8 +42,12 @@
                                 <a  class="nav-link dropdown-toggle" href="#" role="button" id="user_email" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         ${sessionScope.email}</a>
                                 <div class="dropdown-menu" aria-labelledby="user_email">
-                                    <a class="dropdown-item" href="Controller?command=gotoprofile"><fmt:message key="header.profile"/></a>
-                                    <a class="dropdown-item" href="Controller?command=logout"><fmt:message key="header.logout"/></a>
+                                    <a class="dropdown-item" href="${'admin'.equals(sessionScope.role) ? 'Controller?command=gotoadminpage' : 'Controller?command=gotoprofile'}">
+                                        <fmt:message key="header.profile"/>
+                                    </a>
+                                    <a class="dropdown-item" href="Controller?command=logout">
+                                        <fmt:message key="header.logout"/>
+                                    </a>
                                 </div>
                             </li>
                         </c:when>
@@ -61,20 +65,21 @@
                     </c:choose>
                 </ul>
 
-                <form class="form-inline my-2 my-lg-0">
-                    <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" placeholder="Search...">
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-secondary btn-number">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <a class="btn btn-success btn-sm ml-3" href="Controller?command=gotocart">
-                        <i class="fa fa-shopping-cart"></i> <fmt:message key="header.cart"/>
-                        <span class="badge badge-light">3</span>
-                    </a>
-                </form>
+<%--                <form class="form-inline my-2 " style="max-width: 100px">--%>
+<%--                    <div class="input-group input-group-sm">--%>
+<%--                        <input type="text" class="form-control" placeholder="Search...">--%>
+<%--                        <div class="input-group-append">--%>
+<%--                            <button type="button" class="btn btn-secondary btn-number">--%>
+<%--                                <i class="fa fa-search"></i>--%>
+<%--                            </button>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </form>--%>
+
+                <a class="btn btn-success btn-sm my-2" href="Controller?command=gotocart">
+                    <i class="fa fa-shopping-cart"></i> <fmt:message key="header.cart"/>
+                    <span class="badge badge-light">3</span>
+                </a>
 
                 <ul class="navbar-nav offset-1">
                     <li class="nav-item">

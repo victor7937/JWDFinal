@@ -128,4 +128,16 @@ public class FootwearServiceImpl implements FootwearService {
         }
         return sizesList;
     }
+
+    @Override
+    public Integer getQuantity(String art, Float size) throws ServiceException {
+        Integer quantity;
+        try {
+            quantity = footwearDAO.getQuantity(art, size);
+        } catch (DAOException e) {
+            logger.error("Get quantity DAO error", e);
+            throw new ServiceException(e.getMessage(), e);
+        }
+        return quantity;
+    }
 }

@@ -23,8 +23,8 @@
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
+                <table class="table">
+                    <thead class="thead-dark">
                         <tr>
                             <th scope="col"> </th>
                             <th scope="col">Product</th>
@@ -38,19 +38,31 @@
                     </thead>
                     <tbody>
                         <c:forEach var="item" items="${requestScope.itemsList}">
-                            <tr>
+                            <tr class="text-cart">
                                 <td> <div class="small-image-container"><img src="${item.footwear.imageLink}"  alt="item"/></div> </td>
                                 <td>${item.footwear.art}</td>
                                 <td>${item.footwear.brand}</td>
                                 <td>
-                                    <select name="quantity" class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                    </select>
+                                    <c:choose>
+                                        <c:when test="${item.quantity == 0}">
+                                        <select name="quantity" class="form-control quantity-select text-cart" disabled>
+                                            <option>0</option>
+                                        </select>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <select name="quantity" class="form-control quantity-select text-cart">
+                                                <c:forEach var="i" begin="1" end="${item.quantity}">
+                                                    <option value="${i}">${i}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                                 <td>${item.size}</td>
                                     <%--                            <td><input class="form-control" type="text" value="1" /></td>--%>
-                                <td class="text-right">$${item.footwear.price}</td>
+
+                                <td class="text-right">$<span class="price_view">${item.footwear.price}</span></td>
+                                <input type="hidden" class="price_data" name="price" value="${item.footwear.price}">
                                 <td class="text-right">
                                     <form method="post" action="Controller">
                                         <input type="hidden" name="command" value="deletecartitem">
@@ -61,41 +73,6 @@
                                 </td>
                             </tr>
                         </c:forEach>
-
-<%--                        <tr>--%>
-<%--                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>--%>
-<%--                            <td>Product Name Toto</td>--%>
-<%--                            <td>In stock</td>--%>
-<%--                            <td><input class="form-control" type="text" value="1" /></td>--%>
-<%--                            <td class="text-right">33,90 €</td>--%>
-<%--                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>--%>
-<%--                        </tr>--%>
-<%--                        <tr>--%>
-<%--                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>--%>
-<%--                            <td>Product Name Titi</td>--%>
-<%--                            <td>In stock</td>--%>
-<%--                            <td><input class="form-control" type="text" value="1" /></td>--%>
-<%--                            <td class="text-right">70,00 €</td>--%>
-<%--                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>--%>
-<%--                        </tr>--%>
-<%--                        <tr>--%>
-<%--                            <td></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td>Sub-Total</td>--%>
-<%--                            <td class="text-right">$ 255,90</td>--%>
-<%--                        </tr>--%>
-<%--                        <tr>--%>
-<%--                            <td></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td></td>--%>
-<%--                            <td>Shipping</td>--%>
-<%--                            <td class="text-right">$ 6,90 </td>--%>
-<%--                            <td></td>--%>
-<%--                        </tr>--%>
                         <tr>
                             <td></td>
                             <td></td>
@@ -110,8 +87,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>$${requestScope.total}</strong></td>
+                            <td><span class="total-cart">Total</span></td>
+                            <td class="text-right total-cart">$<span class="total-cart" id="total_val"></span></td>
                             <td></td>
                         </tr>
                     </tbody>
@@ -121,16 +98,41 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Continue Shopping</button>
+                    <a href="Controller?command=gotocategory" class="btn btn-block btn-light">Continue Shopping</a>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
+                    <button class="btn btn-lg btn-block btn-success text-uppercase" type="submit">Checkout</button>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
+<script type="text/javascript">
+    let selectList = document.getElementsByClassName("quantity-select");
+    let priceDataList = document.getElementsByClassName("price_data");
+    let priceViewList = document.getElementsByClassName("price_view");
+    function countTotal(){
+        let total = 0.0;
+        for (let i = 0; i < selectList.length; i++) {
+            let optionsList = selectList[i].options;
+            let price = parseFloat(priceDataList[i].value);
+            for (let j = 0; j < optionsList.length; j++) {
+                if (optionsList[j].selected === true){
+                    let price_count = (price * parseInt(optionsList[j].value));
+                    total += price_count;
+                    priceViewList[i].innerHTML = price_count.toString();
+                }
+            }
+        }
+        document.getElementById("total_val").innerHTML = total.toString();
+    }
+    countTotal()
+    for (let i = 0; i < selectList.length; i++) {
+        selectList[i].onchange = countTotal;
+    }
+</script>
 
 
 <jsp:include page="footer.jsp"/>

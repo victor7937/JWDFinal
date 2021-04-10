@@ -21,14 +21,14 @@
 
 <jsp:include page="header.jsp"/>
 
-<div class="card bg-light">
+<div class="card bg-light" id="sign-in">
     <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title text-center mb-4 mt-1">Sign in</h4>
         <hr>
         <c:choose>
             <c:when test="${param.message.equals('wrong_e_or_p')}">
                 <p class="text-danger text-center">Wrong email or password<br/>
-                Please try again</p>
+                    Please try again</p>
             </c:when>
             <c:when test="${param.message.equals('register_success')}">
                 <p class="text-success text-center">Registration completed successfully</p>
@@ -61,8 +61,8 @@
                 <button type="submit" class="btn btn-primary btn-block"> Login  </button>
             </div>
         </form>
-            <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>
-            <p class="text-center">Don't have an account? <a href="Controller?command=registration">Register</a> </p>
+        <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>
+        <p class="text-center">Don't have an account? <a href="Controller?command=registration">Register</a> </p>
 
     </article>
 </div>

@@ -11,12 +11,18 @@ public class FootwearItem implements Serializable {
 
     private Footwear footwear;
     private Float size;
-
-    public FootwearItem () {}
+    private Integer quantity;
 
     public FootwearItem(Footwear footwear, Float size) {
         this.size = size;
         this.footwear = footwear;
+        this.quantity = 0;
+    }
+
+    public FootwearItem(Footwear footwear, Float size, Integer quantity) {
+        this.footwear = footwear;
+        this.size = size;
+        this.quantity = quantity;
     }
 
     public Footwear getFootwear() {
@@ -33,6 +39,14 @@ public class FootwearItem implements Serializable {
 
     public void setSize(Float size) {
         this.size = size;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @Override

@@ -18,11 +18,11 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">E-COMMERCE PRODUCT</h1>
-        <p class="lead text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab adipisci consequatur ea error expedita illo in quam? Doloribus esse est, hic iste nostrum officiis perspiciatis repudiandae similique tempora temporibus vitae?</p>
+        <h1 class="jumbotron-heading">PRODUCT PAGE</h1>
+        <p class="lead text-muted mb-0">Select sizes as you like and enjoy shopping!</p>
     </div>
 </section>
-<<div class="container">
+<div class="container">
     <div class="row">
         <div class="col">
             <nav aria-label="breadcrumb">
@@ -260,13 +260,15 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-        if (${param.get('show') == 'yes'})
+        if (${'yes'.equals(param.get('show'))})
         {
             $("#cartToast").toast({delay: 5000});
             $("#cartToast").toast('show');
         }
     });
 </script>
+
+
 
 <%--<script type="text/javascript">--%>
 <%--    //Plus & Minus for Quantity product--%>

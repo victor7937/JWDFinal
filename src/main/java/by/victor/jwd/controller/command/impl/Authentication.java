@@ -4,6 +4,7 @@ import java.io.IOException;
 
 
 import by.victor.jwd.bean.Customer;
+import by.victor.jwd.bean.UserRole;
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.service.exception.ServiceException;
@@ -25,6 +26,7 @@ public class Authentication implements Command {
 	private static final String SESSION_ATTRIBUTE = "email";
 	private static final String AUTH_SUCCESS_REDIRECT = "/lei-shoes";
 	private static final String WRONG_E_OR_P_REDIRECT = "Controller?command=gotosigninpage&message=wrong_e_or_p";
+	private static final String ROLE_ATTRIBUTE = "role";
 
 
 	@Override
@@ -45,6 +47,11 @@ public class Authentication implements Command {
 
 			HttpSession session = request.getSession(true);
 			session.setAttribute(SESSION_ATTRIBUTE, customer.getEmail());
+			if (customer.getRole() == UserRole.ADMIN) {
+				session.setAttribute(ROLE_ATTRIBUTE, UserRole.ADMIN.toString().toLowerCase());
+			} else {
+				session.setAttribute(ROLE_ATTRIBUTE, UserRole.USER.toString().toLowerCase());
+			}
 			response.sendRedirect(AUTH_SUCCESS_REDIRECT);
 
 		} catch (ServiceException e) {

@@ -3,6 +3,7 @@ package by.victor.jwd.controller.command.impl;
 import by.victor.jwd.bean.Footwear;
 import by.victor.jwd.bean.FootwearItem;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.service.FootwearService;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.exception.ServiceException;
@@ -26,21 +27,19 @@ public class GoToCart implements Command {
     private static final String ART_PREFIX = "art_";
     private static final String COOKIE_DELIMITER = "\\|";
     public static final String ITEMS_LIST_ATTRIBUTE = "itemsList";
-    public static final String TOTAL_ATTRIBUTE = "total";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Cookie[] cookies = request.getCookies();
         List<FootwearItem> footwearItems = new ArrayList<>();
         if (cookies == null) {
-            request.setAttribute("itemsList", footwearItems);
+            request.setAttribute(ITEMS_LIST_ATTRIBUTE, footwearItems);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
             requestDispatcher.forward(request, response);
             return;
         }
         String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
-        Float total = 0.0f;
         for (Cookie cookie : cookies) {
             if (cookie.getName().matches(ART_PREFIX + ".+")) {
                 String art = cookie.getName().replace(ART_PREFIX,"");
@@ -59,7 +58,6 @@ public class GoToCart implements Command {
                             .collect(Collectors.toList());
                     for (Float size : sizes) {
                         footwearItems.add(new FootwearItem(footwear, size));
-                        total += footwear.getPrice();
                     }
                 }
                 else {
@@ -68,9 +66,16 @@ public class GoToCart implements Command {
                 }
             }
         }
+        try {
+            for (FootwearItem item : footwearItems) {
+                Integer quantity = footwearService.getQuantity(item.getFootwear().getArt(), item.getSize());
+                item.setQuantity(quantity);
+            }
+        } catch (ServiceException e) {
+            throw new ControllerException("Getting quantity error", e);
+        }
 
-        request.setAttribute(ITEMS_LIST_ATTRIBUTE,footwearItems);
-        request.setAttribute(TOTAL_ATTRIBUTE, total);
+        request.setAttribute(ITEMS_LIST_ATTRIBUTE, footwearItems);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
         requestDispatcher.forward(request, response);
     }

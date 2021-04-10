@@ -9,6 +9,7 @@ import by.victor.jwd.service.exception.ServiceException;
 import by.victor.jwd.service.CustomerService;
 import org.apache.log4j.Logger;
 
+import java.util.List;
 
 
 public class CustomerServiceImpl implements CustomerService {
@@ -94,6 +95,19 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new ServiceException(e.getMessage(), e);
 		}
 		return successDeleting;
+	}
+
+	@Override
+	public List<Customer> getAllCustomers() throws ServiceException {
+		List<Customer> customers;
+		try {
+			 customers = customerDAO.getAll();
+		} catch (DAOException e) {
+			logger.error("Get all customers DAO error", e);
+			throw new ServiceException(e.getMessage(), e);
+		}
+		return customers;
+
 	}
 
 }

@@ -1,7 +1,15 @@
+footer {
+    margin-top: auto;
+}
+
 body {
     /*font-family: Poppins, sans-serif;*/
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .bloc_left_price {
@@ -92,6 +100,31 @@ footer a {
 .toast-body span {
     font-size: 17px;
 }
+
+.tab-page {
+    border-left:1px solid #e4e9ef;
+    border-right:1px solid #e4e9ef;
+    border-bottom:1px solid #e4e9ef;
+}
+#sign-in {
+   height: 62vh;
+
+}
+
+.thead-dark {
+    background-color: #343a40!important;
+}
+
+.total-cart {
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.text-cart {
+    font-size: 18px;
+    font-weight: 600;
+}
+
 
 
 

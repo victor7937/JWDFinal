@@ -39,7 +39,7 @@ public class SaveNewCustomer implements Command {
 		if (!requestValidator.validate(request)){
 			logger.info("Registration data is incorrect");
 			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PATH);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			requestDispatcher.forward(request, response);
 			return;
 		}
@@ -55,7 +55,7 @@ public class SaveNewCustomer implements Command {
 		} catch (EmailExistsException e) {
 			request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMAIL);
 			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(ERROR_PATH);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			requestDispatcher.forward(request, response);
 		} catch (ServiceException e) {
 			logger.error("Registration fail",e);
