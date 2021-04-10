@@ -1,6 +1,8 @@
 package by.victor.jwd.controller.command.impl;
 
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.command.CommandName;
+import by.victor.jwd.controller.command.CommandPath;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -16,7 +18,7 @@ public class DeleteCartItem implements Command {
     private static final String ART_PREFIX = "art_";
     private static final String DELIMITER = "|";
     private static final String REGEX_DELIMITER = "\\|";
-    private static final String COMMAND_GOTOCART = "Controller?command=gotocart";
+    private static final String COMMAND_GOTOCART = CommandPath.createCommand(CommandName.GOTOCART).createPath();
     private static final String ART_PARAM = "art";
     private static final String SIZE_PARAM = "size";
 

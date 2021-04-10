@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.command.CommandName;
+import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.controller.validator.RequestValidator;
 import by.victor.jwd.controller.validator.ValidationProvider;
@@ -20,12 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 import static by.victor.jwd.controller.constant.ParamValues.*;
 
 public class SaveNewCustomer implements Command {
+	public static final String MESSAGE_PARAM = "message";
+	public static final String SUCCESS_VALUE = "register_success";
 	Logger logger = Logger.getLogger(SaveNewCustomer.class);
 	private static final String INCORRECT_CUSTOMER_ATTRIBUTE = "incorrect_customer";
 	private static final String ERROR_MSG_ATTRIBUTE = "err_message";
 	private static final String ERROR_MSG_TEXT_EMAIL = "Sorry, this email has already taken";
-	private static final String ERROR_PATH = "Controller?command=registration";
-	private static final String SUCCESS_PATH = "Controller?command=gotosigninpage&message=register_success";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,7 +49,9 @@ public class SaveNewCustomer implements Command {
 		CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
 		try {
 			if (customerService.registration(customer)) {
-				response.sendRedirect(SUCCESS_PATH);
+				response.sendRedirect(CommandPath.createCommand(CommandName.GOTOSIGNINPAGE)
+						.addParam(MESSAGE_PARAM, SUCCESS_VALUE)
+						.createPath());
 			}
 			else {
 				throw new ControllerException("Registration fail");

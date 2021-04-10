@@ -2,6 +2,8 @@ package by.victor.jwd.controller.command.impl;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.command.CommandName;
+import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.controller.validator.RequestValidator;
 import by.victor.jwd.controller.validator.ValidationProvider;
@@ -21,11 +23,13 @@ import static by.victor.jwd.controller.constant.ParamValues.*;
 
 public class UpdateProfile implements Command {
     private final static Logger logger = Logger.getLogger(UpdateProfile.class);
-    private final static String SUCCESS_PATH = "Controller?command=gotoprofile&message=upd_success";
-    private final static String WRONG_UPD_PATH = "Controller?command=gotoprofile&message=not_upd";
-    private final static String PROFILE_PATH = "Controller?command=gotoprofile";
+
+    private static final String PROFILE_PATH = CommandPath.createCommand(CommandName.GOTOPROFILE).createPath();
     private static final String ERROR_MSG_ATTRIBUTE = "err_message";
     private static final String ERROR_MSG_TEXT_EMAIL = "Sorry, this email has already taken";
+    public static final String MESSAGE_PARAM = "message";
+    public static final String UPD_SUCCESS_VALUE = "upd_success";
+    public static final String UPD_FAIL_VALUE = "not_upd";
 
 
     @Override
@@ -38,7 +42,7 @@ public class UpdateProfile implements Command {
             return;
         }
 
-        String currentEmail = (String) request.getSession().getAttribute("email");
+        String currentEmail = (String) request.getSession().getAttribute(EMAIL_PARAM);
         Customer customer = new Customer(request.getParameter(NAME_PARAM), request.getParameter(EMAIL_PARAM),
                 "", request.getParameter(PHONE_PARAM),  request.getParameter(COUNTRY_PARAM),
                 request.getParameter(CITY_PARAM), request.getParameter(ADDRESS_PARAM));
@@ -59,12 +63,16 @@ public class UpdateProfile implements Command {
 
         try {
             if (customerService.update(currentEmail, customer)){
-                request.getSession().setAttribute("email", customer.getEmail());
-                response.sendRedirect(SUCCESS_PATH);
+                request.getSession().setAttribute(EMAIL_PARAM, customer.getEmail());
+                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
+                        .addParam(MESSAGE_PARAM, UPD_SUCCESS_VALUE)
+                        .createPath());
             }
             else {
                 logger.error("Profile wasn't updated");
-                response.sendRedirect(WRONG_UPD_PATH);
+                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
+                        .addParam(MESSAGE_PARAM, UPD_FAIL_VALUE)
+                        .createPath());
             }
         } catch (EmailExistsException e) {
             logger.info("Email exists");
@@ -72,7 +80,6 @@ public class UpdateProfile implements Command {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PATH);
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-            //goToExceptionsPage
             logger.error("Can't update customer",e);
             throw new ControllerException("Error while updating customer");
         }

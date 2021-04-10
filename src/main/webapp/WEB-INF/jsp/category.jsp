@@ -28,7 +28,7 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="lei-shoes">Home</a></li>
+                    <li class="breadcrumb-item"><a href="Controller?command=gotomainpage">Home</a></li>
                     <li class="breadcrumb-item"><a href="Controller?command=gotocategory">Category</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Sub-category</li>
                 </ol>

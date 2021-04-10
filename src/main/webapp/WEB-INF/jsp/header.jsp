@@ -19,7 +19,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="lei-shoes"><span class="logo"><fmt:message key="header.company.name"/></span></a>
+            <a class="navbar-brand" href="Controller?command=gotomainpage"><span class="logo"><fmt:message key="header.company.name"/></span></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
                 <ul class="navbar-nav m-auto">
                     <li class="nav-item ${param.size() == 0 ? 'active' : ''}">
-                        <a class="nav-link" href="lei-shoes"><fmt:message key="header.home"/><span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="Controller?command=gotomainpage"><fmt:message key="header.home"/><span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item ${param.get('command').equals('gotocategory') ? 'active' : ''}">
                         <a class="nav-link" href="Controller?command=gotocategory"><fmt:message key="header.categories"/></a>

@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 public class GoToAdminPage implements Command {
 
+    public static final String CUSTOMERS_ATTRIBUTE = "customers";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -35,7 +37,7 @@ public class GoToAdminPage implements Command {
         customers = customers.stream()
                 .filter(c -> !c.getRole().equals(UserRole.ADMIN))
                 .collect(Collectors.toList());
-        request.setAttribute("customers", customers);
+        request.setAttribute(CUSTOMERS_ATTRIBUTE, customers);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/admin_page.jsp");
         requestDispatcher.forward(request, response);

@@ -38,7 +38,7 @@
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="lei-shoes">Home</a>
+            <a href="Controller?command=gotomainpage">Home</a>
         </li>
         <li class="breadcrumb-item active">${statusCode}</li>
     </ol>
@@ -62,7 +62,7 @@
         <p>Here are some helpful links to get you back on track:</p>
         <ul>
             <li>
-                <a href="lei-shoes">Home</a>
+                <a href="Controller?command=gotomainpage">Home</a>
             </li>
             <li>
                 <a href="Controller?command=gotocategory">Categories</a>

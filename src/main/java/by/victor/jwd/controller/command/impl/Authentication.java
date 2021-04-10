@@ -6,6 +6,8 @@ import java.io.IOException;
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.UserRole;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.command.CommandName;
+import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.service.exception.ServiceException;
 import by.victor.jwd.service.ServiceProvider;
@@ -25,8 +27,9 @@ public class Authentication implements Command {
 
 	private static final String SESSION_ATTRIBUTE = "email";
 	private static final String AUTH_SUCCESS_REDIRECT = "/lei-shoes";
-	private static final String WRONG_E_OR_P_REDIRECT = "Controller?command=gotosigninpage&message=wrong_e_or_p";
 	private static final String ROLE_ATTRIBUTE = "role";
+	public static final String MESSAGE_PARAM = "message";
+	public static final String WRONG_VALUE = "wrong_e_or_p";
 
 
 	@Override
@@ -41,7 +44,9 @@ public class Authentication implements Command {
 			Customer customer = customerService.authorization(email, password);
 			
 			if (customer == null) {
-				response.sendRedirect(WRONG_E_OR_P_REDIRECT);
+				response.sendRedirect(CommandPath.createCommand(CommandName.GOTOSIGNINPAGE)
+						.addParam(MESSAGE_PARAM, WRONG_VALUE)
+						.createPath());
 				return;
 			}
 
