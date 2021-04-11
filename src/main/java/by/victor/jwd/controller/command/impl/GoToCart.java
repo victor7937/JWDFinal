@@ -68,11 +68,11 @@ public class GoToCart implements Command {
         }
         try {
             for (FootwearItem item : footwearItems) {
-                Integer quantity = footwearService.getQuantity(item.getFootwear().getArt(), item.getSize());
-                item.setQuantity(quantity);
+                Integer maxQuantity = footwearService.getMaxQuantity(item.getFootwear().getArt(), item.getSize());
+                item.setMaxQuantity(maxQuantity);
             }
         } catch (ServiceException e) {
-            throw new ControllerException("Getting quantity error", e);
+            throw new ControllerException("Getting max quantity error", e);
         }
 
         request.setAttribute(ITEMS_LIST_ATTRIBUTE, footwearItems);

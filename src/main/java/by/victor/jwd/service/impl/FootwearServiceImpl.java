@@ -130,10 +130,10 @@ public class FootwearServiceImpl implements FootwearService {
     }
 
     @Override
-    public Integer getQuantity(String art, Float size) throws ServiceException {
+    public Integer getMaxQuantity(String art, Float size) throws ServiceException {
         Integer quantity;
         try {
-            quantity = footwearDAO.getQuantity(art, size);
+            quantity = footwearDAO.getMaxQuantity(art, size);
         } catch (DAOException e) {
             logger.error("Get quantity DAO error", e);
             throw new ServiceException(e.getMessage(), e);

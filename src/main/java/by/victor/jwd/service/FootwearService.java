@@ -2,7 +2,6 @@ package by.victor.jwd.service;
 
 import by.victor.jwd.bean.Footwear;
 import by.victor.jwd.bean.ForEnum;
-import by.victor.jwd.dao.exception.DAOException;
 import by.victor.jwd.service.exception.ServiceException;
 
 import java.util.List;
@@ -19,5 +18,5 @@ public interface FootwearService {
     List<String> getCategories (String lang) throws ServiceException;
     List<String> getBrands () throws ServiceException;
     List<Float> getSizesByArt(String art) throws ServiceException;
-    Integer getQuantity (String art, Float size) throws ServiceException;
+    Integer getMaxQuantity(String art, Float size) throws ServiceException;
 }

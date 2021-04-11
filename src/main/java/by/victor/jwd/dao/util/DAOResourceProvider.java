@@ -13,19 +13,56 @@ public class DAOResourceProvider implements AutoCloseable {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
+    private Boolean autoCommit;
+    private Boolean committed;
 
     public DAOResourceProvider() {
         connection = null;
         statement = null;
         resultSet = null;
+        autoCommit = true;
+        committed = false;
     }
 
-    private void createConnection() throws ConnectionException {
-        connection = connectionPool.getConnection();
+    public boolean isAutoCommit() {
+        return autoCommit;
+    }
+
+    public void setAutoCommit(boolean autoCommit) {
+        this.autoCommit = autoCommit;
+    }
+
+    public void commit() throws SQLException {
+        if (connection != null) {
+            connection.commit();
+            committed = true;
+        }
+    }
+
+    public void rollback() throws SQLException {
+        if (connection != null) {
+            connection.rollback();
+            committed = true;
+        }
+    }
+
+    private void createConnection() throws ConnectionException, SQLException {
+        if (connection == null ) {
+            connection = connectionPool.getConnection();
+        }
+        if (autoCommit != connection.getAutoCommit()) {
+            connection.setAutoCommit(autoCommit);
+        }
+        committed = false;
     }
 
     private PreparedStatement createPreparedStatement(String s) throws SQLException {
         statement = connection.prepareStatement(s);
+        return (PreparedStatement) statement;
+    }
+
+    private PreparedStatement createPreparedStatementWithGK(String s) throws SQLException {
+        statement = connection.prepareStatement(s, Statement.RETURN_GENERATED_KEYS);
         return (PreparedStatement) statement;
     }
 
@@ -54,6 +91,14 @@ public class DAOResourceProvider implements AutoCloseable {
         return ps.executeUpdate() > 0;
     }
 
+    public ResultSet updateActionWithResultSet(String query, SQLConsumer<PreparedStatement> consumer) throws SQLException, ConnectionException {
+        createConnection();
+        PreparedStatement ps = createPreparedStatementWithGK(query);
+        consumer.accept(ps);
+        ps.executeUpdate();
+        return ps.getGeneratedKeys();
+    }
+
     @Override
     public void close() throws DAOException {
         if (statement != null) {
@@ -65,8 +110,14 @@ public class DAOResourceProvider implements AutoCloseable {
         }
         if (connection != null) {
             try {
+                if (!connection.getAutoCommit()) {
+                    if (!committed) {
+                        connection.rollback();
+                    }
+                    connection.setAutoCommit(true);
+                }
                 connectionPool.releaseConnection(connection);
-            } catch (ConnectionException e) {
+            } catch (ConnectionException | SQLException e) {
                 throw new DAOException("Exception while releasing connection", e);
             }
         }

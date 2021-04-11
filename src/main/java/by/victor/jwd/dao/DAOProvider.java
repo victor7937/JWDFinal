@@ -2,6 +2,7 @@ package by.victor.jwd.dao;
 
 import by.victor.jwd.dao.impl.SQLCustomerDAO;
 import by.victor.jwd.dao.impl.SQLFootwearDAO;
+import by.victor.jwd.dao.impl.SQLOrderDAO;
 
 public final class DAOProvider {
 
@@ -11,7 +12,8 @@ public final class DAOProvider {
 
 	private final FootwearDAO footwearDAO = new SQLFootwearDAO();
 
-	
+	private final OrderDAO orderDAO = new SQLOrderDAO();
+
 	private DAOProvider() {}
 	
 	public static DAOProvider getInstance() {
@@ -22,5 +24,9 @@ public final class DAOProvider {
 
 	public FootwearDAO getFootwearDAO() {
 		return footwearDAO;
+	}
+
+	public OrderDAO getOrderDAO() {
+		return orderDAO;
 	}
 }

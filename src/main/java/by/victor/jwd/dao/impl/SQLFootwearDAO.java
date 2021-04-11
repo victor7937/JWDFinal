@@ -12,10 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-
-
 
 public class SQLFootwearDAO implements FootwearDAO {
 
@@ -33,8 +29,9 @@ public class SQLFootwearDAO implements FootwearDAO {
 
     private static final String SQL_GET_CATEGORIES = "SELECT c_name_%s AS name FROM categories";
     private static final String SQL_GET_BRANDS = "SELECT b_name FROM brands";
-    private static final String SQL_GET_SIZES = "SELECT DISTINCT fi_size FROM footwear_items where fi_art = ?";
-    private static final String SQL_GET_QUANTITY = "SELECT COUNT(fi_id) AS quantity FROM footwear_items WHERE fi_art = ? AND fi_size = ?";
+    private static final String SQL_GET_SIZES = "SELECT DISTINCT fi_size FROM footwear_items where fi_art = ? AND fi_status = 'STOCK'";
+    private static final String SQL_GET_QUANTITY = "SELECT COUNT(fi_id) AS quantity FROM footwear_items WHERE fi_art = ? " +
+            "AND fi_size = ? AND fi_status = 'STOCK'";
 
     private static final String DATA_ACCESS_EXCEPTION_TEXT =
             "It's impossible to get a connection from the connection pool, "
@@ -210,7 +207,7 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
-    public Integer getQuantity(String art, Float size) throws DAOException {
+    public Integer getMaxQuantity(String art, Float size) throws DAOException {
         int quantity = 0;
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
             ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_QUANTITY, ps -> {

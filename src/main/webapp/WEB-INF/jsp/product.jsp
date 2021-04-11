@@ -37,17 +37,6 @@
 </div>
 <div class="container">
     <div class="row">
-        <!-- Image -->
-<%--        <div class="col-12 col-lg-6">--%>
-<%--            <div class="card bg-light mb-3">--%>
-<%--                <div class="card-body">--%>
-<%--                    <a href="" data-toggle="modal" data-target="#productModal">--%>
-<%--                        <img class="img-fluid" src="https://dummyimage.com/800x800/55595c/fff" />--%>
-<%--                        <p class="text-center">Zoom</p>--%>
-<%--                    </a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
         <div class="col-12 col-lg-6">
             <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel" data-touch="false" data-interval="false">
                 <ol class="carousel-indicators">
@@ -90,15 +79,12 @@
         <div class="col-12 col-lg-6 add_to_cart_block">
             <div class="card mb-3">
                 <div class="card-body">
-<%--                    <p class="price">99.00 $</p>--%>
-<%--                    <p class="price_discounted">149.90 $</p>--%>
                     <div class="product-title-brand mb-1">${footwear.brand}</div>
                     <div class="product-title-name mb-1">${footwear.name}</div>
                     <div class="price-title mb-2">$ ${footwear.price}
 <%--                        <span>${footwear.price}</span>--%>
                     </div>
                     <hr class="mb-2">
-<%--    <p><span class="price mr-1"><strong>$12.99</strong></span></p>--%>
                     <div class="table-responsive mb-2">
                         <table class="table table-sm table-borderless mb-0">
                             <tbody>
@@ -267,29 +253,5 @@
         }
     });
 </script>
-
-
-
-<%--<script type="text/javascript">--%>
-<%--    //Plus & Minus for Quantity product--%>
-<%--    $(document).ready(function(){--%>
-<%--        var quantity = 1;--%>
-
-<%--        $('.quantity-right-plus').click(function(e){--%>
-<%--            e.preventDefault();--%>
-<%--            var quantity = parseInt($('#quantity').val());--%>
-<%--            $('#quantity').val(quantity + 1);--%>
-<%--        });--%>
-
-<%--        $('.quantity-left-minus').click(function(e){--%>
-<%--            e.preventDefault();--%>
-<%--            var quantity = parseInt($('#quantity').val());--%>
-<%--            if(quantity > 1){--%>
-<%--                $('#quantity').val(quantity - 1);--%>
-<%--            }--%>
-<%--        });--%>
-
-<%--    });--%>
-<%--</script>--%>
 </body>
 </html>
