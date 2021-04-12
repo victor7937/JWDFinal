@@ -97,7 +97,25 @@
         </div>
         <div class="tab-pane fade ${"showorders".equals(param.get("command")) ? 'active show' : ''}" id="nav-orders" role="tabpanel" aria-labelledby="nav-orders-tab">
             <div class="container">
-                Orders
+                <div class="accordion" id="accordionExample">
+                    <c:forEach var="n" begin="1" end="5">
+                        <div class="card">
+                            <div class="card-header bg-light" id="heading${n}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-center order-header" type="button" data-toggle="collapse" data-target="#collapse${n}" aria-expanded="true" aria-controls="collapse${n}">
+                                        Order ${n}
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapse${n}" class="collapse" aria-labelledby="heading${n}" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </div>
 <%--        <div class="tab-pane fade" id="nav-footwear" role="tabpanel" aria-labelledby="nav-footwear-tab">--%>
