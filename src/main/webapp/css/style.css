@@ -125,6 +125,20 @@ footer a {
     font-weight: 600;
 }
 
+.nav-tabs a {
+    color: rgba(0,0,0,0.7);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.nav-tabs a:hover {
+    color: rgba(0,0,0,0.5);
+}
+
+.nav-tabs .active {
+    color: rgba(0,0,0,0.9);
+}
+
 
 
 

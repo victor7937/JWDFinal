@@ -3,6 +3,8 @@ package by.victor.jwd.controller.command.impl;
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.UserRole;
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.command.CommandName;
+import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.service.CustomerService;
 import by.victor.jwd.service.ServiceProvider;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class GoToAdminPage implements Command {
 
-    public static final String CUSTOMERS_ATTRIBUTE = "customers";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,19 +29,7 @@ public class GoToAdminPage implements Command {
 //            response.sendError(403);
 //            return;
 //        }
-        CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
-        List<Customer> customers;
-        try {
-             customers = customerService.getAllCustomers();
-        } catch (ServiceException e) {
-            throw new ControllerException("Get all customers error");
-        }
-        customers = customers.stream()
-                .filter(c -> !c.getRole().equals(UserRole.ADMIN))
-                .collect(Collectors.toList());
-        request.setAttribute(CUSTOMERS_ATTRIBUTE, customers);
+        response.sendRedirect(CommandPath.createCommand(CommandName.SHOWUSERS).createPath());
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/admin_page.jsp");
-        requestDispatcher.forward(request, response);
     }
 }

@@ -2,12 +2,13 @@ package by.victor.jwd.service.impl;
 
 import by.victor.jwd.bean.Order;
 import by.victor.jwd.dao.DAOProvider;
-import by.victor.jwd.dao.FootwearDAO;
 import by.victor.jwd.dao.OrderDAO;
 import by.victor.jwd.dao.exception.DAOException;
 import by.victor.jwd.service.OrderService;
 import by.victor.jwd.service.exception.ServiceException;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -29,5 +30,17 @@ public class OrderServiceImpl implements OrderService {
            throw new ServiceException(e);
         }
         return success;
+    }
+
+    @Override
+    public List<Order> getAllOrders(String lang) throws ServiceException {
+        List<Order> orders;
+        try {
+            orders = orderDAO.showOrders(lang);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return orders;
     }
 }

@@ -29,16 +29,16 @@
 <section>
     <div class="container">
         <nav>
-            <div class="nav nav-tabs row justify-content-between" id="nav-tab" role="tablist">
-                    <a class="nav-link col-3 text-center active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" aria-controls="nav-users" aria-selected="true">Users</a>
-                    <a class="nav-link col-3 text-center" id="nav-orders-tab" data-toggle="tab" href="#nav-orders" role="tab" aria-controls="nav-orders" aria-selected="false">Orders</a>
-                    <a class="nav-link col-3 text-center" id="nav-footwear-tab" data-toggle="tab" href="#nav-footwear" role="tab" aria-controls="nav-footwear" aria-selected="false">Footwear</a>
+            <div class="nav nav-tabs row" id="nav-tab" role="tablist">
+                    <a class="nav-link col-6 text-center ${"showusers".equals(param.get("command")) ? 'active' : ''}" id="nav-users-tab"  href="Controller?command=gotoadminpage"  aria-selected="${"showusers".equals(param.get("command")) ? 'true' : 'false'}">Users</a>
+                    <a class="nav-link col-6 text-center ${"showorders".equals(param.get("command")) ? 'active' : ''}" id="nav-orders-tab"  href="Controller?command=showorders" aria-selected="${"showorders".equals(param.get("command")) ? 'true' : 'false'}">Orders</a>
+<%--                    <a class="nav-link col-3 text-center" id="nav-footwear-tab" data-toggle="tab" href="#nav-footwear" role="tab" aria-controls="nav-footwear" aria-selected="false">Footwear</a>--%>
             </div>
         </nav>
     </div>
 
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade active show" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+        <div class="tab-pane fade ${"showusers".equals(param.get("command")) ? 'active show' : ''}" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
 
             <div class="container mb-4 tab-page">
                 <div class="row">
@@ -95,16 +95,16 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="nav-orders" role="tabpanel" aria-labelledby="nav-orders-tab">
+        <div class="tab-pane fade ${"showorders".equals(param.get("command")) ? 'active show' : ''}" id="nav-orders" role="tabpanel" aria-labelledby="nav-orders-tab">
             <div class="container">
                 Orders
             </div>
         </div>
-        <div class="tab-pane fade" id="nav-footwear" role="tabpanel" aria-labelledby="nav-footwear-tab">
-            <div class="container">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores autem cumque distinctio, dolores dolorum est eum facere harum, impedit iste neque numquam! Exercitationem perspiciatis praesentium quam quis rem suscipit velit!
-            </div>
-        </div>
+<%--        <div class="tab-pane fade" id="nav-footwear" role="tabpanel" aria-labelledby="nav-footwear-tab">--%>
+<%--            <div class="container">--%>
+<%--                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores autem cumque distinctio, dolores dolorum est eum facere harum, impedit iste neque numquam! Exercitationem perspiciatis praesentium quam quis rem suscipit velit!--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </div>
 </section>
 

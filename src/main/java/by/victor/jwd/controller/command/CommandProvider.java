@@ -26,6 +26,8 @@ public class CommandProvider {
 		commands.put(CommandName.GOTOADMINPAGE, new GoToAdminPage());
 		commands.put(CommandName.DELETECUSTOMER, new DeleteCustomer());
 		commands.put(CommandName.NEWORDER, new CreateNewOrder());
+		commands.put(CommandName.SHOWORDERS, new ShowOrders());
+		commands.put(CommandName.SHOWUSERS, new ShowUsers());
 	}
 	
 	
