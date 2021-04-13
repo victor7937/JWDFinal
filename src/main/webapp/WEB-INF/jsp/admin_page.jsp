@@ -119,7 +119,20 @@
                                                     <li class="list-group-item col-2">${order.customer.email}</li>
                                                     <li class="list-group-item col-2">${order.price}</li>
                                                     <li class="list-group-item col-2">${order.date.toLocalDate().toString()} <br/>${order.date.toLocalTime().toString()}</li>
-                                                    <li class="list-group-item col-2">${order.orderStatus}</li>
+                                                    <c:choose>
+                                                        <c:when test="${order.orderStatus.toString().equals('WAITING')}">
+                                                            <li class="list-group-item col-2 text-warning">Waiting</li>
+                                                        </c:when>
+                                                        <c:when test="${order.orderStatus.toString().equals('APPROVED')}">
+                                                            <li class="list-group-item col-2 text-success">Approved</li>
+                                                        </c:when>
+                                                        <c:when test="${order.orderStatus.toString().equals('DECLINE')}">
+                                                            <li class="list-group-item col-2 text-danger">Decline</li>
+                                                        </c:when>
+                                                        <c:when test="${order.orderStatus.toString().equals('COMPLETE')}">
+                                                            <li class="list-group-item col-2 text-info">Complete</li>
+                                                        </c:when>
+                                                    </c:choose>
                                                 </ul>
                                             </button>
                                         </h2>
@@ -127,25 +140,29 @@
 
                                     <div id="collapse${order.id}" class="collapse" aria-labelledby="heading${order.id}" data-parent="#accordionExample">
                                         <div class="card-body">
-                                            <ul class="list-group row list-group-horizontal delivery">
+                                            <ul class="list-group row list-group-horizontal delivery justify-content-center">
                                                 <li class="list-group-item col-1"><i class="fa fa-2x fa-truck text-dark"></i></li>
                                                 <li class="list-group-item col-2">${order.customer.country}</li>
                                                 <li class="list-group-item col-2">${order.customer.city}</li>
                                                 <li class="list-group-item col-3">${order.customer.address}</li>
                                                 <li class="list-group-item col-4">
-                                                   <form method="post" action="Controller">
-                                                       <div class="input-group">
-                                                           <select name="status" class="form-control">
-                                                               <option value="waiting" class="text-warning">Waiting</option>
-                                                               <option value="approved" class="text-success">Approved</option>
-                                                               <option value="decline" class="text-danger">Decline</option>
-                                                               <option value="complete" class="text-info">Complete</option>
-                                                           </select>
-                                                           <div class="input-group-append">
-                                                               <button type="submit" class="btn btn-primary">Set status</button>
+                                                   <c:if test="${order.orderStatus.toString().equals('WAITING') || order.orderStatus.toString().equals('APPROVED') }">
+                                                       <form method="post" action="Controller">
+                                                           <div class="input-group">
+                                                               <input type="hidden" name="command" value="changestatus">
+                                                               <input type="hidden" name="order_id" value="${order.id}">
+                                                               <select name="status" class="form-control">
+                                                                   <option value="waiting" class="text-warning">Waiting</option>
+                                                                   <option value="approved" class="text-success">Approved</option>
+                                                                   <option value="decline" class="text-danger">Decline</option>
+                                                                   <option value="complete" class="text-info">Complete</option>
+                                                               </select>
+                                                               <div class="input-group-append">
+                                                                   <button type="submit" class="btn btn-primary">Set status</button>
+                                                               </div>
                                                            </div>
-                                                       </div>
-                                                   </form>
+                                                       </form>
+                                                   </c:if>
                                                 </li>
                                             </ul>
                                             <div class="table-responsive mt-4">
@@ -203,8 +220,14 @@
             <c:when test="${'success'.equals(param.get('deleted'))}">
                 <span class="text-success">Successfully deleted</span>
             </c:when>
+            <c:when test="${'success'.equals(param.get('change'))}">
+                <span class="text-success">Status successfully changed</span>
+            </c:when>
             <c:when test="${'fail'.equals(param.get('deleted'))}">
-                <span class="text-warning">Fail to delete customer</span>
+                <span class="text-danger">Fail to delete customer</span>
+            </c:when>
+            <c:when test="${'fail'.equals(param.get('change'))}">
+                <span class="text-danger">Changing status fail</span>
             </c:when>
         </c:choose>
     </div>

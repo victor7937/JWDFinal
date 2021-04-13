@@ -129,6 +129,12 @@
                 <hr>
             </div>
         </div>
+        <c:if test="${'success'.equals(param.get('change'))}">
+            <p class="text-success text-center">Status was changed successfully!</p>
+        </c:if>
+        <c:if test="${'fail'.equals(param.get('change'))}">
+            <p class="text-success text-center">Fail to change status</p>
+        </c:if>
         <c:choose>
             <c:when test="${requestScope.orders.size() == 0}">
                 <div class="row my-2">
@@ -160,7 +166,20 @@
                                                     <li class="list-group-item col-2">${order.customer.email}</li>
                                                     <li class="list-group-item col-2">${order.price}</li>
                                                     <li class="list-group-item col-2">${order.date.toLocalDate().toString()} <br/>${order.date.toLocalTime().toString()}</li>
-                                                    <li class="list-group-item col-2">${order.orderStatus}</li>
+                                                    <c:choose>
+                                                        <c:when test="${order.orderStatus.toString().equals('WAITING')}">
+                                                            <li class="list-group-item col-2 text-warning">Waiting</li>
+                                                        </c:when>
+                                                        <c:when test="${order.orderStatus.toString().equals('APPROVED')}">
+                                                            <li class="list-group-item col-2 text-success">Approved</li>
+                                                        </c:when>
+                                                        <c:when test="${order.orderStatus.toString().equals('DECLINE')}">
+                                                            <li class="list-group-item col-2 text-danger">Decline</li>
+                                                        </c:when>
+                                                        <c:when test="${order.orderStatus.toString().equals('COMPLETE')}">
+                                                            <li class="list-group-item col-2 text-info">Complete</li>
+                                                        </c:when>
+                                                    </c:choose>
                                                 </ul>
                                             </button>
                                         </h2>
@@ -173,10 +192,11 @@
                                                 <li class="list-group-item col-2">${order.customer.country}</li>
                                                 <li class="list-group-item col-2">${order.customer.city}</li>
                                                 <li class="list-group-item col-3r">${order.customer.address}</li>
-                                                <c:if test="${order.orderStatus.toString() == 'WAITING'}">
+                                                <c:if test="${order.orderStatus.toString() == 'WAITING' || order.orderStatus.toString() == 'APPROVED'}">
                                                     <li class="list-group-item col-4">
                                                         <form method="post" action="Controller">
-                                                            <input name="status" value="decline" type="hidden">
+                                                            <input type="hidden" name="command" value="userdecline">
+                                                            <input type="hidden" name="order_id" value="${order.id}">
                                                             <div class="input-group justify-content-center">
                                                                 <button type="submit" class="btn btn-danger">Decline Order</button>
                                                             </div>

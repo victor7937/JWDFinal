@@ -28,6 +28,8 @@ public class CommandProvider {
 		commands.put(CommandName.NEWORDER, new CreateNewOrder());
 		commands.put(CommandName.SHOWORDERS, new ShowOrders());
 		commands.put(CommandName.SHOWUSERS, new ShowUsers());
+		commands.put(CommandName.CHANGESTATUS, new ChangeStatus());
+		commands.put(CommandName.USERDECLINE, new UserDecline());
 	}
 	
 	

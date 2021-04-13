@@ -31,7 +31,7 @@ public class SQLOrderDAO implements OrderDAO {
 
     private static final String SQL_GET_ITEM = "SELECT fi_id FROM footwear_items WHERE fi_art = ? AND fi_size = ? AND fi_status = 'STOCK' LIMIT 1";
 
-    private static final String SQL_GET_ORDERS = "SELECT * FROM orders ORDER BY ord_date";
+    private static final String SQL_GET_ORDERS = "SELECT * FROM orders ORDER BY ord_date DESC";
 
     private static final String SQL_GET_ORDERS_OF_CUSTOMER = "SELECT * FROM orders WHERE ord_customer_email = ? ORDER BY ord_date DESC";
 

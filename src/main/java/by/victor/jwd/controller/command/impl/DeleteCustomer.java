@@ -29,13 +29,13 @@ public class DeleteCustomer implements Command {
         CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
         try {
             if (customerService.delete(email)) {
-                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOADMINPAGE)
+                response.sendRedirect(CommandPath.createCommand(CommandName.SHOWUSERS)
                         .addParam(DELETED_PARAM, SUCCESS_VALUE)
                         .addParam(SHOW_PARAM, YES_VALUE)
                         .createPath());
             }
             else {
-                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOADMINPAGE)
+                response.sendRedirect(CommandPath.createCommand(CommandName.SHOWUSERS)
                         .addParam(DELETED_PARAM, FAIL_VALUE)
                         .addParam(SHOW_PARAM, YES_VALUE)
                         .createPath());
