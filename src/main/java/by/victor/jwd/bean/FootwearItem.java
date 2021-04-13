@@ -66,13 +66,13 @@ public class FootwearItem implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FootwearItem that = (FootwearItem) o;
-        return Objects.equals(size, that.size) && Objects.equals(footwear, that.footwear)
+        return Objects.equals(size, that.size) && Objects.equals(footwear.getArt(), that.footwear.getArt())
                 && Objects.equals(quantity, that.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(size, footwear, quantity);
+        return Objects.hash(size, footwear.getArt(), quantity);
     }
 
     @Override

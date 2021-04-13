@@ -139,6 +139,40 @@ footer a {
     color: rgba(0,0,0,0.9);
 }
 
+.order-main-header li {
+    color: rgba(0,0,0,0.9);
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+}
+
+
+.order-header li {
+    color: rgba(0,0,0,0.9);
+    font-weight: 500;
+    font-size: 17px;
+    text-align: center;
+}
+
+.order-header:hover {
+    color: rgba(0,0,0,0.5);
+}
+
+select option {
+    font-weight: 500;
+}
+
+select {
+    font-weight: 500;
+}
+
+.delivery li {
+    text-align: center;
+}
+
+
+
+
 
 
 

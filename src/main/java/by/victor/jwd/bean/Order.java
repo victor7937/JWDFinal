@@ -18,6 +18,8 @@ public class Order implements Serializable {
     private OrderStatus orderStatus;
     private List<FootwearItem> items;
     private Float price;
+    private Integer id;
+
 
 
     public Order (Customer customer, LocalDateTime date, List<FootwearItem> items) {
@@ -80,17 +82,25 @@ public class Order implements Serializable {
         this.price = price;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(customer, order.customer) && Objects.equals(date, order.date) && orderStatus == order.orderStatus && Objects.equals(items, order.items);
+        return Objects.equals(customer, order.customer) && Objects.equals(date, order.date) && orderStatus == order.orderStatus && Objects.equals(items, order.items) && Objects.equals(price, order.price) && Objects.equals(id, order.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customer, date, orderStatus, items);
+        return Objects.hash(customer, date, orderStatus, items, price, id);
     }
 
     @Override
@@ -101,6 +111,7 @@ public class Order implements Serializable {
                 ", orderStatus=" + orderStatus +
                 ", items=" + items +
                 ", price=" + price +
-                "}";
+                ", id=" + id +
+                '}';
     }
 }

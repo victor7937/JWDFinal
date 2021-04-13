@@ -96,25 +96,90 @@
             </div>
         </div>
         <div class="tab-pane fade ${"showorders".equals(param.get("command")) ? 'active show' : ''}" id="nav-orders" role="tabpanel" aria-labelledby="nav-orders-tab">
-            <div class="container">
-                <div class="accordion" id="accordionExample">
-                    <c:forEach var="n" begin="1" end="5">
-                        <div class="card">
-                            <div class="card-header bg-light" id="heading${n}">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-center order-header" type="button" data-toggle="collapse" data-target="#collapse${n}" aria-expanded="true" aria-controls="collapse${n}">
-                                        Order ${n}
-                                    </button>
-                                </h2>
-                            </div>
+            <div class="container mb-4 tab-page">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-group row list-group-horizontal order-main-header px-4 my-3">
+                            <li class="list-group-item col-2">Order #</li>
+                            <li class="list-group-item col-2">For</li>
+                            <li class="list-group-item col-2">Email</li>
+                            <li class="list-group-item col-2">Price</li>
+                            <li class="list-group-item col-2">Created at</li>
+                            <li class="list-group-item col-2">Status</li>
+                        </ul>
+                        <div class="accordion mb-4" id="accordionExample">
+                            <c:forEach var="order" items="${requestScope.orders}">
+                                <div class="card">
+                                    <div class="card-header bg-light" id="heading${order.id}">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-block" type="button" data-toggle="collapse" data-target="#collapse${order.id}" aria-expanded="true" aria-controls="collapse${order.id}">
+                                                <ul class="list-group list-group-horizontal row list-group-flush order-header">
+                                                    <li class="list-group-item col-2">#${order.id}</li>
+                                                    <li class="list-group-item col-2">${order.customer.name}</li>
+                                                    <li class="list-group-item col-2">${order.customer.email}</li>
+                                                    <li class="list-group-item col-2">${order.price}</li>
+                                                    <li class="list-group-item col-2">${order.date.toLocalDate().toString()} <br/>${order.date.toLocalTime().toString()}</li>
+                                                    <li class="list-group-item col-2">${order.orderStatus}</li>
+                                                </ul>
+                                            </button>
+                                        </h2>
+                                    </div>
 
-                            <div id="collapse${n}" class="collapse" aria-labelledby="heading${n}" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                                    <div id="collapse${order.id}" class="collapse" aria-labelledby="heading${order.id}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <ul class="list-group row list-group-horizontal delivery">
+                                                <li class="list-group-item col-1"><i class="fa fa-2x fa-truck text-dark"></i></li>
+                                                <li class="list-group-item col-2">${order.customer.country}</li>
+                                                <li class="list-group-item col-2">${order.customer.city}</li>
+                                                <li class="list-group-item col-3">${order.customer.address}</li>
+                                                <li class="list-group-item col-4">
+                                                   <form method="post" action="Controller">
+                                                       <div class="input-group">
+                                                           <select name="status" class="form-control">
+                                                               <option value="waiting" class="text-warning">Waiting</option>
+                                                               <option value="approved" class="text-success">Approved</option>
+                                                               <option value="decline" class="text-danger">Decline</option>
+                                                               <option value="complete" class="text-info">Complete</option>
+                                                           </select>
+                                                           <div class="input-group-append">
+                                                               <button type="submit" class="btn btn-primary">Set status</button>
+                                                           </div>
+                                                       </div>
+                                                   </form>
+                                                </li>
+                                            </ul>
+                                            <div class="table-responsive mt-4">
+                                                <table class="table table-bordered">
+                                                    <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Product</th>
+                                                        <th scope="col">Brand</th>
+                                                        <th scope="col">Quantity</th>
+                                                        <th scope="col">Size</th>
+                                                            <%--                            <th scope="col" class="text-center">Quantity</th>--%>
+                                                        <th scope="col" class="text-right">Price</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach var="item" items="${order.items}">
+                                                            <tr>
+                                                                <td>${item.footwear.art}</td>
+                                                                <td>${item.footwear.brand}</td>
+                                                                <td>${item.quantity}</td>
+                                                                <td>${item.size}</td>
+                                                                <td class="text-right">${item.quantity * item.footwear.price}</td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </c:forEach>
                         </div>
-                    </c:forEach>
+                    </div>
                 </div>
             </div>
         </div>
