@@ -106,6 +106,18 @@ public class FootwearServiceImpl implements FootwearService {
     }
 
     @Override
+    public List<String> getColors(String lang) throws ServiceException {
+        List<String> colorList;
+        try {
+            colorList = footwearDAO.getColors(lang);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return colorList;
+    }
+
+    @Override
     public List<String> getBrands() throws ServiceException {
         List<String> brandList;
         try {
@@ -139,5 +151,17 @@ public class FootwearServiceImpl implements FootwearService {
             throw new ServiceException(e.getMessage(), e);
         }
         return quantity;
+    }
+
+    @Override
+    public boolean createNewFootwear(Footwear footwear, String description_en, String description_ru, String lang) throws ServiceException {
+        boolean ifAdded;
+        try {
+            ifAdded = footwearDAO.addNewFootwear(footwear, description_en, description_ru, lang);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return ifAdded;
     }
 }

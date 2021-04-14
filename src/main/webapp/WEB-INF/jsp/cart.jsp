@@ -40,7 +40,7 @@
                         <tbody>
                             <c:forEach var="item" items="${requestScope.itemsList}">
                                 <tr class="text-cart">
-                                    <td> <div class="small-image-container"><img src="${item.footwear.imageLink}"  alt="item"/></div> </td>
+                                    <td> <div class="small-image-container"><img src="images/${item.footwear.imageLink}"  alt="item"/></div> </td>
                                     <td>${item.footwear.art}</td>
                                     <input type="hidden" name="art" value="${item.footwear.art}">
                                     <td>${item.footwear.brand}</td>
@@ -108,7 +108,7 @@
     </div>
 </form>
 
-<div class="toast" id="orderToast" style="position: absolute; top: 10px; right: 10px;">
+<div class="toast" id="orderToast" style="position: absolute; top: 53px; right: 2px;">
     <div class="toast-header">
         <strong class="mr-auto"><i class="fa fa-shopping-cart"></i> Order Message</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">

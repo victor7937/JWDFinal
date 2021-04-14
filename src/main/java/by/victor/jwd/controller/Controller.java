@@ -11,8 +11,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(name = "Controller", value = "/Controller")
-
-
+@MultipartConfig
 public class Controller extends HttpServlet {
 
     private final CommandProvider provider = new CommandProvider();

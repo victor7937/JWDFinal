@@ -48,19 +48,19 @@
                     <div class="carousel-item active">
 <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
                         <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="${footwear.imageLink}"  alt="1"/>
+                            <img class="img-fluid" src="images/${footwear.imageLink}"  alt="1"/>
                         </a>
                     </div>
                     <div class="carousel-item">
                         <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
                         <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="${footwear.imageLink}"  alt="2"/>
+                            <img class="img-fluid" src="images/${footwear.imageLink}"  alt="2"/>
                         </a>
                     </div>
                     <div class="carousel-item">
                         <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
                         <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="${footwear.imageLink}" alt="3" />
+                            <img class="img-fluid" src="images/${footwear.imageLink}" alt="3" />
                         </a>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img class="img-fluid" src="${footwear.imageLink}" data-dismiss="modal" />
+                <img class="img-fluid" src="images/${footwear.imageLink}" data-dismiss="modal" />
             </div>
 <%--            <div class="modal-footer">--%>
 <%--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
@@ -221,7 +221,7 @@
     </div>
 </div>
 
-<div class="toast" id="cartToast" style="position: absolute; top: 10px; right: 10px;">
+<div class="toast" id="cartToast" style="position: absolute; top: 63px; right: 2px;">
     <div class="toast-header">
         <strong class="mr-auto"><i class="fa fa-shopping-cart"></i> Cart Message</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
@@ -245,7 +245,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-
         if (${'yes'.equals(param.get('show'))})
         {
             $("#cartToast").toast({delay: 5000});

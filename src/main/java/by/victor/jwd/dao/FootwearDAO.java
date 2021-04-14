@@ -16,14 +16,15 @@ public interface FootwearDAO {
     List<Footwear> getByBrand(String brand, ForEnum forEnum, String lang) throws DAOException;
     Footwear getFootwearByArt(String art, String lang) throws DAOException;
     List<String> getCategories (String lang) throws DAOException;
+    List<String> getColors (String lang) throws DAOException;
     List<String> getBrands () throws DAOException;
 
     List<Float> getSizes(String art) throws DAOException;
 
     Integer getMaxQuantity(String art, Float size) throws DAOException;
 
-    boolean addNewFootwear(Footwear footwear) throws DAOException;
+    boolean addNewFootwear(Footwear footwear, String description_en, String description_ru, String lang) throws DAOException;
     boolean deleteFootwear(String art) throws DAOException;
-    boolean updateFootwear(String art, Customer footwear) throws DAOException;
+    boolean updateFootwear(String art, Footwear footwear) throws DAOException;
 
 }

@@ -16,7 +16,10 @@ public interface FootwearService {
     Footwear getByArt(String art, String lang) throws ServiceException;
 
     List<String> getCategories (String lang) throws ServiceException;
+    List<String> getColors (String lang) throws ServiceException;
     List<String> getBrands () throws ServiceException;
     List<Float> getSizesByArt(String art) throws ServiceException;
     Integer getMaxQuantity(String art, Float size) throws ServiceException;
+
+    boolean createNewFootwear (Footwear footwear, String description_en, String description_ru, String lang) throws ServiceException;
 }

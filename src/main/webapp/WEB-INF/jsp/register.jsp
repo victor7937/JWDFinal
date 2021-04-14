@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="r" uri="http://lei-shoes/region-functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: victor
@@ -16,6 +17,8 @@
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/register.css'/>" rel="stylesheet" type="text/css">
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
+    <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+    <fmt:setBundle basename="application"/>
 </head>
 <body>
 
@@ -24,7 +27,7 @@
 <div class="card bg-light">
     <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title mt-3 text-center">Create Account</h4>
-        <p class="text-center">Get started with your free account</p>
+        <p class="text-center">Get started with your new account</p>
         <p>
             <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
             <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>

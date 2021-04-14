@@ -1,5 +1,6 @@
 package by.victor.jwd.controller.validator;
 
+import by.victor.jwd.controller.validator.impl.FootwearValidator;
 import by.victor.jwd.controller.validator.impl.ProfileValidator;
 import by.victor.jwd.controller.validator.impl.RegistrationValidator;
 
@@ -8,6 +9,7 @@ public class ValidationProvider {
 
     private final RequestValidator registrationValidator = new RegistrationValidator();
     private final RequestValidator profileValidator = new ProfileValidator();
+    private final RequestValidator footwearValidator = new FootwearValidator();
 
     private ValidationProvider() {}
 
@@ -16,4 +18,8 @@ public class ValidationProvider {
     public RequestValidator getRegistrationValidator() { return registrationValidator; }
 
     public RequestValidator getProfileValidator() { return profileValidator; }
+
+    public RequestValidator getFootwearValidator() {
+        return footwearValidator;
+    }
 }

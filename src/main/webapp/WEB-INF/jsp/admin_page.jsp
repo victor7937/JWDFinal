@@ -208,7 +208,7 @@
     </div>
 </section>
 
-<div class="toast" id="infoToast" style="position: absolute; top: 10px; right: 10px;">
+<div class="toast" id="infoToast" style="position: absolute; top: 63px; right: 2px;">
     <div class="toast-header">
         <strong class="mr-auto"><i class="fa fa-info-circle"></i> Info</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">

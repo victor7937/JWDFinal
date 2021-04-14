@@ -28,10 +28,18 @@ public class SQLFootwearDAO implements FootwearDAO {
     private static final String SQL_BY_ART = " WHERE f_art = ?";
 
     private static final String SQL_GET_CATEGORIES = "SELECT c_name_%s AS name FROM categories";
+    private static final String SQL_GET_COLORS = "SELECT cl_name_%s AS name FROM colors";
+    private static final String SQL_GET_CATEGORY_ID = "SELECT c_id FROM categories WHERE c_name_%s = ?";
     private static final String SQL_GET_BRANDS = "SELECT b_name FROM brands";
+    private static final String SQL_GET_BRAND_ID = "SELECT b_id FROM brands WHERE b_name = ?";
     private static final String SQL_GET_SIZES = "SELECT DISTINCT fi_size FROM footwear_items where fi_art = ? AND fi_status = 'STOCK'";
+    private static final String SQL_GET_COLOR_ID = "SELECT cl_id FROM colors WHERE cl_name_%s = ?";
     private static final String SQL_GET_QUANTITY = "SELECT COUNT(fi_id) AS quantity FROM footwear_items WHERE fi_art = ? " +
             "AND fi_size = ? AND fi_status = 'STOCK'";
+
+
+    private static final String SQL_ADD_FOOTWEAR = "INSERT INTO footwears (f_art, f_name, f_price, f_category, f_for, f_image_link, f_color, f_brand, f_description_en, f_description_ru) "+
+    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String DATA_ACCESS_EXCEPTION_TEXT =
             "It's impossible to get a connection from the connection pool, "
@@ -177,6 +185,21 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
+    public List<String> getColors(String lang) throws DAOException {
+        List<String> colorList = new ArrayList<>();
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_COLORS, lang));
+            while (resultSet.next()) {
+                String category = resultSet.getString("name");
+                colorList.add(category);
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Getting colors DAO error", e);
+        }
+        return colorList;
+    }
+
+    @Override
     public List<String> getBrands() throws DAOException {
         List<String> brandList = new ArrayList<>();
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
@@ -225,8 +248,44 @@ public class SQLFootwearDAO implements FootwearDAO {
 
 
     @Override
-    public boolean addNewFootwear(Footwear footwear) throws DAOException {
-        return false;
+    public boolean addNewFootwear(Footwear footwear, String description_en, String description_ru, String lang) throws DAOException {
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            ResultSet categoryIdRS = resourceProvider.createResultSet(String.format(SQL_GET_CATEGORY_ID, lang),
+                    ps -> ps.setString(1, footwear.getCategory()));
+            if (!categoryIdRS.next()) {
+                return false;
+            }
+            int categoryId = categoryIdRS.getInt("c_id");
+
+            ResultSet colorIdRS = resourceProvider.createResultSet(String.format(SQL_GET_COLOR_ID, lang),
+                    ps -> ps.setString(1, footwear.getColor()));
+            if (!colorIdRS.next()) {
+                return false;
+            }
+            int colorId = colorIdRS.getInt("cl_id");
+
+            ResultSet brandIdRS = resourceProvider.createResultSet(SQL_GET_BRAND_ID,
+                    ps -> ps.setString(1, footwear.getBrand()));
+            if (!brandIdRS.next()) {
+                return false;
+            }
+            int brandId = brandIdRS.getInt("b_id");
+
+            return resourceProvider.updateAction(SQL_ADD_FOOTWEAR, ps -> {
+                ps.setString(1, footwear.getArt());
+                ps.setString(2, footwear.getName());
+                ps.setFloat(3, footwear.getPrice());
+                ps.setInt(4, categoryId);
+                ps.setString(5, footwear.getForWhom().toString());
+                ps.setString(6, footwear.getImageLink());
+                ps.setInt(7, colorId);
+                ps.setInt(8, brandId);
+                ps.setString(9, description_en);
+                ps.setString(10, description_ru);
+            });
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Error creating footwear",e);
+        }
     }
 
     @Override
@@ -235,12 +294,12 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
-    public boolean updateFootwear(String art, Customer footwear) throws DAOException {
+    public boolean updateFootwear(String art, Footwear footwear) throws DAOException {
         return false;
     }
 
     private Footwear buildFootwear(ResultSet resultSet) throws DAOException {
-        Footwear footwear = null;
+        Footwear footwear;
         try {
             String art = resultSet.getString("f_art");
             String name = resultSet.getString("f_name");

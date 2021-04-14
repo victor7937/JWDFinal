@@ -98,8 +98,8 @@
                     <div class="col-md-4 col-sm-6 my-3">
                         <div class="product-card">
                             <div class="product-image">
-                                    <img class="pic-1" src="${footwear.imageLink}">
-                                    <img class="pic-2" src="${footwear.imageLink}">
+                                    <img class="pic-1" src="images/${footwear.imageLink}">
+                                    <img class="pic-2" src="images/${footwear.imageLink}">
                                 <ul class="social">
                                    <!-- <li><a href="" class="fa fa-search"></a></li>
                                     <li><a href="" class="fa fa-shopping-bag"></a></li> -->
@@ -141,6 +141,13 @@
 
     </div>
 </div>
+
+<c:if test="${sessionScope.email != null && 'admin'.equals(sessionScope.role)}">
+    <a href="Controller?command=addfootwear" class="add-footwear-btn">
+        <i class="fa fa-5x fa-plus"></i>
+    </a>
+</c:if>
+
 
 <jsp:include page="footer.jsp"/>
 

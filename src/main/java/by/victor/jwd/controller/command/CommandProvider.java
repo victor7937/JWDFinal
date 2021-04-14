@@ -30,6 +30,8 @@ public class CommandProvider {
 		commands.put(CommandName.SHOWUSERS, new ShowUsers());
 		commands.put(CommandName.CHANGESTATUS, new ChangeStatus());
 		commands.put(CommandName.USERDECLINE, new UserDecline());
+		commands.put(CommandName.ADDFOOTWEAR, new GoToAddingFootwear());
+		commands.put(CommandName.NEWFOOTWEAR, new CreateFootwear());
 	}
 	
 	
