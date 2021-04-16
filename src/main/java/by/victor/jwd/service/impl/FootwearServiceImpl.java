@@ -26,8 +26,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             footwearList = footwearDAO.getAll(forEnum, lang);
         } catch (DAOException e) {
-            logger.error("Get all DAO error", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return footwearList;
     }
@@ -38,8 +38,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             footwearList = footwearDAO.getByCategory(category,forEnum, lang);
         } catch (DAOException e) {
-            logger.error("Get by category DAO error ", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return footwearList;
     }
@@ -50,8 +50,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             footwearList = footwearDAO.getByCategoryAndBrand(category, brand, forEnum, lang);
         } catch (DAOException e) {
-            logger.error("Get by category and brand DAO error ", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return footwearList;
     }
@@ -75,8 +75,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             footwearList = footwearDAO.getByBrand(brand, forEnum, lang);
         } catch (DAOException e) {
-            logger.error("Get by brand DAO error ", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return footwearList;
     }
@@ -87,8 +87,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             footwear = footwearDAO.getFootwearByArt(art, lang);
         } catch (DAOException e) {
-            logger.error("Get by art DAO error ", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return footwear;
     }
@@ -99,8 +99,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             categoriesList = footwearDAO.getCategories(lang);
         } catch (DAOException e) {
-            logger.error("Get categories DAO error", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return categoriesList;
     }
@@ -123,8 +123,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             brandList = footwearDAO.getBrands();
         } catch (DAOException e) {
-            logger.error("Get brands DAO error", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return brandList;
     }
@@ -135,8 +135,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             sizesList = footwearDAO.getSizes(art);
         } catch (DAOException e) {
-            logger.error("Get sizes by art DAO error", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return sizesList;
     }
@@ -147,8 +147,8 @@ public class FootwearServiceImpl implements FootwearService {
         try {
             quantity = footwearDAO.getMaxQuantity(art, size);
         } catch (DAOException e) {
-            logger.error("Get quantity DAO error", e);
-            throw new ServiceException(e.getMessage(), e);
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return quantity;
     }

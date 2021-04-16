@@ -31,7 +31,6 @@ public class UpdateProfile implements Command {
     public static final String UPD_SUCCESS_VALUE = "upd_success";
     public static final String UPD_FAIL_VALUE = "not_upd";
 
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestValidator requestValidator = ValidationProvider.getInstance().getProfileValidator();

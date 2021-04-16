@@ -6,7 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+<fmt:setBundle basename="application"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +29,7 @@
 <section class="jumbotron text-center mb-0">
     <div class="container">
         <h1 class="jumbotron-heading">Lei Shoes</h1>
-        <p class="lead text-muted">Belarusian high quality hand made footwear</p>
+        <p class="lead text-muted"><fmt:message key="main.company.description"/></p>
     </div>
 </section>
 
@@ -60,28 +63,6 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <%--            </div>--%>
-    <%--        <div class="col-12 col-md-3">--%>
-    <%--            <div class="card">--%>
-    <%--                <div class="card-header bg-success text-white text-uppercase">--%>
-    <%--                    <i class="fa fa-heart"></i> Top product--%>
-    <%--                </div>--%>
-    <%--                <img class="img-fluid border-0" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">--%>
-    <%--                <div class="card-body">--%>
-    <%--                    <h4 class="card-title text-center"><a href="Controller?command=gotoproduct" title="View Product">Product title</a></h4>--%>
-    <%--                    <div class="row">--%>
-    <%--                        <div class="col">--%>
-    <%--                            <p class="btn btn-danger btn-block">99.00 $</p>--%>
-    <%--                        </div>--%>
-    <%--                        <div class="col">--%>
-    <%--                            <a href="Controller?command=gotoproduct" class="btn btn-success btn-block">View</a>--%>
-    <%--                        </div>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
-    <%--            </div>--%>
-    <%--                    </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
 </section>
 
 <section>
@@ -90,28 +71,11 @@
             <div class="col-sm">
                 <div class="card">
                     <div class="card-header text-white text-uppercase">
-                        <i class="fa fa-star"></i> Last products
+                        <i class="fa fa-star"></i> <fmt:message key="main.last"/>
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
                             <c:forEach begin="1" end="3">
-                                <%--                            <div class="col-sm">--%>
-                                <%--                                <div class="card">--%>
-                                <%--                                    <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">--%>
-                                <%--                                    <div class="card-body">--%>
-                                <%--                                        <h4 class="card-title"><a href="Controller?command=gotoproduct" title="View Product">Product title</a></h4>--%>
-                                <%--                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--%>
-                                <%--                                        <div class="row">--%>
-                                <%--                                            <div class="col">--%>
-                                <%--                                                <p class="btn btn-danger btn-block">99.00 $</p>--%>
-                                <%--                                            </div>--%>
-                                <%--                                            <div class="col">--%>
-                                <%--                                                <a href="Controller?command=gotocart" class="btn btn-success btn-block">Add to cart</a>--%>
-                                <%--                                            </div>--%>
-                                <%--                                        </div>--%>
-                                <%--                                    </div>--%>
-                                <%--                                </div>--%>
-                                <%--                            </div>--%>
                                 <div class="col-md-3 col-sm-6 my-3">
                                     <div class="product-card">
                                         <div class="product-image">
@@ -125,8 +89,8 @@
                                             <!--<span class="product-discount-label">-20%</span>-->
                                         </div>
                                         <div class="product-content">
-                                            <div class="price">$ 100.00
-                                                <span>$ 150.00</span>
+                                            <div class="price">$795.00
+                                                <span>$970.00</span>
                                             </div>
                                             <h2 class="brand">Balenciaga</h2>
                                             <span class="model">Track</span>
@@ -149,7 +113,7 @@
             <div class="col-sm">
                 <div class="card">
                     <div class="card-header text-white text-uppercase">
-                        <i class="fa fa-trophy"></i> Best products
+                        <i class="fa fa-trophy"></i> <fmt:message key="main.best"/>
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
@@ -167,8 +131,8 @@
                                             <!--<span class="product-discount-label">-20%</span>-->
                                         </div>
                                         <div class="product-content">
-                                            <div class="price">$ 100.00
-                                                <span>$ 150.00</span>
+                                            <div class="price">$830
+                                                <span>$900</span>
                                             </div>
                                             <h2 class="brand">Balenciaga</h2>
                                             <span class="model">Track</span>

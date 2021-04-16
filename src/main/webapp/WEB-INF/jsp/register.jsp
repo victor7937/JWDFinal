@@ -26,14 +26,14 @@
 
 <div class="card bg-light">
     <article class="card-body mx-auto" style="max-width: 400px;">
-        <h4 class="card-title mt-3 text-center">Create Account</h4>
-        <p class="text-center">Get started with your new account</p>
+        <h4 class="card-title mt-3 text-center"><fmt:message key="register.create"/></h4>
+        <p class="text-center"><fmt:message key="register.new.account"/></p>
         <p>
-            <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
-            <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>
+            <a href="" class="btn btn-block btn-twitter"> <i class="fa fa-twitter"></i> <fmt:message key="register.twitter"/></a>
+            <a href="" class="btn btn-block btn-facebook"> <i class="fa fa-facebook"></i> <fmt:message key="register.facebook"/></a>
         </p>
         <p class="divider-text">
-            <span class="bg-light">OR</span>
+            <span class="bg-light"><fmt:message key="register.or"/></span>
         </p>
         <c:if test="${err_message != null}">
             <p class="text-danger text-center">${err_message}</p>
@@ -44,13 +44,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input name="name" class="form-control" placeholder="Full name" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.name}" required>
+                <input name="name" class="form-control" placeholder="<fmt:message key="register.placeholder.name"/>" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.name}" required>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input name="email" class="form-control" placeholder="Email address" type="email" value="${incorrect_customer == null ? '' : incorrect_customer.email}" required>
+                <input name="email" class="form-control" placeholder="<fmt:message key="register.placeholder.email"/>" type="email" value="${incorrect_customer == null ? '' : incorrect_customer.email}" required>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -61,7 +61,7 @@
                         <option value="${code}">${r:getCountryFlag(code)}${code}</option>
                     </c:forEach>
                 </select>
-                <input name="phone" class="form-control" placeholder="Phone number" type="tel" maxlength="12">
+                <input name="phone" class="form-control" placeholder="<fmt:message key="register.placeholder.phone"/>" type="tel" maxlength="12">
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -78,19 +78,19 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
                 </div>
-                <input name="city" class="form-control" placeholder="City" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.city}">
+                <input name="city" class="form-control" placeholder="<fmt:message key="register.placeholder.city"/>" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.city}">
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
                 </div>
-                <input name="address" class="form-control" placeholder="Address" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.address}">
+                <input name="address" class="form-control" placeholder="<fmt:message key="register.placeholder.address"/>" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.address}">
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input name="password" id="password" class="form-control" placeholder="Create password" type="password" required
+                <input name="password" id="password" class="form-control" placeholder="<fmt:message key="register.placeholder.password"/>" type="password" required
                        title="Password should contain only english letters, numbers and symbols such as '-_!@' at least one number and lowercase english letter, 8-40 characters"
                 pattern="^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9-_!@]{7,40}$">
             </div>
@@ -98,12 +98,12 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input name="password" id="password_repeat" class="form-control" placeholder="Repeat password" type="password" required>
+                <input name="password" id="password_repeat" class="form-control" placeholder="<fmt:message key="register.placeholder.password.repeat"/>" type="password" required>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                <button type="submit" class="btn btn-primary btn-block"> <fmt:message key="register.create"/>  </button>
             </div>
-            <p class="text-center">Have an account? <a href="Controller?command=gotosigninpage">Log In</a> </p>
+            <p class="text-center"><fmt:message key="register.have.account"/> <a href="Controller?command=gotosigninpage"><fmt:message key="register.log.in"/></a> </p>
         </form>
     </article>
 </div>

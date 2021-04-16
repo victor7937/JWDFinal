@@ -19,18 +19,18 @@
                 <h5>About</h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <p class="mb-0">
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus natus nemo recusandae reiciendis  nemo recusandae reiciendis
+                   Premium brands retail. Choose footwear as you like, add it to cart and make the order!
                 </p>
             </div>
 
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
-                <h5>Informations</h5>
+                <h5>Information</h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
-                    <li><a href="">Link 1</a></li>
-                    <li><a href="">Link 2</a></li>
-                    <li><a href="">Link 3</a></li>
-                    <li><a href="">Link 4</a></li>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Categories</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li><a href="">Cart</a></li>
                 </ul>
             </div>
 
@@ -38,10 +38,10 @@
                 <h5>Others links</h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
-                    <li><a href="">Link 1</a></li>
-                    <li><a href="">Link 2</a></li>
-                    <li><a href="">Link 3</a></li>
-                    <li><a href="">Link 4</a></li>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Categories</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li><a href="">Cart</a></li>
                 </ul>
             </div>
 
@@ -49,10 +49,10 @@
                 <h5>Contact</h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
-                    <li><i class="fa fa-home mr-2"></i> My company</li>
-                    <li><i class="fa fa-envelope mr-2"></i> email@example.com</li>
-                    <li><i class="fa fa-phone mr-2"></i> + 33 12 14 15 16</li>
-                    <li><i class="fa fa-print mr-2"></i> + 33 12 14 15 16</li>
+                    <li><i class="fa fa-home mr-2"></i> Lei Shoes</li>
+                    <li><i class="fa fa-envelope mr-2"></i> lei-shoes@mail.ru</li>
+                    <li><i class="fa fa-phone mr-2"></i> +375 29 180 25 50</li>
+                    <li><i class="fa fa-print mr-2"></i> +375 33 181 15 70</li>
                 </ul>
             </div>
             <div class="col-12 copyright mt-3">

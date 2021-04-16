@@ -24,7 +24,7 @@ import static by.victor.jwd.controller.constant.ParamValues.*;
 public class SaveNewCustomer implements Command {
 	public static final String MESSAGE_PARAM = "message";
 	public static final String SUCCESS_VALUE = "register_success";
-	Logger logger = Logger.getLogger(SaveNewCustomer.class);
+	public static final String REGISTRATION_FAIL_MESSAGE = "Registration fail";
 	private static final String INCORRECT_CUSTOMER_ATTRIBUTE = "incorrect_customer";
 	private static final String ERROR_MSG_ATTRIBUTE = "err_message";
 	private static final String ERROR_MSG_TEXT_EMAIL = "Sorry, this email has already taken";
@@ -39,7 +39,6 @@ public class SaveNewCustomer implements Command {
 				request.getParameter(CITY_PARAM),request.getParameter(ADDRESS_PARAM));
 
 		if (!requestValidator.validate(request)){
-			logger.info("Registration data is incorrect");
 			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			requestDispatcher.forward(request, response);
@@ -54,7 +53,7 @@ public class SaveNewCustomer implements Command {
 						.createPath());
 			}
 			else {
-				throw new ControllerException("Registration fail");
+				throw new ControllerException(REGISTRATION_FAIL_MESSAGE);
 			}
 		} catch (EmailExistsException e) {
 			request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMAIL);
@@ -62,8 +61,7 @@ public class SaveNewCustomer implements Command {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
 			requestDispatcher.forward(request, response);
 		} catch (ServiceException e) {
-			logger.error("Registration fail",e);
-			throw new ControllerException("Registration fail");
+			throw new ControllerException(REGISTRATION_FAIL_MESSAGE);
 		}
 	}
 }

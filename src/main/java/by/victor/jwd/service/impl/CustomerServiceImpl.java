@@ -30,8 +30,8 @@ public class CustomerServiceImpl implements CustomerService {
 				return customer;
 			}
 		} catch (DAOException e) {
-			logger.error("Auth DAO error ", e);
-			throw new ServiceException(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
 		}
 
 		return null;
@@ -45,8 +45,8 @@ public class CustomerServiceImpl implements CustomerService {
 				return customer;
 			}
 		} catch (DAOException e) {
-			logger.error("Get by email DAO error ", e);
-			throw new ServiceException(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
 		}
 		return null;
 	}
@@ -62,8 +62,8 @@ public class CustomerServiceImpl implements CustomerService {
 				throw new EmailExistsException(EMAIL_EXISTS);
 			}
 		} catch (DAOException e) {
-			logger.error("Registration DAO error", e);
-			throw new ServiceException(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
 		}
 		return successAdding;
 
@@ -79,8 +79,8 @@ public class CustomerServiceImpl implements CustomerService {
 				successUpdating = customerDAO.updateCustomer(email, customer);
 			}
 		} catch (DAOException e) {
-			logger.error("Update DAO error", e);
-			throw new ServiceException(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
 		}
 		return successUpdating;
 	}
@@ -91,8 +91,8 @@ public class CustomerServiceImpl implements CustomerService {
 		try {
 			successDeleting = customerDAO.deleteCustomer(email);
 		} catch (DAOException e) {
-			logger.error("Delete DAO error", e);
-			throw new ServiceException(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
 		}
 		return successDeleting;
 	}
@@ -103,8 +103,8 @@ public class CustomerServiceImpl implements CustomerService {
 		try {
 			 customers = customerDAO.getAll();
 		} catch (DAOException e) {
-			logger.error("Get all customers DAO error", e);
-			throw new ServiceException(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
 		}
 		return customers;
 

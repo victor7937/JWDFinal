@@ -45,6 +45,12 @@
                             </c:if>
                             <input type="hidden" name="command" value="updateprofile">
                             <div class="form-group row">
+                                <label for="email" class="col-4 col-form-label">Email</label>
+                                <div class="col-6">
+                                    <input id="email" name="email"  value="${customer.email}" readonly class="form-control-plaintext" required type="email">
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="name" class="col-4 col-form-label">Name</label>
                                 <div class="col-6">
                                     <input id="name" name="name" value="${customer.name}" placeholder="Name" class="form-control" type="text" required>
@@ -86,12 +92,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="email" class="col-4 col-form-label">Email</label>
-                                <div class="col-6">
-                                    <input id="email" name="email" placeholder="Email" value="${customer.email}" class="form-control" required type="email">
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label for="newpass" class="col-4 col-form-label">New Password</label>
                                 <div class="col-6">

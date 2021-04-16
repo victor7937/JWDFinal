@@ -14,12 +14,6 @@ import java.util.List;
 
 public class SQLCustomerDAO implements CustomerDAO {
 
-	private static final String DATA_ACCESS_EXCEPTION_TEXT =
-				"It's impossible to get a connection from the connection pool, "
-						+ "execute a query, build a bean object, close the statement "
-						+ "or return the connection back";
-		
-	
 	private static final String SQL_GET_ALL_CUSTOMERS =
 			"SELECT * FROM customers ORDER BY cu_firstname";
 
@@ -53,7 +47,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 				customerList.add(customer);
 			}
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Getting all customers error", e);
 		}
 		return customerList;
 	}
@@ -67,7 +61,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 				customer = buildCustomer(resultSet);
 			}
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Getting customer by email error", e);
 		}
 		return customer;
 	}
@@ -84,7 +78,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 				customer = buildCustomer(resultSet);
 			}
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Getting customer by email and password error", e);
 		}
 		return customer;
 	}
@@ -98,14 +92,14 @@ public class SQLCustomerDAO implements CustomerDAO {
 				isEmailExists = true;
 			}
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Checking if customer exists error", e);
 		}
 		return isEmailExists;
 	}
 
 	@Override
 	public boolean addNewCustomer(Customer customer) throws DAOException {
-		boolean operationSuccess = false;
+		boolean operationSuccess;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
 			operationSuccess = resourceProvider.updateAction(SQL_INSERT_CUSTOMER, ps -> {
 				ps.setString(1, customer.getName());
@@ -117,7 +111,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 				ps.setString(7, customer.getAddress());
 			});
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Adding new customer error", e);
 		}
 		return operationSuccess;
 	}
@@ -128,14 +122,14 @@ public class SQLCustomerDAO implements CustomerDAO {
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
 			operationSuccess = resourceProvider.updateAction(SQL_DELETE_CUSTOMER_BY_EMAIL, ps -> ps.setString(1, email));
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Deleting customer error", e);
 		}
 		return operationSuccess;
 	}
 
 	@Override
 	public boolean updateCustomer(String email, Customer customer) throws DAOException {
-		boolean operationSuccess = false;
+		boolean operationSuccess;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
 			operationSuccess = resourceProvider.updateAction(SQL_UPDATE_CUSTOMER, ps -> {
 				ps.setString(1, customer.getName());
@@ -148,13 +142,13 @@ public class SQLCustomerDAO implements CustomerDAO {
 				ps.setString(8, email);
 			});
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Updating customer error", e);
 		}
 		return operationSuccess;
 	}
 
 	private Customer buildCustomer(ResultSet resultSet) throws DAOException {
-		Customer customer = null;
+		Customer customer;
 		try {
 			String name = resultSet.getString("cu_firstname");
 			String email = resultSet.getString("cu_email");
@@ -170,7 +164,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 			}
 
 		} catch (SQLException e) {
-			throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+			throw new DAOException("Building customer error", e);
 		}
 		return customer;
 	}

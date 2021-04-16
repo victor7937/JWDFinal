@@ -41,11 +41,6 @@ public class SQLFootwearDAO implements FootwearDAO {
     private static final String SQL_ADD_FOOTWEAR = "INSERT INTO footwears (f_art, f_name, f_price, f_category, f_for, f_image_link, f_color, f_brand, f_description_en, f_description_ru) "+
     "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String DATA_ACCESS_EXCEPTION_TEXT =
-            "It's impossible to get a connection from the connection pool, "
-                    + "execute a query, build a bean object, close the statement "
-                    + "or return the connection back";
-
     @Override
     public List<Footwear> getAll(ForEnum forEnum, String lang) throws DAOException {
         List<Footwear> footwearList = new ArrayList<>();
@@ -63,7 +58,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 footwearList.add(footwear);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting all footwear error", e);
         }
         return footwearList;
     }
@@ -86,7 +81,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 footwearList.add(footwear);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting footwear by category error", e);
         }
         return footwearList;
     }
@@ -110,26 +105,10 @@ public class SQLFootwearDAO implements FootwearDAO {
                 footwearList.add(footwear);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting footwear by category and brand error", e);
         }
         return footwearList;
     }
-
-   /*  @Override
-    public List<Footwear> getByForEnum(ForEnum forWhom, String lang) throws DAOException {
-       List<Footwear> footwearList = new ArrayList<>();
-        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
-            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + SQL_BY_FOR_WHOM,
-                    ps -> ps.setString(1, forWhom.toString()));
-            while (resultSet.next()) {
-                Footwear footwear = buildFootwear(resultSet);
-                footwearList.add(footwear);
-            }
-        } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
-        }
-        return footwearList;*/
-    //}
 
     @Override
     public List<Footwear> getByBrand(String brand, ForEnum forEnum, String lang) throws DAOException {
@@ -149,7 +128,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 footwearList.add(footwear);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting footwear by brand error", e);
         }
         return footwearList;
     }
@@ -164,7 +143,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 footwear = buildFootwear(resultSet);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting footwear by art error", e);
         }
         return footwear;
     }
@@ -179,7 +158,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 categoryList.add(category);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting categories error", e);
         }
         return categoryList;
     }
@@ -194,7 +173,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 colorList.add(category);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException("Getting colors DAO error", e);
+            throw new DAOException("Getting colors error", e);
         }
         return colorList;
     }
@@ -209,7 +188,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 brandList.add(brand);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting brands error", e);
         }
         return brandList;
     }
@@ -224,7 +203,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 sizesList.add(size);
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting sizes error", e);
         }
         return sizesList;
     }
@@ -241,7 +220,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 quantity = resultSet.getInt("quantity");
             }
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Getting max quantity error", e);
         }
         return quantity;
     }
@@ -284,7 +263,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                 ps.setString(10, description_ru);
             });
         } catch (SQLException | ConnectionException e) {
-            throw new DAOException("Error creating footwear",e);
+            throw new DAOException("Creating footwear error",e);
         }
     }
 
@@ -314,7 +293,7 @@ public class SQLFootwearDAO implements FootwearDAO {
                     description, imageLink, brand,  ForEnum.valueOf(forWhom));
 
         } catch (SQLException e) {
-            throw new DAOException(DATA_ACCESS_EXCEPTION_TEXT, e);
+            throw new DAOException("Building footwear error", e);
         }
         return footwear;
     }
