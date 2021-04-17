@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class GoToContact implements Command {
+
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/contact.jsp";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/contact.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
         requestDispatcher.forward(request, response);
     }
 }

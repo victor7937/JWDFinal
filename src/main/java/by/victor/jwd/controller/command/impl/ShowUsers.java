@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class ShowUsers implements Command {
 
     private static final String CUSTOMERS_ATTRIBUTE = "customers";
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/admin_page.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,14 +28,14 @@ public class ShowUsers implements Command {
         try {
             customers = customerService.getAllCustomers();
         } catch (ServiceException e) {
-            throw new ControllerException("Get all customers error");
+            throw new ControllerException(e);
         }
         customers = customers.stream()
                 .filter(c -> !c.getRole().equals(UserRole.ADMIN))
                 .collect(Collectors.toList());
         request.setAttribute(CUSTOMERS_ATTRIBUTE, customers);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/admin_page.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
         requestDispatcher.forward(request, response);
     }
 }

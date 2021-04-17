@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GoToMainPage implements Command {
 
+	public static final String FORWARD_PATH = "/WEB-INF/jsp/main.jsp";
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
 		requestDispatcher.forward(request, response);
 	}
 

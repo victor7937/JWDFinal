@@ -22,7 +22,6 @@ import java.io.IOException;
 import static by.victor.jwd.controller.constant.ParamValues.*;
 
 public class UpdateProfile implements Command {
-    private final static Logger logger = Logger.getLogger(UpdateProfile.class);
 
     private static final String PROFILE_PATH = CommandPath.createCommand(CommandName.GOTOPROFILE).createPath();
     private static final String ERROR_MSG_ATTRIBUTE = "err_message";
@@ -30,12 +29,12 @@ public class UpdateProfile implements Command {
     public static final String MESSAGE_PARAM = "message";
     public static final String UPD_SUCCESS_VALUE = "upd_success";
     public static final String UPD_FAIL_VALUE = "not_upd";
+    public static final String PASSWORD_ERROR_MSG = "Error while updating customers password";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestValidator requestValidator = ValidationProvider.getInstance().getProfileValidator();
         if (!requestValidator.validate(request)){
-            logger.info("Profile updating data is incorrect");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PATH);
             requestDispatcher.forward(request, response);
             return;
@@ -55,8 +54,7 @@ public class UpdateProfile implements Command {
             try {
                 customer.setPassword(customerService.getByEmail(currentEmail).getPassword());
             } catch (ServiceException e) {
-                logger.error("Can't update customers password",e);
-                throw new ControllerException("Error while updating customers password");
+                throw new ControllerException(PASSWORD_ERROR_MSG,e);
             }
         }
 
@@ -68,19 +66,16 @@ public class UpdateProfile implements Command {
                         .createPath());
             }
             else {
-                logger.error("Profile wasn't updated");
                 response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
                         .addParam(MESSAGE_PARAM, UPD_FAIL_VALUE)
                         .createPath());
             }
         } catch (EmailExistsException e) {
-            logger.info("Email exists");
             request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMAIL);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(PROFILE_PATH);
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
-            logger.error("Can't update customer",e);
-            throw new ControllerException("Error while updating customer");
+            throw new ControllerException(e);
         }
     }
 }

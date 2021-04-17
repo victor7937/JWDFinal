@@ -1,9 +1,10 @@
 package by.victor.jwd.controller.command.impl;
 
 import by.victor.jwd.bean.Footwear;
-import by.victor.jwd.bean.ForEnum;
+import by.victor.jwd.bean.FootwearCriteria;
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.exception.ControllerException;
+import by.victor.jwd.controller.util.CriteriaCreator;
 import by.victor.jwd.service.FootwearService;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.exception.ServiceException;
@@ -13,87 +14,50 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class GoToCategory implements Command {
 
-    private final static String ALL_PARAM = "all";
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/category.jsp";
+    public static final String FOOTWEAR_LIST_ATTRIBUTE = "footwearList";
+    public static final String BRAND_LIST_ATTRIBUTE = "brandList";
+    public static final String CATEGORY_LIST_ATTRIBUTE = "categoryList";
+    public static final String FOR_WHOM_ATTRIBUTE = "forWhom";
+    public static final String CATEGORY_ATTRIBUTE = "category";
+    public static final String BRAND_ATTRIBUTE = "brand";
+    public static final String LANG_ATTRIBUTE = "lang";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String categoryParam = request.getParameter("category");
-        String brandParam = request.getParameter("brand");
-        String forParam = request.getParameter("for");
-        if (categoryParam == null || "".equals(categoryParam)) {
-            categoryParam = ALL_PARAM;
-        }
-        if (brandParam == null || "".equals(brandParam)) {
-            brandParam = ALL_PARAM;
-        }
-        if (forParam == null || "".equals(forParam) || !(ForEnum.HIM.toString().toLowerCase().equals(forParam) ||
-                ForEnum.HER.toString().toLowerCase().equals(forParam) || ALL_PARAM.equals(forParam))) {
-            forParam = ALL_PARAM;
-        }
-        ForEnum forParamEnum = ForEnum.valueOf(forParam.toUpperCase());
-
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
-        String lang = (String)request.getSession().getAttribute("lang");
+        String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
         List<Footwear> footwearList;
         List<String> categoryList;
         List<String> brandList;
+
         try {
             categoryList = footwearService.getCategories(lang);
             brandList = footwearService.getBrands();
         } catch (ServiceException e) {
-            throw new ControllerException("Error while loading category and brand");
+            throw new ControllerException(e);
         }
 
-        if(!categoryParam.equals(ALL_PARAM) && !categoryList.contains(categoryParam)) {
-            categoryParam = ALL_PARAM;
+        FootwearCriteria criteria = CriteriaCreator.createFootwearCriteria(request, categoryList, brandList);
+
+        try {
+            footwearList = footwearService.getByCriteria(criteria, lang);
+        } catch (ServiceException e) {
+            throw new ControllerException(e);
         }
 
-        if(!brandParam.equals(ALL_PARAM) && !brandList.contains(brandParam)) {
-            brandParam = ALL_PARAM;
-        }
+        request.setAttribute(FOOTWEAR_LIST_ATTRIBUTE, footwearList);
+        request.setAttribute(BRAND_LIST_ATTRIBUTE, brandList);
+        request.setAttribute(CATEGORY_LIST_ATTRIBUTE, categoryList);
+        request.setAttribute(FOR_WHOM_ATTRIBUTE, criteria.getForWhom().toString().toLowerCase());
+        request.setAttribute(CATEGORY_ATTRIBUTE, criteria.getCategory());
+        request.setAttribute(BRAND_ATTRIBUTE, criteria.getBrand());
 
-        if (categoryParam.equals(ALL_PARAM) && brandParam.equals(ALL_PARAM)) {
-            try {
-                footwearList = footwearService.getAll(forParamEnum, lang);
-            } catch (ServiceException e) {
-                throw new ControllerException("Error while loading all footwear");
-            }
-        } else if (categoryParam.equals(ALL_PARAM)) {
-            try {
-                footwearList = footwearService.getByBrand(brandParam, forParamEnum, lang);
-            } catch (ServiceException e) {
-                throw new ControllerException("Error while loading footwear by brand");
-            }
-        } else if (brandParam.equals(ALL_PARAM)) {
-            try {
-                footwearList = footwearService.getByCategory(categoryParam, forParamEnum, lang);
-            } catch (ServiceException e) {
-                throw new ControllerException("Error while loading footwear by category");
-            }
-        } else {
-            try {
-                footwearList = footwearService.getByCategoryAndBrand(categoryParam, brandParam, forParamEnum, lang);
-            } catch (ServiceException e) {
-                throw new ControllerException("Error while loading footwear by category and brand");
-            }
-        }
-
-        request.setAttribute("footwearList", footwearList);
-        request.setAttribute("brandList", brandList);
-        request.setAttribute("categoryList", categoryList);
-        request.setAttribute("forWhom", forParam);
-        request.setAttribute("category", categoryParam);
-        request.setAttribute("brand", brandParam);
-
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/category.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
         requestDispatcher.forward(request, response);
     }
 }

@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class GoToSignInPage implements Command {
+
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/sign-in.jsp";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/sign-in.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
         requestDispatcher.forward(request, response);
     }
 }

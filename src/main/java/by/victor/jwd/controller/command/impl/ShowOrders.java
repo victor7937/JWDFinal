@@ -18,6 +18,7 @@ public class ShowOrders implements Command {
 
     private static final String LANG_ATTRIBUTE = "lang";
     private static final String ORDERS_ATTRIBUTE = "orders";
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/admin_page.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,12 +30,12 @@ public class ShowOrders implements Command {
         try {
             orders = orderService.getAllOrders(lang);
         } catch (ServiceException e) {
-            throw new ControllerException("Error getting orders", e);
+            throw new ControllerException(e);
         }
 
         request.setAttribute(ORDERS_ATTRIBUTE, orders);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/admin_page.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
         requestDispatcher.forward(request, response);
     }
 }

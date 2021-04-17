@@ -24,6 +24,7 @@ public class GoToProfile implements Command {
     private static final String FORWARD_PATH = "/WEB-INF/jsp/profile.jsp";
     private static final String LANG_ATTRIBUTE = "lang";
     private static final String ORDERS_ATTRIBUTE = "orders";
+    public static final String PROFILE_INFO_ERROR = "Error while getting profile info";
 
 
     @Override
@@ -35,7 +36,7 @@ public class GoToProfile implements Command {
         try {
             customer = customerService.getByEmail(email);
         } catch (ServiceException e) {
-            throw new ControllerException("Error while getting profile info",e);
+            throw new ControllerException(PROFILE_INFO_ERROR,e);
         }
         if (customer != null) {
             OrderService orderService = ServiceProvider.getInstance().getOrderService();
@@ -43,7 +44,7 @@ public class GoToProfile implements Command {
             try {
                 orders = orderService.getOrdersOfCustomer(email, lang);
             } catch (ServiceException e) {
-               throw new ControllerException("Error getting orders",e);
+               throw new ControllerException(e);
             }
             request.setAttribute(ORDERS_ATTRIBUTE, orders);
             request.setAttribute(CUSTOMER_ATTRIBUTE, customer);
@@ -51,8 +52,8 @@ public class GoToProfile implements Command {
             requestDispatcher.forward(request, response);
         }
         else {
-            logger.error("Getting profile info error, user doesn't exist");
-            throw new ControllerException("Error while getting profile info, user doesn't exist");
+            logger.error(PROFILE_INFO_ERROR);
+            throw new ControllerException(PROFILE_INFO_ERROR);
         }
     }
 }

@@ -28,6 +28,7 @@ public class SaveNewCustomer implements Command {
 	private static final String INCORRECT_CUSTOMER_ATTRIBUTE = "incorrect_customer";
 	private static final String ERROR_MSG_ATTRIBUTE = "err_message";
 	private static final String ERROR_MSG_TEXT_EMAIL = "Sorry, this email has already taken";
+	public static final String FORWARD_PATH = "/WEB-INF/jsp/register.jsp";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +41,7 @@ public class SaveNewCustomer implements Command {
 
 		if (!requestValidator.validate(request)){
 			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
 			requestDispatcher.forward(request, response);
 			return;
 		}
@@ -58,10 +59,10 @@ public class SaveNewCustomer implements Command {
 		} catch (EmailExistsException e) {
 			request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMAIL);
 			request.setAttribute(INCORRECT_CUSTOMER_ATTRIBUTE, customer);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
 			requestDispatcher.forward(request, response);
 		} catch (ServiceException e) {
-			throw new ControllerException(REGISTRATION_FAIL_MESSAGE);
+			throw new ControllerException(REGISTRATION_FAIL_MESSAGE, e);
 		}
 	}
 }

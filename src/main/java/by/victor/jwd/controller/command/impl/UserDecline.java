@@ -39,7 +39,7 @@ public class UserDecline implements Command {
                         .createPath());
             }
         } catch (ServiceException e) {
-            throw new ControllerException("Error updating status");
+            throw new ControllerException(e);
         }
     }
 }

@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GoToRegistrationPage implements Command {
 
+	public static final String FORWARD_PATH = "/WEB-INF/jsp/register.jsp";
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
 		requestDispatcher.forward(request, response);
-		
 	}
 
 }

@@ -20,6 +20,8 @@ public class GoToProduct implements Command {
     private static final String SIZES_ATTRIBUTE = "sizes";
     private static final String ART_PARAM = "art";
     private static final String LANG_PARAM = "lang";
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/product.jsp";
+    public static final int ERROR_CODE = 404;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,14 +34,14 @@ public class GoToProduct implements Command {
             footwear = footwearService.getByArt(art,lang);
             sizes = footwearService.getSizesByArt(art);
         } catch (ServiceException e) {
-            throw new ControllerException("Error while loading footwears");
+            throw new ControllerException(e);
         }
         if (footwear == null) {
-            response.sendError(404);
+            response.sendError(ERROR_CODE);
         } else {
             request.setAttribute(FOOTWEAR_ATTRIBUTE, footwear);
             request.setAttribute(SIZES_ATTRIBUTE, sizes);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/product.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
             requestDispatcher.forward(request, response);
         }
     }

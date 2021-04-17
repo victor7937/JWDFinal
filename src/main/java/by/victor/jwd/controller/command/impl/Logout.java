@@ -5,6 +5,9 @@ import java.io.IOException;
 
 
 import by.victor.jwd.controller.command.Command;
+import by.victor.jwd.controller.command.CommandName;
+import by.victor.jwd.controller.command.CommandPath;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,15 +17,11 @@ public class Logout implements Command{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		HttpSession session = request.getSession();
-		
-		if(session != null) {
+		if (session != null) {
 			session.invalidate();
 		}
-
-		response.sendRedirect("/lei-shoes");
-		
+		response.sendRedirect(CommandPath.createCommand(CommandName.GOTOMAINPAGE).createPath());
 	}
 
 }

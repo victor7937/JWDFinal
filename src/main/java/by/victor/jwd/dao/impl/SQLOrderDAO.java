@@ -37,7 +37,7 @@ public class SQLOrderDAO implements OrderDAO {
 
     private static final String SQL_GET_ORDERS_OF_STATUS = "SELECT * FROM orders WHERE ord_status = ? ORDER BY ord_date DESC";
 
-    private static final String SQL_SET_ORDER_STATUS = "UPDAE orders SET ord_status = ? WHERE ord_id = ?";
+    private static final String SQL_SET_ORDER_STATUS = "UPDATE orders SET ord_status = ? WHERE ord_id = ?";
 
     private static final String SQL_GET_ORDER_ITEMS = "SELECT oi_item_id FROM orders_items WHERE oi_order_id = ?";
 
@@ -61,7 +61,6 @@ public class SQLOrderDAO implements OrderDAO {
                 logger.error("Order not updated");
                 return false;
             }
-//            resourceProvider.commit();
 
             int orderId = orderRS.getInt(1);
             for (FootwearItem item : order.getItems()) {
@@ -91,7 +90,6 @@ public class SQLOrderDAO implements OrderDAO {
         } catch (ConnectionException | SQLException e) {
             throw new DAOException("Create order error", e);
         }
-
     }
 
     @Override
