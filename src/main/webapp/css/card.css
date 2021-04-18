@@ -21,7 +21,7 @@
 }
 .product-card .pic-1 {
     opacity: 1;
-    transition: all .5s ease-out 0.8s;
+    transition: all .3s ease-out 0.1s;
 }
 .product-card:hover .pic-1 {
     opacity: 0;
@@ -31,7 +31,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    transition: all .5s ease-out 0.8s;
+    transition: all .3s ease-out 0.1s;
 }
 .product-card:hover .pic-2 {
     opacity: 1;

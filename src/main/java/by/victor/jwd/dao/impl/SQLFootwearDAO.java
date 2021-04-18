@@ -1,6 +1,5 @@
 package by.victor.jwd.dao.impl;
 
-import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.Footwear;
 import by.victor.jwd.bean.ForEnum;
 import by.victor.jwd.dao.FootwearDAO;
@@ -18,7 +17,7 @@ import java.util.List;
 public class SQLFootwearDAO implements FootwearDAO {
 
     private static final String SQL_GET_FOOTWEARS = "SELECT f_art, f_name, f_price, c_name_%s AS category," +
-            " f_description_%s AS description, f_image_link, cl_name_%s AS color, b_name AS brand, f_for FROM footwears f JOIN " +
+            " f_description_%s AS description, cl_name_%s AS color, b_name AS brand, f_for FROM footwears f JOIN " +
             "categories c ON c.c_id = f.f_category JOIN brands b ON b.b_id = f.f_brand JOIN colors c2 ON " +
             "c2.cl_id = f.f_color";
 
@@ -51,8 +50,12 @@ public class SQLFootwearDAO implements FootwearDAO {
     private static final String SQL_GET_QUANTITY = "SELECT COUNT(fi_id) AS quantity FROM footwear_items WHERE fi_art = ? " +
             "AND fi_size = ? AND fi_status = 'STOCK'";
 
-    private static final String SQL_ADD_FOOTWEAR = "INSERT INTO footwears (f_art, f_name, f_price, f_category, f_for, f_image_link, f_color, f_brand, f_description_en, f_description_ru) "+
-    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_ADD_FOOTWEAR = "INSERT INTO footwears (f_art, f_name, f_price, f_category, f_for, f_color, f_brand, f_description_en, f_description_ru) "+
+    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String SQL_ADD_IMAGE = "INSERT INTO footwear_images (img_name, img_art) VALUES(?, ?)";
+
+    private static final String SQL_GET_IMAGES = "SELECT img_name FROM footwear_images WHERE img_art = ? ORDER BY img_name";
 
     @Override
     public List<Footwear> getAll(ForEnum forEnum, String lang) throws DAOException {
@@ -218,6 +221,7 @@ public class SQLFootwearDAO implements FootwearDAO {
     @Override
     public boolean addNewFootwear(Footwear footwear, String description_en, String description_ru, String lang) throws DAOException {
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            resourceProvider.setAutoCommit(false);
             ResultSet categoryIdRS = resourceProvider.createResultSet(String.format(SQL_GET_CATEGORY_ID, lang),
                     ps -> ps.setString(1, footwear.getCategory()));
             if (!categoryIdRS.next()) {
@@ -239,18 +243,37 @@ public class SQLFootwearDAO implements FootwearDAO {
             }
             int brandId = brandIdRS.getInt("b_id");
 
-            return resourceProvider.updateAction(SQL_ADD_FOOTWEAR, ps -> {
+            boolean updateSuccess = resourceProvider.updateAction(SQL_ADD_FOOTWEAR, ps -> {
                 ps.setString(1, footwear.getArt());
                 ps.setString(2, footwear.getName());
                 ps.setFloat(3, footwear.getPrice());
                 ps.setInt(4, categoryId);
                 ps.setString(5, footwear.getForWhom().toString());
-                ps.setString(6, footwear.getImageLink());
-                ps.setInt(7, colorId);
-                ps.setInt(8, brandId);
-                ps.setString(9, description_en);
-                ps.setString(10, description_ru);
+                ps.setInt(6, colorId);
+                ps.setInt(7, brandId);
+                ps.setString(8, description_en);
+                ps.setString(9, description_ru);
             });
+
+            if (!updateSuccess) {
+                resourceProvider.rollback();
+                return false;
+            }
+
+            for (String image : footwear.getImageLinks()) {
+                boolean imageAdding = resourceProvider.updateAction(SQL_ADD_IMAGE, ps -> {
+                    ps.setString(1, image);
+                    ps.setString(2, footwear.getArt());
+                });
+                if (!imageAdding) {
+                    resourceProvider.rollback();
+                    return false;
+                }
+            }
+
+            resourceProvider.commit();
+            return true;
+
         } catch (SQLException | ConnectionException e) {
             throw new DAOException("Creating footwear error",e);
         }
@@ -274,16 +297,30 @@ public class SQLFootwearDAO implements FootwearDAO {
             Float price = resultSet.getFloat("f_price");
             String category = resultSet.getString("category");
             String description = resultSet.getString("description");
-            String imageLink = resultSet.getString("f_image_link");
             String color = resultSet.getString("color");
             String brand = resultSet.getString("brand");
             String forWhom = resultSet.getString("f_for");
+            List<String> imageList = getImages(art);
             footwear = new Footwear(art, name, price, color, category,
-                    description, imageLink, brand,  ForEnum.valueOf(forWhom));
+                    description, imageList, brand,  ForEnum.valueOf(forWhom));
 
         } catch (SQLException e) {
             throw new DAOException("Building footwear error", e);
         }
         return footwear;
+    }
+
+    private List<String> getImages(String art) throws DAOException {
+        List<String> imageList = new ArrayList<>();
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+            ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_IMAGES, ps -> ps.setString(1, art));
+            while (resultSet.next()) {
+                String imageName = resultSet.getString("img_name");
+                imageList.add(imageName);
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Getting images error", e);
+        }
+        return imageList;
     }
 }

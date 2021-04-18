@@ -40,7 +40,7 @@
                         <tbody>
                             <c:forEach var="item" items="${requestScope.itemsList}">
                                 <tr class="text-cart">
-                                    <td> <div class="small-image-container"><img src="images/${item.footwear.imageLink}"  alt="item"/></div> </td>
+                                    <td> <div class="small-image-container"><img src="images/${item.footwear.imageLinks.get(0)}" alt="item"/></div> </td>
                                     <td>${item.footwear.art}</td>
                                     <input type="hidden" name="art" value="${item.footwear.art}">
                                     <td>${item.footwear.brand}</td>

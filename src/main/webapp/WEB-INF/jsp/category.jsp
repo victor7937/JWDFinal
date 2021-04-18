@@ -64,41 +64,15 @@
                     </c:forEach>
                 </ul>
             </div>
-<%--            <div class="card bg-light mb-3">--%>
-<%--                <div class="card-header text-white text-uppercase">Last product</div>--%>
-<%--                <div class="card-body">--%>
-<%--                    <img class="img-fluid" src="https://dummyimage.com/600x400/55595c/fff" />--%>
-<%--                    <h5 class="card-title">Product title</h5>--%>
-<%--                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--%>
-<%--                    <p class="bloc_left_price">99.00 $</p>--%>
-<%--                </div>--%>
-<%--            </div>--%>
         </div>
         <div class="col">
             <div class="row">
-                <!--<div class="col-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <img class="card-img-top" src="https://dummyimage.com/600x400/55595c/fff" alt="Card image cap">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="Controller?command=gotoproduct" title="View Product">Product title</a></h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="row">
-                                <div class="col">
-                                    <p class="btn btn-danger btn-block">99.00 $</p>
-                                </div>
-                                <div class="col">
-                                    <a href="#" class="btn btn-success btn-block">Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
                 <c:forEach var="footwear" items="${requestScope.footwearList}">
                     <div class="col-md-4 col-sm-6 my-3">
                         <div class="product-card">
                             <div class="product-image">
-                                    <img class="pic-1" src="images/${footwear.imageLink}">
-                                    <img class="pic-2" src="images/${footwear.imageLink}">
+                                    <img class="pic-1" src="images/${footwear.imageLinks.get(0)}">
+                                    <img class="pic-2" src="images/${footwear.imageLinks.size() > 1 ? footwear.imageLinks.get(1) : footwear.imageLinks.get(0)}">
                                 <ul class="social">
                                    <!-- <li><a href="" class="fa fa-search"></a></li>
                                     <li><a href="" class="fa fa-shopping-bag"></a></li> -->

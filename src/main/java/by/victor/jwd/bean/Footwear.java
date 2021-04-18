@@ -2,6 +2,7 @@ package by.victor.jwd.bean;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class Footwear implements Serializable {
@@ -15,7 +16,7 @@ public class Footwear implements Serializable {
     private String color;
     private String category;
     private String description;
-    private String imageLink;
+    private List<String> imageLinks;
     private String brand;
     private ForEnum forWhom;
 
@@ -24,14 +25,14 @@ public class Footwear implements Serializable {
     }
 
     public Footwear(String art, String name, Float price, String color, String category,
-                    String description, String imageLink, String brand, ForEnum forWhom) {
+                    String description, List<String> imageLinks, String brand, ForEnum forWhom) {
         this.art = art;
         this.name = name;
         this.price = price;
         this.color = color;
         this.category = category;
         this.description = description;
-        this.imageLink = imageLink;
+        this.imageLinks = imageLinks;
         this.brand = brand;
         this.forWhom = forWhom;
     }
@@ -84,12 +85,16 @@ public class Footwear implements Serializable {
         this.description = description;
     }
 
-    public String getImageLink() {
-        return imageLink;
+    public List<String> getImageLinks() {
+        return imageLinks;
     }
 
-    public void setImageLink(String imageLink) {
-        this.imageLink = imageLink;
+    public void setImageLinks(List<String> imageLinks) {
+        this.imageLinks = imageLinks;
+    }
+
+    public void addImage(String image) {
+        this.imageLinks.add(image);
     }
 
     public String getBrand() {
@@ -130,7 +135,7 @@ public class Footwear implements Serializable {
                 ", color='" + color + '\'' +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
-                ", imageLink='" + imageLink + '\'' +
+                ", imageLink='" + imageLinks + '\'' +
                 ", brand='" + brand + '\'' +
                 ", forWhom=" + forWhom +
                 '}';

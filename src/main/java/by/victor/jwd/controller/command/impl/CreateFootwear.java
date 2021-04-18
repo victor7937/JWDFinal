@@ -39,7 +39,7 @@ public class CreateFootwear implements Command {
 
         Footwear footwear = new Footwear(request.getParameter(ART_PARAM));
         buildFootwear(footwear, request);
-        footwear.setImageLink(ImageUploader.upload(request).get(0));
+        footwear.setImageLinks(ImageUploader.upload(request));
         String description_en = request.getParameter(DESCRIPTION_EN_PARAM);
         String description_ru = request.getParameter(DESCRIPTION_RU_PARAM);
 

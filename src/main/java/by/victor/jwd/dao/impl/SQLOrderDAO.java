@@ -6,7 +6,6 @@ import by.victor.jwd.dao.exception.ConnectionException;
 import by.victor.jwd.dao.exception.DAOException;
 import by.victor.jwd.dao.util.DAOResourceProvider;
 import by.victor.jwd.dao.util.SQLConsumer;
-import by.victor.jwd.service.OrderService;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;

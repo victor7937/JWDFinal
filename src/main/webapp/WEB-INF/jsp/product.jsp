@@ -45,24 +45,26 @@
                     <li data-target="#carouselExampleFade" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-<%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
-                        <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="images/${footwear.imageLink}"  alt="1"/>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
-                        <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="images/${footwear.imageLink}"  alt="2"/>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <%--                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">--%>
-                        <a href="" data-toggle="modal" data-target="#productModal">
-                            <img class="img-fluid" src="images/${footwear.imageLink}" alt="3" />
-                        </a>
-                    </div>
+                    <c:forEach begin="0" var="i" end="${footwear.imageLinks.size() - 1}">
+                        <div class="carousel-item ${i == 0 ? 'active' : ''}">
+                            <a href="" data-toggle="modal" data-target="#productModal${i}">
+                                <img class="img-fluid" src="images/${footwear.imageLinks.get(i)}" alt="image"/>
+                            </a>
+                        </div>
+                    </c:forEach>
+
+<%--                    <div class="carousel-item">--%>
+<%--                        &lt;%&ndash;                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">&ndash;%&gt;--%>
+<%--                        <a href="" data-toggle="modal" data-target="#productModal">--%>
+<%--                            <img class="img-fluid" src="images/${footwear.imageLinks}" alt="2"/>--%>
+<%--                        </a>--%>
+<%--                    </div>--%>
+<%--                    <div class="carousel-item">--%>
+<%--                        &lt;%&ndash;                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">&ndash;%&gt;--%>
+<%--                        <a href="" data-toggle="modal" data-target="#productModal">--%>
+<%--                            <img class="img-fluid" src="images/${footwear.imageLinks}" alt="3" />--%>
+<%--                        </a>--%>
+<%--                    </div>--%>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon bg-secondary" aria-hidden="true"></span>
@@ -202,24 +204,27 @@
 <jsp:include page="footer.jsp"/>
 
 <!-- Modal image -->
-<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-center" id="productModalLabel">Product title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<c:forEach var="i" begin="0" end="${footwear.imageLinks.size() - 1}">
+    <div class="modal fade" id="productModal${i}" tabindex="-1" role="dialog" aria-labelledby="productModalLabel${i}" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="productModalLabel${i}">Product title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img class="img-fluid" src="images/${footwear.imageLinks.get(i)}" data-dismiss="modal" />
+                </div>
+                    <%--            <div class="modal-footer">--%>
+                    <%--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
+                    <%--            </div>--%>
             </div>
-            <div class="modal-body">
-                <img class="img-fluid" src="images/${footwear.imageLink}" data-dismiss="modal" />
-            </div>
-<%--            <div class="modal-footer">--%>
-<%--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-<%--            </div>--%>
         </div>
     </div>
-</div>
+</c:forEach>
+
 
 <div class="toast" id="cartToast" style="position: absolute; top: 63px; right: 2px;">
     <div class="toast-header">
