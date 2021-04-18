@@ -20,29 +20,40 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static by.victor.jwd.controller.constant.FootwearParams.ART_PARAM;
+import static by.victor.jwd.controller.constant.FootwearParams.SIZE_PARAM;
+import static by.victor.jwd.controller.constant.GlobalParams.MESSAGE_PARAM;
 
 public class CreateNewOrder implements Command {
 
     private final static Logger logger = Logger.getLogger(CreateNewOrder.class);
+    private static final String TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    private static final String ART_PREFIX = "art_";
+    private static final String QUANTITY_PARAM = "quantity";
+    private static final String EMAIL_PARAM = "email";
+    private static final String LANG_DEFAULT = "en";
+    private static final String SUCCESS_VALUE = "success";
+    private static final String FAIL_VALUE = "fail";
+    private static final String NOT_LOGGED_IN_VALUE = "not_logged_in";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String customerEmail = (String) request.getSession().getAttribute("email");
+        String customerEmail = (String) request.getSession().getAttribute(EMAIL_PARAM);
 
-        if (customerEmail == null || customerEmail.isEmpty()) {
-            response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam("message","not_logged_in").createPath());
+        if (customerEmail == null || customerEmail.isBlank()) {
+            response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, NOT_LOGGED_IN_VALUE).createPath());
             return;
         }
 
-        String[] arts = request.getParameterValues("art");
-        String[] sizes = request.getParameterValues("size");
-        String[] quantities = request.getParameterValues("quantity");
+        String[] arts = request.getParameterValues(ART_PARAM);
+        String[] sizes = request.getParameterValues(SIZE_PARAM);
+        String[] quantities = request.getParameterValues(QUANTITY_PARAM);
 
         if ((arts == null || sizes == null || quantities == null) || (arts.length == 0 || sizes.length == 0 || quantities.length == 0) ||
                 (arts.length != sizes.length || quantities.length != sizes.length)){
@@ -56,29 +67,27 @@ public class CreateNewOrder implements Command {
 
         try {
             for (int i = 0; i < arts.length; i++) {
-                Footwear footwear = footwearService.getByArt(arts[i],"en");
+                Footwear footwear = footwearService.getByArt(arts[i], LANG_DEFAULT);
                 FootwearItem footwearItem = new FootwearItem(footwear, Float.parseFloat(sizes[i]), Integer.parseInt(quantities[i]));
                 items.add(footwearItem);
             }
         } catch (ServiceException e) {
-            logger.error("Error getting footwears for order");
-            throw new ControllerException("Error getting footwears for order");
+            throw new ControllerException("Error getting footwear for order", e);
         }
 
         Customer customer;
         try {
             customer = customerService.getByEmail(customerEmail);
         } catch (ServiceException e) {
-            logger.error("Error getting customer for order");
-            throw new ControllerException("Error getting customer for order");
+            throw new ControllerException("Error getting customer for order", e);
         }
 
         if (customer == null) {
-            logger.error("Customer don't find");
-            throw new ControllerException("Customer don't find");
+            logger.error("Customer not found");
+            throw new ControllerException("Customer not found");
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_PATTERN);
         LocalDateTime currentDate = LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter);
 
         Order order = new Order(customer, currentDate, items);
@@ -91,16 +100,16 @@ public class CreateNewOrder implements Command {
                 Cookie[] cookies = request.getCookies();
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {
-                        if (cookie.getName().contains("art_")) {
+                        if (cookie.getName().contains(ART_PREFIX)) {
                             cookie.setMaxAge(0);
                             response.addCookie(cookie);
                         }
                     }
                 }
-                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam("message","success").createPath());
+                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, SUCCESS_VALUE).createPath());
 
             } else {
-                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam("message","fail").createPath());
+                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, FAIL_VALUE).createPath());
             }
 
         } catch (ServiceException e) {

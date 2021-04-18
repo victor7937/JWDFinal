@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+
 public class ShowOrders implements Command {
 
-    private static final String LANG_ATTRIBUTE = "lang";
     private static final String ORDERS_ATTRIBUTE = "orders";
-    public static final String FORWARD_PATH = "/WEB-INF/jsp/admin_page.jsp";
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/admin-page.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,6 +1,6 @@
 package by.victor.jwd.controller.constant;
 
-public class ParamValues {
+public class CustomerParams {
     public final static String EMAIL_PARAM = "email";
     public final static String NAME_PARAM = "name";
     public final static String PHONE_PARAM = "phone";

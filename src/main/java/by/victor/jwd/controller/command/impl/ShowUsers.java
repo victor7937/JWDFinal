@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class ShowUsers implements Command {
 
     private static final String CUSTOMERS_ATTRIBUTE = "customers";
-    public static final String FORWARD_PATH = "/WEB-INF/jsp/admin_page.jsp";
+    public static final String FORWARD_PATH = "/WEB-INF/jsp/admin-page.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

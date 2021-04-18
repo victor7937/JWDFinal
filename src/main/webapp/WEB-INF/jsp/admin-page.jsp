@@ -11,11 +11,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Lei Shoes</title>
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
     <title>Admin page</title>
 </head>
+
 <body>
 
 <jsp:include page="header.jsp"/>
@@ -82,16 +82,6 @@
                             </table>
                         </div>
                     </div>
-    <%--                <div class="col mb-2">--%>
-    <%--                    <div class="row">--%>
-    <%--                        <div class="col-sm-12  col-md-6">--%>
-    <%--                            <a href="Controller?command=gotocategory" class="btn btn-block btn-light">Continue Shopping</a>--%>
-    <%--                        </div>--%>
-    <%--                        <div class="col-sm-12 col-md-6 text-right">--%>
-    <%--                            <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>--%>
-    <%--                        </div>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
                 </div>
             </div>
         </div>
@@ -233,6 +223,8 @@
     </div>
 </div>
 
+<jsp:include page="footer.jsp"/>
+
 <script type="text/javascript">
     $(document).ready(function(){
 
@@ -243,10 +235,6 @@
         }
     });
 </script>
-
-
-
-<jsp:include page="footer.jsp"/>
 
 </body>
 </html>

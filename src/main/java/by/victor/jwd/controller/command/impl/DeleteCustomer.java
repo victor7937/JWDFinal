@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static by.victor.jwd.controller.constant.ParamValues.EMAIL_PARAM;
+import static by.victor.jwd.controller.constant.CustomerParams.EMAIL_PARAM;
 
 public class DeleteCustomer implements Command {
 
@@ -41,7 +41,7 @@ public class DeleteCustomer implements Command {
                         .createPath());
             }
         } catch (ServiceException e) {
-            throw new ControllerException("Delete customer error", e);
+            throw new ControllerException(e);
         }
     }
 }

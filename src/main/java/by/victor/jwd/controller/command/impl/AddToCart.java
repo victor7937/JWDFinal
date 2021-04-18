@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.victor.jwd.controller.constant.FootwearParams.ART_PARAM;
+import static by.victor.jwd.controller.constant.FootwearParams.SIZE_PARAM;
+
 public class AddToCart implements Command {
 
-    private static final String ART_PARAM = "art";
-    private static final String SIZE_PARAM = "size";
     private static final String COOKIE_DELIMITER = "|";
     private static final String ART_PREFIX = "art_";
     private static final int MAX_AGE = 60 * 60 * 24;

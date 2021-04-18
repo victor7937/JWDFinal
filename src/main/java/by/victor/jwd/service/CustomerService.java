@@ -7,14 +7,12 @@ import java.util.List;
 
 public interface CustomerService {
 	Customer authorization(String email, String passport) throws ServiceException;
-
 	Customer getByEmail (String email) throws ServiceException;
-
 	boolean registration(Customer customer) throws ServiceException;
-
-	boolean update(String email, Customer customer) throws ServiceException;
-
+	boolean update(Customer customer) throws ServiceException;
 	boolean delete(String email) throws ServiceException;
-
+	boolean updatePassword(String email, String password) throws ServiceException;
+	String getPasswordByEmail(String email) throws ServiceException;
 	List<Customer> getAllCustomers () throws ServiceException;
+
 }

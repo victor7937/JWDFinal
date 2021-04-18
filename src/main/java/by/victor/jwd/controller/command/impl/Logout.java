@@ -1,9 +1,5 @@
 package by.victor.jwd.controller.command.impl;
 
-import java.io.IOException;
-
-
-
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandName;
 import by.victor.jwd.controller.command.CommandPath;
@@ -12,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 public class Logout implements Command{
 

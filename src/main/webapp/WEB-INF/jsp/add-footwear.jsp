@@ -16,17 +16,8 @@
   <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-<%--<form action="upload" method="post" enctype="multipart/form-data">--%>
-<%--    <div class="input-group">--%>
-<%--        <div class="custom-file">--%>
-<%--            <input type="file" multiple="multiple" name="file" class="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" accept="image/*">--%>
-<%--            <label class="custom-file-label" for="inputGroupFile03">Choose file</label>--%>
-<%--        </div>--%>
-<%--        <div class="input-group-append">--%>
-<%--            <button class="btn btn-primary" type="submit" id="inputGroupFileAddon03">Button</button>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</form>--%>
+
+<jsp:include page="header.jsp"/>
 
 <section>
     <div class="container">
@@ -138,10 +129,7 @@
 
 </section>
 
-
-
-
-
+<jsp:include page="footer.jsp"/>
 
 <script type="application/javascript">
     $('.custom-file input').change(function (e) {

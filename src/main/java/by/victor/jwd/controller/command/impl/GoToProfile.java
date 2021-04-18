@@ -17,20 +17,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+
 public class GoToProfile implements Command {
     private final static Logger logger = Logger.getLogger(GoToProfile.class);
     private static final String CUSTOMER_ATTRIBUTE = "customer";
     private static final String EMAIL_ATTRIBUTE = "email";
     private static final String FORWARD_PATH = "/WEB-INF/jsp/profile.jsp";
-    private static final String LANG_ATTRIBUTE = "lang";
     private static final String ORDERS_ATTRIBUTE = "orders";
-    public static final String PROFILE_INFO_ERROR = "Error while getting profile info";
-
+    private static final String PROFILE_INFO_ERROR = "Error while getting profile info";
+    private static final String AUTHORIZATION_ERROR = "Authorization error";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = (String) request.getSession().getAttribute(EMAIL_ATTRIBUTE);
         String lang = (String) request.getSession().getAttribute(LANG_ATTRIBUTE);
+        if (email == null || email.isBlank()) {
+            throw new ControllerException(AUTHORIZATION_ERROR);
+        }
+
         CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
         Customer customer;
         try {

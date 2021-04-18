@@ -5,7 +5,7 @@ import by.victor.jwd.controller.validator.RequestValidator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import static by.victor.jwd.controller.constant.ParamValues.*;
+import static by.victor.jwd.controller.constant.CustomerParams.*;
 
 public class RegistrationValidator implements RequestValidator {
 
@@ -27,8 +27,8 @@ public class RegistrationValidator implements RequestValidator {
         String password = request.getParameterValues(PASSWORD_PARAM)[0];
         String passwordRepeat = request.getParameterValues(PASSWORD_PARAM)[1];
 
-        if (email == null || password == null || passwordRepeat == null || name == null || "".equals(email) ||
-                "".equals(name) || "".equals(password) || "".equals(passwordRepeat)) {
+        if (email == null || password == null || passwordRepeat == null || name == null || email.isBlank() ||
+               name.isBlank() || password.isBlank() || passwordRepeat.isBlank()) {
             request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMPTY);
             logger.info("Empty fields");
             return false;

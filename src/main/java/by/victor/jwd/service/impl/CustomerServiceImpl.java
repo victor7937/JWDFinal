@@ -70,14 +70,10 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public boolean update(String email, Customer customer) throws ServiceException {
+	public boolean update(Customer customer) throws ServiceException {
 		boolean successUpdating;
 		try {
-			if (!email.equals(customer.getEmail()) && customerDAO.isCustomerExists(customer.getEmail())) {
-				throw new EmailExistsException(EMAIL_EXISTS);
-			} else {
-				successUpdating = customerDAO.updateCustomer(email, customer);
-			}
+			successUpdating = customerDAO.updateCustomer(customer);
 		} catch (DAOException e) {
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
@@ -95,6 +91,30 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new ServiceException(e);
 		}
 		return successDeleting;
+	}
+
+	@Override
+	public boolean updatePassword(String email, String password) throws ServiceException {
+		boolean successUpdating;
+		try {
+			successUpdating = customerDAO.updatePassword(email, password);
+		} catch (DAOException e) {
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
+		}
+		return successUpdating;
+	}
+
+	@Override
+	public String getPasswordByEmail(String email) throws ServiceException {
+		String password;
+		try {
+			password = customerDAO.getPassword(email);
+		} catch (DAOException e) {
+			logger.error(e.getMessage(), e);
+			throw new ServiceException(e);
+		}
+		return password;
 	}
 
 	@Override

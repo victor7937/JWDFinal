@@ -14,20 +14,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static by.victor.jwd.controller.constant.FootwearParams.ART_PARAM;
+import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+
 public class GoToProduct implements Command {
 
     private static final String FOOTWEAR_ATTRIBUTE = "footwear";
     private static final String SIZES_ATTRIBUTE = "sizes";
-    private static final String ART_PARAM = "art";
-    private static final String LANG_PARAM = "lang";
-    public static final String FORWARD_PATH = "/WEB-INF/jsp/product.jsp";
-    public static final int ERROR_CODE = 404;
+    private static final String FORWARD_PATH = "/WEB-INF/jsp/product.jsp";
+    private static final int ERROR_CODE = 404;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String art = request.getParameter(ART_PARAM);
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
-        String lang = (String)request.getSession().getAttribute(LANG_PARAM);
+        String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
         Footwear footwear;
         List<Float> sizes;
         try {

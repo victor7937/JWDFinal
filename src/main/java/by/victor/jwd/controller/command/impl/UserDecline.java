@@ -15,12 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class UserDecline implements Command {
+
+    private static final String CHANGE_PARAM = "change";
+    private static final String FAIL_VALUE = "fail";
+    private static final String SUCCESS_VALUE = "success";
+    private static final String ORDER_ID_PARAM = "order_id";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String orderIdValue = request.getParameter("order_id");
+        String orderIdValue = request.getParameter(ORDER_ID_PARAM);
         if (orderIdValue == null || orderIdValue.isBlank()) {
             response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
-                    .addParam("change", "fail")
+                    .addParam(CHANGE_PARAM, FAIL_VALUE)
                     .createPath());
             return;
         }
@@ -31,11 +37,11 @@ public class UserDecline implements Command {
         try {
             if (orderService.setOrderStatus(orderId, orderStatus)){
                 response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
-                        .addParam("change", "success")
+                        .addParam(CHANGE_PARAM, SUCCESS_VALUE)
                         .createPath());
             } else {
                 response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
-                        .addParam("change", "fail")
+                        .addParam(CHANGE_PARAM, FAIL_VALUE)
                         .createPath());
             }
         } catch (ServiceException e) {

@@ -1,9 +1,9 @@
 package by.victor.jwd.controller.command;
 
+import by.victor.jwd.controller.command.impl.*;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import by.victor.jwd.controller.command.impl.*;
 
 public class CommandProvider {
 	private Map<CommandName, Command> commands = new HashMap<>();
@@ -32,6 +32,8 @@ public class CommandProvider {
 		commands.put(CommandName.USERDECLINE, new UserDecline());
 		commands.put(CommandName.ADDFOOTWEAR, new GoToAddingFootwear());
 		commands.put(CommandName.NEWFOOTWEAR, new CreateFootwear());
+		commands.put(CommandName.GOTOCHANGEPASSWORD, new GoToChangePassword());
+		commands.put(CommandName.CHANGEPASSWORD, new ChangePassword());
 	}
 	
 	

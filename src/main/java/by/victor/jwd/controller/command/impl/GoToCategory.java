@@ -16,16 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+
 public class GoToCategory implements Command {
 
-    public static final String FORWARD_PATH = "/WEB-INF/jsp/category.jsp";
-    public static final String FOOTWEAR_LIST_ATTRIBUTE = "footwearList";
-    public static final String BRAND_LIST_ATTRIBUTE = "brandList";
-    public static final String CATEGORY_LIST_ATTRIBUTE = "categoryList";
-    public static final String FOR_WHOM_ATTRIBUTE = "forWhom";
-    public static final String CATEGORY_ATTRIBUTE = "category";
-    public static final String BRAND_ATTRIBUTE = "brand";
-    public static final String LANG_ATTRIBUTE = "lang";
+    private static final String FORWARD_PATH = "/WEB-INF/jsp/category.jsp";
+    private static final String FOOTWEAR_LIST_ATTRIBUTE = "footwearList";
+    private static final String BRAND_LIST_ATTRIBUTE = "brandList";
+    private static final String CATEGORY_LIST_ATTRIBUTE = "categoryList";
+    private static final String FOR_WHOM_ATTRIBUTE = "forWhom";
+    private static final String CATEGORY_ATTRIBUTE = "category";
+    private static final String BRAND_ATTRIBUTE = "brand";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -20,13 +20,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+
 public class GoToCart implements Command {
 
     private final static Logger logger = Logger.getLogger(GoToCart.class);
-    private static final String LANG_ATTRIBUTE = "lang";
     private static final String ART_PREFIX = "art_";
     private static final String COOKIE_DELIMITER = "\\|";
-    public static final String ITEMS_LIST_ATTRIBUTE = "itemsList";
+    private static final String ITEMS_LIST_ATTRIBUTE = "itemsList";
+    private static final String FORWARD_PATH = "/WEB-INF/jsp/cart.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,7 +36,7 @@ public class GoToCart implements Command {
         List<FootwearItem> footwearItems = new ArrayList<>();
         if (cookies == null) {
             request.setAttribute(ITEMS_LIST_ATTRIBUTE, footwearItems);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
             requestDispatcher.forward(request, response);
             return;
         }
@@ -72,11 +74,11 @@ public class GoToCart implements Command {
                 item.setMaxQuantity(maxQuantity);
             }
         } catch (ServiceException e) {
-            throw new ControllerException("Getting max quantity error", e);
+            throw new ControllerException(e);
         }
 
         request.setAttribute(ITEMS_LIST_ATTRIBUTE, footwearItems);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/cart.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
         requestDispatcher.forward(request, response);
     }
 }

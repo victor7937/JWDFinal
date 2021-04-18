@@ -13,14 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static by.victor.jwd.controller.constant.FootwearParams.*;
+
 public class DeleteCartItem implements Command {
 
     private static final String ART_PREFIX = "art_";
     private static final String DELIMITER = "|";
     private static final String REGEX_DELIMITER = "\\|";
     private static final String COMMAND_GOTOCART = CommandPath.createCommand(CommandName.GOTOCART).createPath();
-    private static final String ART_PARAM = "art";
-    private static final String SIZE_PARAM = "size";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +28,7 @@ public class DeleteCartItem implements Command {
         String size = request.getParameter(SIZE_PARAM);
         Cookie[] cookies = request.getCookies();
 
-        if (cookies == null || art == null || "".equals(art) || size == null || "".equals(size)) {
+        if (cookies == null || art == null || art.isBlank() || size == null || size.isBlank()) {
             response.sendRedirect(COMMAND_GOTOCART);
             return;
         }

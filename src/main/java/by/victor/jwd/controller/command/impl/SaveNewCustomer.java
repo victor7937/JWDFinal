@@ -1,7 +1,5 @@
 package by.victor.jwd.controller.command.impl;
 
-import java.io.IOException;
-
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandName;
@@ -9,20 +7,21 @@ import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
 import by.victor.jwd.controller.validator.RequestValidator;
 import by.victor.jwd.controller.validator.ValidationProvider;
+import by.victor.jwd.service.CustomerService;
+import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.exception.EmailExistsException;
 import by.victor.jwd.service.exception.ServiceException;
-import by.victor.jwd.service.ServiceProvider;
-import by.victor.jwd.service.CustomerService;
-import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static by.victor.jwd.controller.constant.ParamValues.*;
+import java.io.IOException;
+
+import static by.victor.jwd.controller.constant.CustomerParams.*;
+import static by.victor.jwd.controller.constant.GlobalParams.MESSAGE_PARAM;
 
 public class SaveNewCustomer implements Command {
-	public static final String MESSAGE_PARAM = "message";
 	public static final String SUCCESS_VALUE = "register_success";
 	public static final String REGISTRATION_FAIL_MESSAGE = "Registration fail";
 	private static final String INCORRECT_CUSTOMER_ATTRIBUTE = "incorrect_customer";

@@ -20,12 +20,14 @@ public class ChangeStatus implements Command {
     private static final String SUCCESS_VALUE = "success";
     private static final String YES_VALUE = "yes";
     private static final String FAIL_VALUE = "fail";
-    public static final String CHANGE_PARAM = "change";
+    private static final String CHANGE_PARAM = "change";
+    private static final String STATUS_PARAM = "status";
+    private static final String ORDER_ID_PARAM = "order_id";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String statusValue = request.getParameter("status");
-        String orderIdValue = request.getParameter("order_id");
+        String statusValue = request.getParameter(STATUS_PARAM);
+        String orderIdValue = request.getParameter(ORDER_ID_PARAM);
         if (statusValue == null || statusValue.isBlank() || orderIdValue == null || orderIdValue.isBlank()) {
             response.sendRedirect(CommandPath.createCommand(CommandName.SHOWORDERS)
                     .addParam(SHOW_PARAM, YES_VALUE)
@@ -50,7 +52,7 @@ public class ChangeStatus implements Command {
                         .createPath());
             }
         } catch (ServiceException e) {
-            throw new ControllerException("Error updating status");
+            throw new ControllerException(e);
         }
     }
 }

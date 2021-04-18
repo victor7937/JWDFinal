@@ -34,8 +34,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form action="Controller" method="post">
-                            <c:if test="${err_message != null}">
-                                <p class="text-danger text-center">${err_message}</p>
+                            <c:if test="${param.message.equals('err_empty')}">
+                                <p class="text-danger text-center">Fields couldn't be empty</p>
+                            </c:if>
+                            <c:if test="${param.message.equals('err_email')}">
+                                <p class="text-danger text-center">Email is incorrect</p>
+                            </c:if>
+                            <c:if test="${param.message.equals('err_phone')}">
+                                <p class="text-danger text-center">Such phone is not valid</p>
                             </c:if>
                             <c:if test="${param.message.equals('not_upd')}">
                                 <p class="text-danger text-center">Can't update profile</p>
@@ -43,17 +49,20 @@
                             <c:if test="${param.message.equals('upd_success')}">
                                 <p class="text-success text-center">Profile was updated successfully</p>
                             </c:if>
+                            <c:if test="${param.message.equals('change_psw_success')}">
+                                <p class="text-success text-center">Password was changed successfully</p>
+                            </c:if>
                             <input type="hidden" name="command" value="updateprofile">
                             <div class="form-group row">
                                 <label for="email" class="col-4 col-form-label">Email</label>
                                 <div class="col-6">
-                                    <input id="email" name="email"  value="${customer.email}" readonly class="form-control-plaintext" required type="email">
+                                    <input id="email" name="email"  value="${requestScope.customer.email}" readonly class="form-control-plaintext" required type="email">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-4 col-form-label">Name</label>
                                 <div class="col-6">
-                                    <input id="name" name="name" value="${customer.name}" placeholder="Name" class="form-control" type="text" required>
+                                    <input id="name" name="name" value="${requestScope.customer.name}" placeholder="Name" class="form-control" type="text" required>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -62,7 +71,7 @@
                                     <select id="country" name="country" class="form-control" type="text">
                                         <c:forEach var="re" items="${r:displayCountries(sessionScope.lang)}">
                                             <c:choose>
-                                                <c:when test="${re.equals(customer.country)}">
+                                                <c:when test="${re.equals(requestScope.customer.country)}">
                                                     <option selected="">${re}</option>
                                                 </c:when>
                                                 <c:otherwise>
@@ -91,27 +100,32 @@
                                     <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="${customer.phone}" maxlength="15">
                                 </div>
                             </div>
-
+<%--                            <div class="form-group row">--%>
+<%--                                <label for="newpass" class="col-4 col-form-label">New Password</label>--%>
+<%--                                <div class="col-6">--%>
+<%--                                    <input id="newpass" name="newpass" placeholder="New Password" class="form-control" type="password"--%>
+<%--                                           title="Password should contain only english letters, numbers and symbols such as '-_!@' at least one number and lowercase english letter, 8-40 characters"--%>
+<%--                                           pattern="^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9-_!@]{7,40}$">--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group row">--%>
+<%--                                <label for="newpass_repeat" class="col-4 col-form-label">Repeat Password</label>--%>
+<%--                                <div class="col-6">--%>
+<%--                                    <input id="newpass_repeat" name="newpass" placeholder="Repeat Password" class="form-control" type="password">--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
                             <div class="form-group row">
-                                <label for="newpass" class="col-4 col-form-label">New Password</label>
-                                <div class="col-6">
-                                    <input id="newpass" name="newpass" placeholder="New Password" class="form-control" type="password"
-                                           title="Password should contain only english letters, numbers and symbols such as '-_!@' at least one number and lowercase english letter, 8-40 characters"
-                                           pattern="^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9-_!@]{7,40}$">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="newpass_repeat" class="col-4 col-form-label">Repeat Password</label>
-                                <div class="col-6">
-                                    <input id="newpass_repeat" name="newpass" placeholder="Repeat Password" class="form-control" type="password">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="offset-4 col-6">
+                                <div class="offset-4 col-3">
                                     <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
+                                </div>
+                                <div class="col-3">
+                                    <a href="Controller?command=gotochangepassword" class="btn btn-primary">Change Password</a>
                                 </div>
                             </div>
                         </form>
+
+
+
                     </div>
                 </div>
 

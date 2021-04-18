@@ -12,58 +12,62 @@ import by.victor.jwd.controller.validator.ValidationProvider;
 import by.victor.jwd.service.FootwearService;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.exception.ServiceException;
-import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.victor.jwd.controller.constant.FootwearParams.*;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
+
 public class CreateFootwear implements Command {
+
+    private static final String SUCCESS_VALUE = "created_success";
+    private static final String NOT_CREATE_VALUE = "not_create";
+    private static final String INV_DATA_VALUE = "inv_data";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestValidator validator = ValidationProvider.getInstance().getFootwearValidator();
         if (!validator.validate(request)) {
             response.sendRedirect(CommandPath.createCommand(CommandName.ADDFOOTWEAR)
-                    .addParam("message","inv_data")
+                    .addParam(MESSAGE_PARAM, INV_DATA_VALUE)
                     .createPath());
             return;
         }
 
-        Footwear footwear = new Footwear(request.getParameter("art"));
+        Footwear footwear = new Footwear(request.getParameter(ART_PARAM));
         buildFootwear(footwear, request);
         footwear.setImageLink(ImageUploader.upload(request).get(0));
-        String description_en = request.getParameter("description_en");
-        String description_ru = request.getParameter("description_ru");
+        String description_en = request.getParameter(DESCRIPTION_EN_PARAM);
+        String description_ru = request.getParameter(DESCRIPTION_RU_PARAM);
 
-        String lang = (String)request.getSession().getAttribute("lang");
+        String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
 
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
         try {
             if (footwearService.createNewFootwear(footwear, description_en, description_ru, lang)) {
                 response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPRODUCT)
-                        .addParam("art", footwear.getArt())
-                        .addParam("message","created_success")
+                        .addParam(ART_PARAM, footwear.getArt())
+                        .addParam(MESSAGE_PARAM, SUCCESS_VALUE)
                         .createPath());
             } else {
                 response.sendRedirect(CommandPath.createCommand(CommandName.ADDFOOTWEAR)
-                        .addParam("message","not_create")
+                        .addParam(MESSAGE_PARAM, NOT_CREATE_VALUE)
                         .createPath());
             }
         } catch (ServiceException e) {
-            throw new ControllerException("Error adding footwear", e);
+            throw new ControllerException(e);
         }
-
-
     }
 
     private void buildFootwear(Footwear footwear, HttpServletRequest request ){
-        footwear.setName(request.getParameter("name"));
-        footwear.setBrand(request.getParameter("brand"));
-        footwear.setCategory(request.getParameter("category"));
-        footwear.setColor(request.getParameter("color"));
-        footwear.setPrice(Float.parseFloat(request.getParameter("price")));
-        footwear.setForWhom(ForEnum.valueOf(request.getParameter("for")));
+        footwear.setName(request.getParameter(NAME_PARAM));
+        footwear.setBrand(request.getParameter(BRAND_PARAM));
+        footwear.setCategory(request.getParameter(CATEGORY_PARAM));
+        footwear.setColor(request.getParameter(COLOR_PARAM));
+        footwear.setPrice(Float.parseFloat(request.getParameter(PRICE_PARAM)));
+        footwear.setForWhom(ForEnum.valueOf(request.getParameter(FOR_PARAM)));
     }
 }

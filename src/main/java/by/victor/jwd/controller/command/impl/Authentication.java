@@ -1,35 +1,30 @@
 package by.victor.jwd.controller.command.impl;
 
-import java.io.IOException;
-
-
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.UserRole;
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandName;
 import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
-import by.victor.jwd.service.exception.ServiceException;
-import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.CustomerService;
-import org.apache.log4j.Logger;
+import by.victor.jwd.service.ServiceProvider;
+import by.victor.jwd.service.exception.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
-import static by.victor.jwd.controller.constant.ParamValues.*;
+import static by.victor.jwd.controller.constant.CustomerParams.EMAIL_PARAM;
+import static by.victor.jwd.controller.constant.CustomerParams.PASSWORD_PARAM;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
 
 public class Authentication implements Command {
 
-	private final static Logger logger = Logger.getLogger(Authentication.class);
-
 	private static final String SESSION_ATTRIBUTE = "email";
-	private static final String AUTH_SUCCESS_REDIRECT = "/lei-shoes";
-	private static final String ROLE_ATTRIBUTE = "role";
-	public static final String MESSAGE_PARAM = "message";
-	public static final String WRONG_VALUE = "wrong_e_or_p";
+	private static final String AUTH_SUCCESS_REDIRECT = CommandPath.createCommand(CommandName.GOTOMAINPAGE).createPath();
+	private static final String WRONG_VALUE = "wrong_e_or_p";
 
 
 	@Override
@@ -60,8 +55,7 @@ public class Authentication implements Command {
 			response.sendRedirect(AUTH_SUCCESS_REDIRECT);
 
 		} catch (ServiceException e) {
-			logger.error("Authentication error ", e );
-			throw new ControllerException("Authentication error");
+			throw new ControllerException(e);
 		}
 
 	}
