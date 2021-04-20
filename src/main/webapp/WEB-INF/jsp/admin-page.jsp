@@ -22,7 +22,7 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Admin page</h1>
+        <h1 class="jumbotron-heading">ADMIN PAGE</h1>
     </div>
 </section>
 
@@ -135,25 +135,26 @@
                                                 <li class="list-group-item col-2">${order.customer.country}</li>
                                                 <li class="list-group-item col-2">${order.customer.city}</li>
                                                 <li class="list-group-item col-3">${order.customer.address}</li>
-                                                <li class="list-group-item col-4">
+
                                                    <c:if test="${order.orderStatus.toString().equals('WAITING') || order.orderStatus.toString().equals('APPROVED') }">
-                                                       <form method="post" action="Controller">
-                                                           <div class="input-group">
-                                                               <input type="hidden" name="command" value="changestatus">
-                                                               <input type="hidden" name="order_id" value="${order.id}">
-                                                               <select name="status" class="form-control">
-                                                                   <option value="waiting" class="text-warning">Waiting</option>
-                                                                   <option value="approved" class="text-success">Approved</option>
-                                                                   <option value="decline" class="text-danger">Decline</option>
-                                                                   <option value="complete" class="text-info">Complete</option>
-                                                               </select>
-                                                               <div class="input-group-append">
-                                                                   <button type="submit" class="btn btn-primary">Set status</button>
+                                                        <li class="list-group-item col-4">
+                                                           <form method="post" action="Controller">
+                                                               <div class="input-group">
+                                                                   <input type="hidden" name="command" value="changestatus">
+                                                                   <input type="hidden" name="order_id" value="${order.id}">
+                                                                   <select name="status" class="form-control">
+                                                                       <option value="waiting" class="text-warning">Waiting</option>
+                                                                       <option value="approved" class="text-success">Approved</option>
+                                                                       <option value="decline" class="text-danger">Decline</option>
+                                                                       <option value="complete" class="text-info">Complete</option>
+                                                                   </select>
+                                                                   <div class="input-group-append">
+                                                                       <button type="submit" class="btn btn-primary">Set status</button>
+                                                                   </div>
                                                                </div>
-                                                           </div>
-                                                       </form>
+                                                           </form>
+                                                        </li>
                                                    </c:if>
-                                                </li>
                                             </ul>
                                             <div class="table-responsive mt-4">
                                                 <table class="table table-bordered">
@@ -227,7 +228,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-
         if (${'yes'.equals(param.get('show'))})
         {
             $("#infoToast").toast({delay: 5000});

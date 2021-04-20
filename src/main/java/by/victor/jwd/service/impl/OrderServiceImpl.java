@@ -1,6 +1,5 @@
 package by.victor.jwd.service.impl;
 
-import by.victor.jwd.bean.FootwearItem;
 import by.victor.jwd.bean.Order;
 import by.victor.jwd.bean.OrderStatus;
 import by.victor.jwd.dao.DAOProvider;
@@ -10,7 +9,6 @@ import by.victor.jwd.service.OrderService;
 import by.victor.jwd.service.exception.ServiceException;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {

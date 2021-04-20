@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.post;
 
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandName;
@@ -14,14 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static by.victor.jwd.controller.constant.CustomerParams.EMAIL_PARAM;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
 
 public class DeleteCustomer implements Command {
 
     private static final String DELETED_PARAM = "deleted";
-    private static final String SHOW_PARAM = "show";
-    private static final String SUCCESS_VALUE = "success";
-    private static final String YES_VALUE = "yes";
-    private static final String FAIL_VALUE = "fail";
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,13 +28,13 @@ public class DeleteCustomer implements Command {
         try {
             if (customerService.delete(email)) {
                 response.sendRedirect(CommandPath.createCommand(CommandName.SHOWUSERS)
-                        .addParam(DELETED_PARAM, SUCCESS_VALUE)
+                        .addParam(DELETED_PARAM, SUCCESS)
                         .addParam(SHOW_PARAM, YES_VALUE)
                         .createPath());
             }
             else {
                 response.sendRedirect(CommandPath.createCommand(CommandName.SHOWUSERS)
-                        .addParam(DELETED_PARAM, FAIL_VALUE)
+                        .addParam(DELETED_PARAM, FAIL)
                         .addParam(SHOW_PARAM, YES_VALUE)
                         .createPath());
             }

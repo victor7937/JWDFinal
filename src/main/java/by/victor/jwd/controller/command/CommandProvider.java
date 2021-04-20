@@ -1,6 +1,10 @@
 package by.victor.jwd.controller.command;
 
-import by.victor.jwd.controller.command.impl.*;
+import by.victor.jwd.controller.command.impl.post.Logout;
+import by.victor.jwd.controller.command.impl.get.ShowOrders;
+import by.victor.jwd.controller.command.impl.get.ShowUsers;
+import by.victor.jwd.controller.command.impl.go.*;
+import by.victor.jwd.controller.command.impl.post.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,12 +32,19 @@ public class CommandProvider {
 		commands.put(CommandName.NEWORDER, new CreateNewOrder());
 		commands.put(CommandName.SHOWORDERS, new ShowOrders());
 		commands.put(CommandName.SHOWUSERS, new ShowUsers());
-		commands.put(CommandName.CHANGESTATUS, new ChangeStatus());
+		commands.put(CommandName.CHANGESTATUS, new ChangeOrderStatus());
 		commands.put(CommandName.USERDECLINE, new UserDecline());
 		commands.put(CommandName.ADDFOOTWEAR, new GoToAddingFootwear());
 		commands.put(CommandName.NEWFOOTWEAR, new CreateFootwear());
 		commands.put(CommandName.GOTOCHANGEPASSWORD, new GoToChangePassword());
 		commands.put(CommandName.CHANGEPASSWORD, new ChangePassword());
+		commands.put(CommandName.GOTOADDFEATURES, new GoToAddFeatures());
+		commands.put(CommandName.GOTOITEMSPAGE, new GoToItemsPage());
+		commands.put(CommandName.ADDCATEGORY, new AddNewCategory());
+		commands.put(CommandName.ADDCOLOR, new AddNewColor());
+		commands.put(CommandName.ADDBRAND, new AddNewBrand());
+		commands.put(CommandName.ADDITEM, new AddNewItem());
+		commands.put(CommandName.CHANGEITEMSTATUS, new ChangeItemStatus());
 	}
 	
 	

@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.go;
 
 import by.victor.jwd.bean.Footwear;
 import by.victor.jwd.controller.command.Command;
@@ -27,6 +27,11 @@ public class GoToProduct implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String art = request.getParameter(ART_PARAM);
+        if (art == null || art.isBlank()) {
+            response.sendError(ERROR_CODE);
+            return;
+        }
+
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
         String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
         Footwear footwear;

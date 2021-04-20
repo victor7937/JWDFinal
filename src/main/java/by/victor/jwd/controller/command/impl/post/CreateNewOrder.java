@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.post;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.Footwear;
@@ -27,7 +27,7 @@ import java.util.List;
 
 import static by.victor.jwd.controller.constant.FootwearParams.ART_PARAM;
 import static by.victor.jwd.controller.constant.FootwearParams.SIZE_PARAM;
-import static by.victor.jwd.controller.constant.GlobalParams.MESSAGE_PARAM;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
 
 public class CreateNewOrder implements Command {
 
@@ -37,8 +37,6 @@ public class CreateNewOrder implements Command {
     private static final String QUANTITY_PARAM = "quantity";
     private static final String EMAIL_PARAM = "email";
     private static final String LANG_DEFAULT = "en";
-    private static final String SUCCESS_VALUE = "success";
-    private static final String FAIL_VALUE = "fail";
     private static final String NOT_LOGGED_IN_VALUE = "not_logged_in";
 
     @Override
@@ -106,10 +104,10 @@ public class CreateNewOrder implements Command {
                         }
                     }
                 }
-                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, SUCCESS_VALUE).createPath());
+                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, SUCCESS).createPath());
 
             } else {
-                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, FAIL_VALUE).createPath());
+                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, FAIL).createPath());
             }
 
         } catch (ServiceException e) {

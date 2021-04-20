@@ -29,7 +29,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="Controller?command=gotomainpage">Home</a></li>
                     <li class="breadcrumb-item"><a href="Controller?command=gotocategory">Category</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Product</li>
+                    <li class="breadcrumb-item active" aria-current="page">${footwear.art}</li>
                 </ol>
             </nav>
         </div>

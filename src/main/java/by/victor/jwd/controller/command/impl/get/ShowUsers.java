@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.get;
 
 import by.victor.jwd.bean.Customer;
 import by.victor.jwd.bean.UserRole;

@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.post;
 
 import by.victor.jwd.bean.OrderStatus;
 import by.victor.jwd.controller.command.Command;
@@ -14,12 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ChangeStatus implements Command {
+import static by.victor.jwd.controller.constant.GlobalParams.*;
 
-    private static final String SHOW_PARAM = "show";
-    private static final String SUCCESS_VALUE = "success";
-    private static final String YES_VALUE = "yes";
-    private static final String FAIL_VALUE = "fail";
+public class ChangeOrderStatus implements Command {
+
     private static final String CHANGE_PARAM = "change";
     private static final String STATUS_PARAM = "status";
     private static final String ORDER_ID_PARAM = "order_id";
@@ -31,7 +29,7 @@ public class ChangeStatus implements Command {
         if (statusValue == null || statusValue.isBlank() || orderIdValue == null || orderIdValue.isBlank()) {
             response.sendRedirect(CommandPath.createCommand(CommandName.SHOWORDERS)
                     .addParam(SHOW_PARAM, YES_VALUE)
-                    .addParam(CHANGE_PARAM, FAIL_VALUE)
+                    .addParam(CHANGE_PARAM, FAIL)
                     .createPath());
             return;
         }
@@ -43,12 +41,12 @@ public class ChangeStatus implements Command {
             if (orderService.setOrderStatus(orderId, orderStatus)){
                 response.sendRedirect(CommandPath.createCommand(CommandName.SHOWORDERS)
                         .addParam(SHOW_PARAM, YES_VALUE)
-                        .addParam(CHANGE_PARAM, SUCCESS_VALUE)
+                        .addParam(CHANGE_PARAM, SUCCESS)
                         .createPath());
             } else {
                 response.sendRedirect(CommandPath.createCommand(CommandName.SHOWORDERS)
                         .addParam(SHOW_PARAM, YES_VALUE)
-                        .addParam(CHANGE_PARAM, FAIL_VALUE)
+                        .addParam(CHANGE_PARAM, FAIL)
                         .createPath());
             }
         } catch (ServiceException e) {

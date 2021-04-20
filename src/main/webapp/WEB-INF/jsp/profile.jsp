@@ -100,20 +100,6 @@
                                     <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="${customer.phone}" maxlength="15">
                                 </div>
                             </div>
-<%--                            <div class="form-group row">--%>
-<%--                                <label for="newpass" class="col-4 col-form-label">New Password</label>--%>
-<%--                                <div class="col-6">--%>
-<%--                                    <input id="newpass" name="newpass" placeholder="New Password" class="form-control" type="password"--%>
-<%--                                           title="Password should contain only english letters, numbers and symbols such as '-_!@' at least one number and lowercase english letter, 8-40 characters"--%>
-<%--                                           pattern="^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9-_!@]{7,40}$">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="form-group row">--%>
-<%--                                <label for="newpass_repeat" class="col-4 col-form-label">Repeat Password</label>--%>
-<%--                                <div class="col-6">--%>
-<%--                                    <input id="newpass_repeat" name="newpass" placeholder="Repeat Password" class="form-control" type="password">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
                             <div class="form-group row">
                                 <div class="offset-4 col-3">
                                     <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
@@ -123,9 +109,6 @@
                                 </div>
                             </div>
                         </form>
-
-
-
                     </div>
                 </div>
 
@@ -257,21 +240,6 @@
     </div>
 
 </section>
-
-<script>
-    let password = document.getElementById("newpass")
-        , password_repeat = document.getElementById("newpass_repeat");
-    function validatePassword(){
-        if(password.value !== password_repeat.value) {
-            password_repeat.setCustomValidity("Passwords aren't the same");
-        } else {
-            password_repeat.setCustomValidity('');
-        }
-    }
-    password.onchange = validatePassword;
-    password_repeat.onkeyup = validatePassword;
-</script>
-
 
 <jsp:include page="footer.jsp"/>
 

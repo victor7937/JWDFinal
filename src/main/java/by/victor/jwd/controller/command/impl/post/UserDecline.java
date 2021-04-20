@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.post;
 
 import by.victor.jwd.bean.OrderStatus;
 import by.victor.jwd.controller.command.Command;
@@ -14,11 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static by.victor.jwd.controller.constant.GlobalParams.*;
+
 public class UserDecline implements Command {
 
     private static final String CHANGE_PARAM = "change";
-    private static final String FAIL_VALUE = "fail";
-    private static final String SUCCESS_VALUE = "success";
     private static final String ORDER_ID_PARAM = "order_id";
 
     @Override
@@ -26,7 +26,7 @@ public class UserDecline implements Command {
         String orderIdValue = request.getParameter(ORDER_ID_PARAM);
         if (orderIdValue == null || orderIdValue.isBlank()) {
             response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
-                    .addParam(CHANGE_PARAM, FAIL_VALUE)
+                    .addParam(CHANGE_PARAM, FAIL)
                     .createPath());
             return;
         }
@@ -37,11 +37,11 @@ public class UserDecline implements Command {
         try {
             if (orderService.setOrderStatus(orderId, orderStatus)){
                 response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
-                        .addParam(CHANGE_PARAM, SUCCESS_VALUE)
+                        .addParam(CHANGE_PARAM, SUCCESS)
                         .createPath());
             } else {
                 response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPROFILE)
-                        .addParam(CHANGE_PARAM, FAIL_VALUE)
+                        .addParam(CHANGE_PARAM, FAIL)
                         .createPath());
             }
         } catch (ServiceException e) {

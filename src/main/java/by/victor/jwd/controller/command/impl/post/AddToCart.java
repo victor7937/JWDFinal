@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.post;
 
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandName;
@@ -12,17 +12,15 @@ import java.io.IOException;
 
 import static by.victor.jwd.controller.constant.FootwearParams.ART_PARAM;
 import static by.victor.jwd.controller.constant.FootwearParams.SIZE_PARAM;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
 
 public class AddToCart implements Command {
 
     private static final String COOKIE_DELIMITER = "|";
     private static final String ART_PREFIX = "art_";
     private static final int MAX_AGE = 60 * 60 * 24;
-    private static final String SHOW_PARAM = "show";
     private static final String ADDED_PARAM = "added";
-    private static final String YES_VALUE = "yes";
     private static final String NO_SIZE_VALUE = "no_size";
-    private static final String NO_VALUE = "no";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -125,6 +125,11 @@ footer a {
     font-weight: 600;
 }
 
+.text-table {
+    font-size: 18px;
+    font-weight: 500;
+}
+
 .nav-tabs a {
     color: rgba(0,0,0,0.7);
     font-weight: 600;
@@ -140,10 +145,11 @@ footer a {
 }
 
 .order-main-header li {
-    color: rgba(0,0,0,0.9);
+    color: #fff;
     font-weight: 600;
     font-size: 20px;
     text-align: center;
+    background-color: #343a40;
 }
 
 

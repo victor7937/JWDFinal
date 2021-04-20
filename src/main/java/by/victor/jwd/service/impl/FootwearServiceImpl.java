@@ -1,8 +1,6 @@
 package by.victor.jwd.service.impl;
 
-import by.victor.jwd.bean.Footwear;
-import by.victor.jwd.bean.FootwearCriteria;
-import by.victor.jwd.bean.ForEnum;
+import by.victor.jwd.bean.*;
 import by.victor.jwd.dao.DAOProvider;
 import by.victor.jwd.dao.FootwearDAO;
 import by.victor.jwd.dao.exception.DAOException;
@@ -132,14 +130,99 @@ public class FootwearServiceImpl implements FootwearService {
     }
 
     @Override
-    public boolean createNewFootwear(Footwear footwear, String description_en, String description_ru, String lang) throws ServiceException {
-        boolean ifAdded;
+    public List<FootwearItem> getItemsByArt(String art) throws ServiceException {
+        List<FootwearItem> itemList;
         try {
-            ifAdded = footwearDAO.addNewFootwear(footwear, description_en, description_ru, lang);
+            itemList = footwearDAO.getItemsByArt(art);
         } catch (DAOException e) {
             logger.error(e.getMessage(), e);
             throw new ServiceException(e);
         }
-        return ifAdded;
+        return itemList;
     }
+
+    @Override
+    public ItemStatus getItemStatus(Integer id) throws ServiceException {
+        ItemStatus status;
+        try {
+            status = footwearDAO.getItemStatus(id);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return status;
+    }
+
+    @Override
+    public boolean createNewItem(String art, Float size) throws ServiceException {
+        boolean isCreated;
+        try {
+            isCreated = footwearDAO.addNewItem(art, size);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isCreated;
+    }
+
+    @Override
+    public boolean createNewColor(String color_en, String color_ru) throws ServiceException {
+        boolean isCreated;
+        try {
+            isCreated = footwearDAO.addNewColor(color_en, color_ru);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isCreated;
+    }
+
+    @Override
+    public boolean createNewCategory(String category_en, String category_ru) throws ServiceException {
+        boolean isCreated;
+        try {
+            isCreated = footwearDAO.addNewCategory(category_en, category_ru);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isCreated;
+    }
+
+    @Override
+    public boolean createNewBrand(String brand) throws ServiceException {
+        boolean isCreated;
+        try {
+            isCreated = footwearDAO.addNewBrand(brand);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isCreated;
+    }
+
+    @Override
+    public boolean createNewFootwear(Footwear footwear, String description_en, String description_ru, String lang) throws ServiceException {
+        boolean isCreated;
+        try {
+            isCreated = footwearDAO.addNewFootwear(footwear, description_en, description_ru, lang);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isCreated;
+    }
+
+    @Override
+    public boolean updateItemStatus(Integer id, ItemStatus status) throws ServiceException {
+        boolean isUpdated;
+        try {
+            isUpdated = footwearDAO.updateItemStatus(id, status);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isUpdated;
+    }
+
 }

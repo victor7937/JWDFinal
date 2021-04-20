@@ -9,10 +9,12 @@ public class FootwearItem implements Serializable {
     @Serial
     private static final long serialVersionUID = -5729255221961409256L;
 
+    private Integer id;
     private Footwear footwear;
     private Float size;
     private Integer maxQuantity;
     private Integer quantity;
+    private ItemStatus status;
 
     public FootwearItem(Footwear footwear, Float size) {
         this.size = size;
@@ -59,6 +61,22 @@ public class FootwearItem implements Serializable {
 
     public void setMaxQuantity(Integer maxQuantity) {
         this.maxQuantity = maxQuantity;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ItemStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ItemStatus status) {
+        this.status = status;
     }
 
     @Override

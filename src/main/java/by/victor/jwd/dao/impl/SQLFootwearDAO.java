@@ -1,7 +1,9 @@
 package by.victor.jwd.dao.impl;
 
 import by.victor.jwd.bean.Footwear;
+import by.victor.jwd.bean.FootwearItem;
 import by.victor.jwd.bean.ForEnum;
+import by.victor.jwd.bean.ItemStatus;
 import by.victor.jwd.dao.FootwearDAO;
 import by.victor.jwd.dao.exception.ConnectionException;
 import by.victor.jwd.dao.exception.DAOException;
@@ -56,6 +58,20 @@ public class SQLFootwearDAO implements FootwearDAO {
     private static final String SQL_ADD_IMAGE = "INSERT INTO footwear_images (img_name, img_art) VALUES(?, ?)";
 
     private static final String SQL_GET_IMAGES = "SELECT img_name FROM footwear_images WHERE img_art = ? ORDER BY img_name";
+
+    private static final String SQL_ADD_ITEM = "INSERT INTO footwear_items(fi_art, fi_size) VALUES (?, ?)";
+
+    private static final String SQL_ADD_BRAND = "INSERT INTO brands (b_name) VALUES (?)";
+
+    private static final String SQL_ADD_CATEGORY = "INSERT INTO categories (c_name_en, c_name_ru) VALUES (?, ?)";
+
+    private static final String SQL_ADD_COLOR = "INSERT INTO colors (cl_name_en, cl_name_ru) VALUES (?, ?)";
+
+    private static final String SQL_GET_ITEMS_BY_ART = "SELECT fi_id, fi_size, fi_status FROM footwear_items WHERE fi_art = ?";
+
+    private static final String SQL_GET_ITEM_STATUS = "SELECT fi_status FROM footwear_items WHERE fi_id = ?";
+
+    private static final String SQL_UPDATE_ITEM_STATUS = "UPDATE footwear_items SET fi_status = ? WHERE fi_id = ?";
 
     @Override
     public List<Footwear> getAll(ForEnum forEnum, String lang) throws DAOException {
@@ -186,6 +202,35 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
+    public ItemStatus getItemStatus(Integer id) throws DAOException {
+        ItemStatus itemStatus = null;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_ITEM_STATUS, ps -> ps.setInt(1, id));
+            if (resultSet.next()) {
+                itemStatus = ItemStatus.valueOf(resultSet.getString("fi_status"));
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Getting item status error", e);
+        }
+        return itemStatus;
+    }
+
+    @Override
+    public List<FootwearItem> getItemsByArt(String art) throws DAOException {
+        List<FootwearItem> itemsList = new ArrayList<>();
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+            ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_ITEMS_BY_ART, ps -> ps.setString(1, art));
+            while (resultSet.next()) {
+               FootwearItem item = buildItem(resultSet, art);
+               itemsList.add(item);
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Getting footwear items error", e);
+        }
+        return itemsList;
+    }
+
+    @Override
     public List<Float> getSizes(String art) throws DAOException {
         List<Float> sizesList = new ArrayList<>();
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
@@ -280,6 +325,73 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
+    public boolean addNewItem(String art, Float size) throws DAOException {
+        boolean successAdding;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            successAdding = resourceProvider.updateAction(SQL_ADD_ITEM, ps -> {
+               ps.setString(1, art);
+               ps.setFloat(2, size);
+            });
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Adding new item error", e);
+        }
+        return successAdding;
+    }
+
+    @Override
+    public boolean addNewCategory(String category_en, String category_ru) throws DAOException {
+        boolean successAdding;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            successAdding = resourceProvider.updateAction(SQL_ADD_CATEGORY, ps -> {
+                ps.setString(1, category_en);
+                ps.setString(2, category_ru);
+            });
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Adding new category error", e);
+        }
+        return successAdding;
+    }
+
+    @Override
+    public boolean addNewColor(String color_en, String color_ru) throws DAOException {
+        boolean successAdding;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            successAdding = resourceProvider.updateAction(SQL_ADD_COLOR, ps -> {
+                ps.setString(1, color_en);
+                ps.setString(2, color_ru);
+            });
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Adding new color error", e);
+        }
+        return successAdding;
+    }
+
+    @Override
+    public boolean addNewBrand(String brand) throws DAOException {
+        boolean successAdding;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            successAdding = resourceProvider.updateAction(SQL_ADD_BRAND, ps -> ps.setString(1, brand));
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Adding new brand error", e);
+        }
+        return successAdding;
+    }
+
+    @Override
+    public boolean updateItemStatus(Integer itemId, ItemStatus status) throws DAOException {
+        boolean successUpdating;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            successUpdating = resourceProvider.updateAction(SQL_UPDATE_ITEM_STATUS, ps -> {
+                ps.setString(1, status.toString());
+                ps.setInt(2, itemId);
+            });
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Updating item status error", e);
+        }
+        return successUpdating;
+    }
+
+    @Override
     public boolean deleteFootwear(String art) throws DAOException {
         return false;
     }
@@ -308,6 +420,21 @@ public class SQLFootwearDAO implements FootwearDAO {
             throw new DAOException("Building footwear error", e);
         }
         return footwear;
+    }
+
+    private FootwearItem buildItem(ResultSet resultSet, String art) throws DAOException {
+        FootwearItem item;
+        try {
+            Integer id = resultSet.getInt("fi_id");
+            Float size = resultSet.getFloat("fi_size");
+            ItemStatus status = ItemStatus.valueOf(resultSet.getString("fi_status"));
+            item = new FootwearItem(new Footwear(art), size);
+            item.setId(id);
+            item.setStatus(status);
+        } catch (SQLException e) {
+            throw new DAOException("Getting items error", e);
+        }
+        return item;
     }
 
     private List<String> getImages(String art) throws DAOException {

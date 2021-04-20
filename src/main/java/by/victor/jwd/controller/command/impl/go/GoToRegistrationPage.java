@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.go;
 
 import by.victor.jwd.controller.command.Command;
 

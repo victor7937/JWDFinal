@@ -1,4 +1,4 @@
-package by.victor.jwd.controller.command.impl;
+package by.victor.jwd.controller.command.impl.go;
 
 import by.victor.jwd.controller.command.Command;
 
@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToContact implements Command {
+public class GoToSignInPage implements Command {
 
-    private static final String FORWARD_PATH = "/WEB-INF/jsp/contact.jsp";
+    private static final String FORWARD_PATH = "/WEB-INF/jsp/sign-in.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
