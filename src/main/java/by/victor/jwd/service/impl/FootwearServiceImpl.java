@@ -19,40 +19,64 @@ public class FootwearServiceImpl implements FootwearService {
         footwearDAO = DAOProvider.getInstance().getFootwearDAO();
     }
 
+//    @Override
+//    public List<Footwear> getByCriteria(FootwearCriteria criteria, String lang) throws ServiceException {
+//        List<Footwear> footwearList;
+//        String category = criteria.getCategory();
+//        String brand = criteria.getBrand();
+//        ForEnum forWhom = criteria.getForWhom();
+//        if (category.equals(FootwearCriteria.ALL) && brand.equals(FootwearCriteria.ALL)) {
+//            try {
+//                footwearList = footwearDAO.getAll(forWhom, lang);
+//            } catch (DAOException e) {
+//                logger.error(e.getMessage(), e);
+//                throw new ServiceException(e);
+//            }
+//        } else if (category.equals(FootwearCriteria.ALL)) {
+//            try {
+//                footwearList = footwearDAO.getByBrand(brand, forWhom, lang);
+//            } catch (DAOException e) {
+//                logger.error(e.getMessage(), e);
+//                throw new ServiceException(e);
+//            }
+//        } else if (brand.equals(FootwearCriteria.ALL)) {
+//            try {
+//                footwearList = footwearDAO.getByCategory(category, forWhom, lang);
+//            } catch (DAOException e) {
+//                logger.error(e.getMessage(), e);
+//                throw new ServiceException(e);
+//            }
+//        } else {
+//            try {
+//                footwearList = footwearDAO.getByCategoryAndBrand(category, brand, forWhom, lang);
+//            } catch (DAOException e) {
+//                logger.error(e.getMessage(), e);
+//                throw new ServiceException(e);
+//            }
+//        }
+//        return footwearList;
+//    }
+
     @Override
-    public List<Footwear> getByCriteria(FootwearCriteria criteria, String lang) throws ServiceException {
+    public List<Footwear> getByCriteria(FootwearCriteria criteria, String lang, int offset, int limit) throws ServiceException {
         List<Footwear> footwearList;
-        String category = criteria.getCategory();
-        String brand = criteria.getBrand();
-        ForEnum forWhom = criteria.getForWhom();
-        if (category.equals(FootwearCriteria.ALL) && brand.equals(FootwearCriteria.ALL)) {
-            try {
-                footwearList = footwearDAO.getAll(forWhom, lang);
-            } catch (DAOException e) {
-                logger.error(e.getMessage(), e);
-                throw new ServiceException(e);
-            }
-        } else if (category.equals(FootwearCriteria.ALL)) {
-            try {
-                footwearList = footwearDAO.getByBrand(brand, forWhom, lang);
-            } catch (DAOException e) {
-                logger.error(e.getMessage(), e);
-                throw new ServiceException(e);
-            }
-        } else if (brand.equals(FootwearCriteria.ALL)) {
-            try {
-                footwearList = footwearDAO.getByCategory(category, forWhom, lang);
-            } catch (DAOException e) {
-                logger.error(e.getMessage(), e);
-                throw new ServiceException(e);
-            }
-        } else {
-            try {
-                footwearList = footwearDAO.getByCategoryAndBrand(category, brand, forWhom, lang);
-            } catch (DAOException e) {
-                logger.error(e.getMessage(), e);
-                throw new ServiceException(e);
-            }
+        try {
+            footwearList = footwearDAO.getFootwearByCriteria(criteria, lang, offset, limit);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return footwearList;
+    }
+
+    @Override
+    public List<Footwear> getByCriteriaActual(FootwearCriteria criteria, String lang, int offset, int limit) throws ServiceException {
+        List<Footwear> footwearList;
+        try {
+            footwearList = footwearDAO.getActualFootwearByCriteria(criteria, lang, offset, limit);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
         }
         return footwearList;
     }
@@ -126,6 +150,10 @@ public class FootwearServiceImpl implements FootwearService {
             logger.error(e.getMessage(), e);
             throw new ServiceException(e);
         }
+        if (quantity == null) {
+            logger.error("Quantity is null");
+            throw new ServiceException("Quantity is null");
+        }
         return quantity;
     }
 
@@ -151,6 +179,38 @@ public class FootwearServiceImpl implements FootwearService {
             throw new ServiceException(e);
         }
         return status;
+    }
+
+    @Override
+    public Integer getFootwearQuantity(FootwearCriteria criteria, String lang) throws ServiceException {
+        Integer quantity;
+        try {
+            quantity = footwearDAO.getFootwearQuantity(criteria, lang);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        if (quantity == null) {
+            logger.error("Quantity is null");
+            throw new ServiceException("Quantity is null");
+        }
+        return quantity;
+    }
+
+    @Override
+    public Integer getActualFootwearQuantity(FootwearCriteria criteria, String lang) throws ServiceException {
+        Integer quantity;
+        try {
+            quantity = footwearDAO.getActualFootwearQuantity(criteria, lang);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        if (quantity == null) {
+            logger.error("Quantity is null");
+            throw new ServiceException("Quantity is null");
+        }
+        return quantity;
     }
 
     @Override

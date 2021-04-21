@@ -33,7 +33,7 @@ public class AddNewItem implements Command {
                 .addParam(SHOW_PARAM, YES_VALUE)
                 .createPath();
 
-        if (art == null || art.isBlank() || !RequestValidator.isSizeValid(sizeString)) {
+        if (art == null || art.isBlank() || sizeString == null || !RequestValidator.isSizeValid(sizeString)) {
             response.sendRedirect(fail_path);
             return;
         }

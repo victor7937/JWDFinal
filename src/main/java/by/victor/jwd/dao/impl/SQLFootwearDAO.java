@@ -1,9 +1,6 @@
 package by.victor.jwd.dao.impl;
 
-import by.victor.jwd.bean.Footwear;
-import by.victor.jwd.bean.FootwearItem;
-import by.victor.jwd.bean.ForEnum;
-import by.victor.jwd.bean.ItemStatus;
+import by.victor.jwd.bean.*;
 import by.victor.jwd.dao.FootwearDAO;
 import by.victor.jwd.dao.exception.ConnectionException;
 import by.victor.jwd.dao.exception.DAOException;
@@ -18,20 +15,18 @@ import java.util.List;
 
 public class SQLFootwearDAO implements FootwearDAO {
 
-    private static final String SQL_GET_FOOTWEARS = "SELECT f_art, f_name, f_price, c_name_%s AS category," +
-            " f_description_%s AS description, cl_name_%s AS color, b_name AS brand, f_for FROM footwears f JOIN " +
-            "categories c ON c.c_id = f.f_category JOIN brands b ON b.b_id = f.f_brand JOIN colors c2 ON " +
-            "c2.cl_id = f.f_color";
+    private static final String SQL_GET_FOOTWEAR = "SELECT f_art, f_name, f_price, c_name_%s AS category," +
+            " f_description_%s AS description, cl_name_%s AS color, b_name AS brand, f_for FROM footwears f" +
+            " JOIN categories c ON c.c_id = f.f_category" +
+            " JOIN brands b ON b.b_id = f.f_brand" +
+            " JOIN colors c2 ON c2.cl_id = f.f_color";
 
-    private static final String SQL_BY_CATEGORY = " WHERE c_name_%s = ?";
-
-    private static final String SQL_BY_BRAND = " WHERE b_name = ?";
-
-    private static final String SQL_BY_CATEGORY_AND_BRAND = " WHERE c_name_%s = ? AND b_name = ?";
-
-    private static final String SQL_FOR_ADDING = " AND f_for = ?";
-
-    private static final String SQL_FOR = " WHERE f_for = ?";
+    private static final String SQL_GET_ACTUAL_FOOTWEAR =
+    "SELECT DISTINCT f_art, f_name, f_price, c_name_%s AS category, f_description_%s AS description, cl_name_%s AS color, b_name AS brand, f_for FROM footwears f" +
+    " JOIN categories c ON c.c_id = f.f_category" +
+    " JOIN brands b ON b.b_id = f.f_brand" +
+    " JOIN colors c2 ON c2.cl_id = f.f_color" +
+    " JOIN footwear_items fi on f.f_art = fi.fi_art WHERE fi_status='STOCK'";
 
     private static final String SQL_BY_ART = " WHERE f_art = ?";
 
@@ -73,52 +68,32 @@ public class SQLFootwearDAO implements FootwearDAO {
 
     private static final String SQL_UPDATE_ITEM_STATUS = "UPDATE footwear_items SET fi_status = ? WHERE fi_id = ?";
 
+    private static final String SQL_GET_COUNT = "SELECT COUNT(f_art) as count FROM footwears f" +
+            "  JOIN categories c ON c.c_id = f.f_category" +
+            "  JOIN brands b ON b.b_id = f.f_brand";
+
+    private static final String SQL_GET_COUNT_ACTUAL = "SELECT COUNT(DISTINCT f_art) as count FROM footwears f" +
+            " JOIN categories c ON c.c_id = f.f_category" +
+            " JOIN brands b ON b.b_id = f.f_brand" +
+            " JOIN footwear_items fi on f.f_art = fi.fi_art WHERE fi_status='STOCK'";
+
+
+    private static final int DEFAULT_LIMIT = 501;
+
     @Override
-    public List<Footwear> getAll(ForEnum forEnum, String lang) throws DAOException {
-        String query = String.format(SQL_GET_FOOTWEARS, lang, lang, lang);
-        if (forEnum == ForEnum.ALL) {
-            return getFootwearList(query,null);
-        }
-        else {
-            return getFootwearList(query + SQL_FOR, ps -> ps.setString(1, forEnum.toString()));
-        }
+    public List<Footwear> getFootwearByCriteria(FootwearCriteria criteria, String lang, int offset, int limit) throws DAOException {
+        String query = String.format(SQL_GET_FOOTWEAR, lang, lang, lang);
+        FootwearQueryCreator queryCreator = FootwearQueryCreator.create(criteria, query, lang, offset, limit);
+
+        return getFootwearList(queryCreator.getQuery(), queryCreator.getConsumer());
     }
 
     @Override
-    public List<Footwear> getByCategory(String category, ForEnum forEnum, String lang) throws DAOException {
-        String query = String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + String.format(SQL_BY_CATEGORY, lang)
-                + (forEnum == ForEnum.ALL ? "" : SQL_FOR_ADDING);
+    public List<Footwear> getActualFootwearByCriteria(FootwearCriteria criteria, String lang, int offset, int limit) throws DAOException {
+        String query = String.format(SQL_GET_ACTUAL_FOOTWEAR, lang, lang, lang);
+        FootwearQueryCreator queryCreator = FootwearQueryCreator.create(criteria, query, lang, offset, limit);
 
-        return getFootwearList(query, ps -> {
-            ps.setString(1, category);
-            if (forEnum != ForEnum.ALL)
-                ps.setString(2, forEnum.toString());
-        });
-    }
-
-    @Override
-    public List<Footwear> getByCategoryAndBrand(String category, String brand, ForEnum forEnum, String lang) throws DAOException {
-        String query = String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + String.format(SQL_BY_CATEGORY_AND_BRAND, lang)
-                + (forEnum == ForEnum.ALL ? "" : SQL_FOR_ADDING);
-
-        return getFootwearList(query, ps -> {
-            ps.setString(1, category);
-            ps.setString(2, brand);
-            if (forEnum != ForEnum.ALL)
-                ps.setString(3, forEnum.toString());
-        });
-    }
-
-    @Override
-    public List<Footwear> getByBrand(String brand, ForEnum forEnum, String lang) throws DAOException {
-        String query = String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + SQL_BY_BRAND
-                + (forEnum == ForEnum.ALL ? "" : SQL_FOR_ADDING);
-
-        return getFootwearList(query, ps -> {
-            ps.setString(1, brand);
-            if (forEnum != ForEnum.ALL)
-                ps.setString(2, forEnum.toString());
-        });
+        return getFootwearList(queryCreator.getQuery(), queryCreator.getConsumer());
     }
 
     private List<Footwear> getFootwearList(String query, SQLConsumer<PreparedStatement> ps) throws DAOException{
@@ -145,7 +120,7 @@ public class SQLFootwearDAO implements FootwearDAO {
     public Footwear getFootwearByArt(String art, String lang) throws DAOException {
         Footwear footwear = null;
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
-            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEARS, lang, lang, lang) + SQL_BY_ART,
+            ResultSet resultSet = resourceProvider.createResultSet(String.format(SQL_GET_FOOTWEAR, lang, lang, lang) + SQL_BY_ART,
                     ps -> ps.setString(1, art));
             if (resultSet.next()) {
                 footwear = buildFootwear(resultSet);
@@ -216,6 +191,37 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
+    public Integer getFootwearQuantity(FootwearCriteria criteria, String lang) throws DAOException {
+        FootwearQueryCreator queryCreator = FootwearQueryCreator.create(criteria, SQL_GET_COUNT, lang, 0, DEFAULT_LIMIT);
+        return getFootwearCount(queryCreator.getQuery(), queryCreator.getConsumer());
+    }
+
+    @Override
+    public Integer getActualFootwearQuantity(FootwearCriteria criteria, String lang) throws DAOException {
+        FootwearQueryCreator queryCreator = FootwearQueryCreator.create(criteria, SQL_GET_COUNT_ACTUAL, lang, 0, DEFAULT_LIMIT);
+        return getFootwearCount(queryCreator.getQuery(), queryCreator.getConsumer());
+    }
+
+    private Integer getFootwearCount (String query, SQLConsumer<PreparedStatement> ps) throws DAOException {
+        Integer count = null;
+
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+            ResultSet resultSet;
+            if (ps == null) {
+                resultSet = resourceProvider.createResultSet(query);
+            } else {
+                resultSet = resourceProvider.createResultSet(query, ps);
+            }
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Getting footwear by params error", e);
+        }
+        return count;
+    }
+
+    @Override
     public List<FootwearItem> getItemsByArt(String art) throws DAOException {
         List<FootwearItem> itemsList = new ArrayList<>();
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
@@ -247,7 +253,7 @@ public class SQLFootwearDAO implements FootwearDAO {
 
     @Override
     public Integer getMaxQuantity(String art, Float size) throws DAOException {
-        int quantity = 0;
+        Integer quantity = null;
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
             ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_QUANTITY, ps -> {
                 ps.setString(1, art);

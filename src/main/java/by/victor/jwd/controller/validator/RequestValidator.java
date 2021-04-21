@@ -8,6 +8,7 @@ public interface RequestValidator {
     String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9-_!@]{7,40}$";
     String SIZE_PATTERN = "^[0-9]{2}(\\.[0-9])?$";
     String PRICE_PATTERN = "^[0-9]{1,4}(\\.[0-9]{1,2})?$";
+    String INTEGER_PATTERN = "^[0-9]+$";
     float MIN_SIZE = 34.0f;
     float MAX_SIZE = 50.0f;
 
@@ -35,6 +36,11 @@ public interface RequestValidator {
     static boolean isPriceValid(String price) {
         Pattern pattern = Pattern.compile(PRICE_PATTERN);
         return pattern.matcher(price).matches();
+    }
+
+    static boolean isInteger(String num) {
+        Pattern pattern = Pattern.compile(INTEGER_PATTERN);
+        return pattern.matcher(num).matches();
     }
 
 }

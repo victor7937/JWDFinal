@@ -5,6 +5,7 @@ import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandName;
 import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
+import by.victor.jwd.controller.validator.RequestValidator;
 import by.victor.jwd.service.FootwearService;
 import by.victor.jwd.service.ServiceProvider;
 import by.victor.jwd.service.exception.ServiceException;
@@ -37,7 +38,7 @@ public class ChangeItemStatus implements Command {
                 .addParam(SHOW_PARAM, YES_VALUE)
                 .createPath();
 
-        if (idString == null || idString.isBlank() || statusString == null || statusString.isBlank()
+        if (idString == null || !RequestValidator.isInteger(idString) || statusString == null || statusString.isBlank()
                 || art == null || art.isBlank()) {
              response.sendRedirect(fail_path);
              return;

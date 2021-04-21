@@ -9,7 +9,8 @@ import by.victor.jwd.service.exception.ServiceException;
 import java.util.List;
 
 public interface FootwearService {
-    List<Footwear> getByCriteria(FootwearCriteria criteria, String lang) throws ServiceException;
+    List<Footwear> getByCriteria(FootwearCriteria criteria, String lang, int offset, int limit) throws ServiceException;
+    List<Footwear> getByCriteriaActual(FootwearCriteria criteria, String lang, int offset, int limit) throws ServiceException;
     Footwear getByArt(String art, String lang) throws ServiceException;
     List<String> getCategories (String lang) throws ServiceException;
     List<String> getColors (String lang) throws ServiceException;
@@ -18,6 +19,8 @@ public interface FootwearService {
     Integer getMaxQuantity(String art, Float size) throws ServiceException;
     List<FootwearItem> getItemsByArt(String art) throws ServiceException;
     ItemStatus getItemStatus(Integer id) throws ServiceException;
+    Integer getFootwearQuantity(FootwearCriteria criteria, String lang) throws ServiceException;
+    Integer getActualFootwearQuantity(FootwearCriteria criteria, String lang) throws ServiceException;
 
     boolean createNewItem (String art, Float size) throws ServiceException;
     boolean createNewColor(String color_en, String color_ru) throws ServiceException;

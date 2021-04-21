@@ -12,6 +12,8 @@
     <c:set var="forWhom" value="${requestScope.forWhom}"/>
     <c:set var="brandParam" value="${requestScope.brand}"/>
     <c:set var="categoryParam" value="${requestScope.category}"/>
+    <c:set var="pageCount" value="${requestScope.pageCount}"/>
+    <c:set var="currentPage" value="${requestScope.currentPage}"/>
 </head>
 <body>
 
@@ -102,23 +104,46 @@
                         </div>
                     </div>
                 </c:forEach>
-                <div class="col-12">
-                    <nav aria-label="...">
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link " href="#" tabindex="-1">Previous</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+
+                <c:if test="${pageCount != 1}">
+                    <div class="col-12">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <c:choose>
+                                    <c:when test="${currentPage == 1}">
+                                        <li class="page-item disabled">
+                                            <a class="page-link " href="#" tabindex="-1">Previous</a>
+                                        </li>
+                                    </c:when>
+
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a class="page-link " href="Controller?command=gotocategory&page=${requestScope.currentPage - 1}&brand=${brandParam}&category=${categoryParam}&for=${forWhom}">Previous</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+
+                                <c:forEach var="i" begin="1" end="${pageCount}">
+                                    <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="Controller?command=gotocategory&page=${i}&brand=${brandParam}&category=${categoryParam}&for=${forWhom}">${i}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${currentPage == pageCount}">
+                                        <li class="page-item disabled">
+                                            <a class="page-link " href="#" tabindex="-1">Next</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a class="page-link " href="Controller?command=gotocategory&page=${currentPage + 1}&brand=${brandParam}&category=${categoryParam}&for=${forWhom}">Next</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </ul>
+                        </nav>
+                    </div>
+                </c:if>
             </div>
         </div>
 
