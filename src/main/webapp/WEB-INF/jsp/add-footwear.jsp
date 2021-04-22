@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>TestFile</title>
+    <title>Add Footwear</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <jsp:include page="includes.jsp"/>
@@ -31,6 +31,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
+                        <c:if test="${param.message.equals('inv_data')}">
+                            <p class="text-danger text-center">Invalid data, please check fields and try again</p>
+                        </c:if>
+                        <c:if test="${param.message.equals('not_created')}">
+                            <p class="text-danger text-center">New footwear wasn't created, please try again</p>
+                        </c:if>
                         <form action="Controller" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="command" value="newfootwear">
                             <div class="form-group row">
@@ -84,7 +90,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="color" class="col-4 col-form-label">For Whom</label>
+                                <label for="for" class="col-4 col-form-label">For Whom</label>
                                 <div class="col-6">
                                     <select id="for" name="for" class="form-control" type="text" required>
                                         <option value="HIM">Him</option>

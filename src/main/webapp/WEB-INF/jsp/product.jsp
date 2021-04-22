@@ -52,19 +52,6 @@
                             </a>
                         </div>
                     </c:forEach>
-
-<%--                    <div class="carousel-item">--%>
-<%--                        &lt;%&ndash;                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">&ndash;%&gt;--%>
-<%--                        <a href="" data-toggle="modal" data-target="#productModal">--%>
-<%--                            <img class="img-fluid" src="images/${footwear.imageLinks}" alt="2"/>--%>
-<%--                        </a>--%>
-<%--                    </div>--%>
-<%--                    <div class="carousel-item">--%>
-<%--                        &lt;%&ndash;                        <img src="https://dummyimage.com/800x800/55595c/fff" class="d-block w-100" alt="...">&ndash;%&gt;--%>
-<%--                        <a href="" data-toggle="modal" data-target="#productModal">--%>
-<%--                            <img class="img-fluid" src="images/${footwear.imageLinks}" alt="3" />--%>
-<%--                        </a>--%>
-<%--                    </div>--%>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon bg-secondary" aria-hidden="true"></span>
@@ -139,9 +126,6 @@
                         (4/5)
                         <a class="pull-right" href="#reviews">View all reviews</a>
                     </div>
-<%--                    <div class="datasheet p-3 mb-2 bg-info text-white">--%>
-<%--                        <a href="" class="text-white"><i class="fa fa-file-text"></i> Download DataSheet</a>--%>
-<%--                    </div>--%>
                 </div>
             </div>
         </div>

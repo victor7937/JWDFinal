@@ -21,39 +21,45 @@ import java.io.IOException;
 import static by.victor.jwd.controller.constant.FootwearParams.*;
 import static by.victor.jwd.controller.constant.GlobalParams.*;
 
-public class CreateFootwear implements Command {
 
-    private static final String NOT_CREATED_VALUE = "not_created";
-    private static final String INV_DATA_VALUE = "inv_data";
+public class EditFootwear implements Command {
+
+    private static final String EDIT_PARAM = "edit";
+    private static final int ERROR_CODE = 404;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String art = request.getParameter(ART_PARAM);
+        if (art == null || art.isBlank()) {
+            response.sendError(ERROR_CODE);
+            return;
+        }
+        String failPath = CommandPath.createCommand(CommandName.GOTOEDITFOOTWEAR)
+                .addParam(EDIT_PARAM, FAIL)
+                .addParam(SHOW_PARAM,YES_VALUE)
+                .addParam(ART_PARAM, art)
+                .createPath();
         RequestValidator validator = ValidationProvider.getInstance().getFootwearValidator();
         if (!validator.validate(request)) {
-            response.sendRedirect(CommandPath.createCommand(CommandName.ADDFOOTWEAR)
-                    .addParam(MESSAGE_PARAM, INV_DATA_VALUE)
-                    .createPath());
+            response.sendRedirect(failPath);
             return;
         }
 
-        Footwear footwear = new Footwear(request.getParameter(ART_PARAM));
+        Footwear footwear = new Footwear(art);
         buildFootwear(footwear, request);
         footwear.setImageLinks(ImageUploader.upload(request));
-        String description_en = request.getParameter(DESCRIPTION_EN_PARAM);
-        String description_ru = request.getParameter(DESCRIPTION_RU_PARAM);
 
         String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
-
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
         try {
-            if (footwearService.createNewFootwear(footwear, description_en, description_ru, lang)) {
-                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPRODUCT)
-                        .addParam(ART_PARAM, footwear.getArt())
+            if (footwearService.updateFootwear(footwear, lang)) {
+                response.sendRedirect(CommandPath.createCommand(CommandName.GOTOEDITFOOTWEAR)
+                        .addParam(EDIT_PARAM, SUCCESS)
+                        .addParam(SHOW_PARAM,YES_VALUE)
+                        .addParam(ART_PARAM, art)
                         .createPath());
             } else {
-                response.sendRedirect(CommandPath.createCommand(CommandName.ADDFOOTWEAR)
-                        .addParam(MESSAGE_PARAM, NOT_CREATED_VALUE)
-                        .createPath());
+                response.sendRedirect(failPath);
             }
         } catch (ServiceException e) {
             throw new ControllerException(e);
@@ -67,5 +73,7 @@ public class CreateFootwear implements Command {
         footwear.setColor(request.getParameter(COLOR_PARAM));
         footwear.setPrice(Float.parseFloat(request.getParameter(PRICE_PARAM)));
         footwear.setForWhom(ForEnum.valueOf(request.getParameter(FOR_PARAM)));
+        footwear.setDescription(request.getParameter(DESCRIPTION_PARAM));
     }
+
 }

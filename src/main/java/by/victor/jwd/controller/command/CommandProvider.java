@@ -45,6 +45,9 @@ public class CommandProvider {
 		commands.put(CommandName.ADDBRAND, new AddNewBrand());
 		commands.put(CommandName.ADDITEM, new AddNewItem());
 		commands.put(CommandName.CHANGEITEMSTATUS, new ChangeItemStatus());
+		commands.put(CommandName.GOTOEDITFOOTWEAR, new GoToEditFootwear());
+		commands.put(CommandName.EDITFOOTWEAR, new EditFootwear());
+		commands.put(CommandName.DELETEIMAGE, new DeleteImage());
 	}
 	
 	

@@ -10,5 +10,6 @@ public class FootwearParams {
     public static final String FOR_PARAM = "for";
     public static final String DESCRIPTION_EN_PARAM = "description_en";
     public static final String DESCRIPTION_RU_PARAM = "description_ru";
+    public static final String DESCRIPTION_PARAM = "description";
     public static final String SIZE_PARAM = "size";
 }

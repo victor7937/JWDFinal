@@ -28,5 +28,8 @@ public interface FootwearService {
     boolean createNewBrand(String brand) throws ServiceException;
     boolean createNewFootwear (Footwear footwear, String description_en, String description_ru, String lang) throws ServiceException;
 
+    boolean updateFootwear(Footwear footwear, String lang) throws ServiceException;
     boolean updateItemStatus (Integer id, ItemStatus status) throws ServiceException;
+
+    boolean deleteImage(String imageName) throws ServiceException;
 }

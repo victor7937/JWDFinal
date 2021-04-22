@@ -86,8 +86,8 @@
                                     <ul class="social">
                                        <!-- <li><a href="" class="fa fa-search"></a></li>
                                         <li><a href="" class="fa fa-shopping-bag"></a></li> -->
-                                        <li><a href="" data-toggle="tooltip" data-placement="top" title="Edit footwear" class="fa fa-edit"></a></li>
-                                        <li><a href="Controller?command=gotoitemspage&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Add new size" class="fa fa-plus-circle"></a></li>
+                                        <li><a href="Controller?command=gotoeditfootwear&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Edit footwear" class="social-button fa fa-edit"></a></li>
+                                        <li><a href="Controller?command=gotoitemspage&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Add new size" class="social-button fa fa-plus-circle"></a></li>
                                     </ul>
                                 </c:if>
                                 <!--<span class="product-discount-label">-20%</span>-->

@@ -2,9 +2,9 @@ package by.victor.jwd.controller.validator.impl;
 
 import by.victor.jwd.controller.util.RegionsAssistant;
 import by.victor.jwd.controller.validator.RequestValidator;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+
 import static by.victor.jwd.controller.constant.CustomerParams.*;
 
 public class RegistrationValidator implements RequestValidator {
@@ -13,8 +13,6 @@ public class RegistrationValidator implements RequestValidator {
     private static final String ERROR_MSG_TEXT_EMPTY = "Sorry, necessary field are empty!";
     private static final String ERROR_MSG_TEXT_E_OR_P = "Sorry, email or password is invalid!";
     private static final String ERROR_MSG_TEXT_PHONE = "Sorry, this phone is not valid!";
-
-    Logger logger = Logger.getLogger(RegistrationValidator.class);
 
     public RegistrationValidator () {}
 
@@ -30,17 +28,14 @@ public class RegistrationValidator implements RequestValidator {
         if (email == null || password == null || passwordRepeat == null || name == null || email.isBlank() ||
                name.isBlank() || password.isBlank() || passwordRepeat.isBlank()) {
             request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_EMPTY);
-            logger.info("Empty fields");
             return false;
         }
         if (!password.equals(passwordRepeat) || !RequestValidator.isEmailValid(email) || !RequestValidator.isPasswordValid(password)){
             request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_E_OR_P);
-            logger.info("Email or password is invalid");
             return false;
         }
         if (!RegionsAssistant.isPhoneValid(phoneCode, phoneNumber)) {
             request.setAttribute(ERROR_MSG_ATTRIBUTE, ERROR_MSG_TEXT_PHONE);
-            logger.info("Phone is not valid");
             return false;
         }
 

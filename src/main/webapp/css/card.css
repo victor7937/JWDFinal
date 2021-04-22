@@ -65,9 +65,10 @@
 .product-card:hover .social li:nth-child(3) {
     transition-delay: .4s;
 }
-.product-card .social li a {
+
+.social-button {
     color: grey;
-    font-size: 17px;
+    font-size: 20px;
     line-height: 40px;
     text-align: center;
     height: 40px;
@@ -76,10 +77,13 @@
     display: block;
     transition: all .5s ease-in-out;
 }
-.product-card .social li a:hover {
+
+.social-button:hover {
     color: #000;
     border-color: #000;
+    text-decoration: none;
 }
+
 .product-card .product-discount-label {
     display: block;
     padding: 4px 15px 4px 30px;

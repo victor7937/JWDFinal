@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SQLFootwearDAO implements FootwearDAO {
 
@@ -50,6 +51,9 @@ public class SQLFootwearDAO implements FootwearDAO {
     private static final String SQL_ADD_FOOTWEAR = "INSERT INTO footwears (f_art, f_name, f_price, f_category, f_for, f_color, f_brand, f_description_en, f_description_ru) "+
     "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+    private static final String SQL_UPDATE_FOOTWEAR = "UPDATE footwears SET f_name = ?, f_price = ?, f_category = ?," +
+            " f_for = ?, f_color = ?, f_brand = ?, f_description_%s = ? WHERE f_art = ?";
+
     private static final String SQL_ADD_IMAGE = "INSERT INTO footwear_images (img_name, img_art) VALUES(?, ?)";
 
     private static final String SQL_GET_IMAGES = "SELECT img_name FROM footwear_images WHERE img_art = ? ORDER BY img_name";
@@ -76,6 +80,8 @@ public class SQLFootwearDAO implements FootwearDAO {
             " JOIN categories c ON c.c_id = f.f_category" +
             " JOIN brands b ON b.b_id = f.f_brand" +
             " JOIN footwear_items fi on f.f_art = fi.fi_art WHERE fi_status='STOCK'";
+
+    private static final String SQL_DELETE_IMAGE = "DELETE FROM footwear_images WHERE img_name = ?";
 
 
     private static final int DEFAULT_LIMIT = 501;
@@ -403,8 +409,75 @@ public class SQLFootwearDAO implements FootwearDAO {
     }
 
     @Override
-    public boolean updateFootwear(String art, Footwear footwear) throws DAOException {
-        return false;
+    public boolean updateFootwear(Footwear footwear, String lang) throws DAOException {
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            resourceProvider.setAutoCommit(false);
+            ResultSet categoryIdRS = resourceProvider.createResultSet(String.format(SQL_GET_CATEGORY_ID, lang),
+                    ps -> ps.setString(1, footwear.getCategory()));
+            if (!categoryIdRS.next()) {
+                return false;
+            }
+            int categoryId = categoryIdRS.getInt("c_id");
+
+            ResultSet colorIdRS = resourceProvider.createResultSet(String.format(SQL_GET_COLOR_ID, lang),
+                    ps -> ps.setString(1, footwear.getColor()));
+            if (!colorIdRS.next()) {
+                return false;
+            }
+            int colorId = colorIdRS.getInt("cl_id");
+
+            ResultSet brandIdRS = resourceProvider.createResultSet(SQL_GET_BRAND_ID,
+                    ps -> ps.setString(1, footwear.getBrand()));
+            if (!brandIdRS.next()) {
+                return false;
+            }
+            int brandId = brandIdRS.getInt("b_id");
+
+            AtomicInteger i = new AtomicInteger();
+            boolean updateSuccess = resourceProvider.updateAction(String.format(SQL_UPDATE_FOOTWEAR, lang), ps -> {
+                ps.setString(i.incrementAndGet(), footwear.getName());
+                ps.setFloat(i.incrementAndGet(), footwear.getPrice());
+                ps.setInt(i.incrementAndGet(), categoryId);
+                ps.setString(i.incrementAndGet(), footwear.getForWhom().toString());
+                ps.setInt(i.incrementAndGet(), colorId);
+                ps.setInt(i.incrementAndGet(), brandId);
+                ps.setString(i.incrementAndGet(), footwear.getDescription());
+                ps.setString(i.incrementAndGet(), footwear.getArt());
+            });
+
+            if (!updateSuccess) {
+                resourceProvider.rollback();
+                return false;
+            }
+
+            for (String image : footwear.getImageLinks()) {
+                boolean imageAdding = resourceProvider.updateAction(SQL_ADD_IMAGE, ps -> {
+                    ps.setString(1, image);
+                    ps.setString(2, footwear.getArt());
+                });
+                if (!imageAdding) {
+                    resourceProvider.rollback();
+                    return false;
+                }
+            }
+
+            resourceProvider.commit();
+            return true;
+
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Updating footwear error",e);
+        }
+    }
+
+    @Override
+    public boolean deleteImage(String imageName) throws DAOException {
+        boolean successDeleting;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+            successDeleting = resourceProvider.updateAction(SQL_DELETE_IMAGE, ps -> ps.setString(1, imageName));
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Deleting image error", e);
+        }
+        return successDeleting;
     }
 
     private Footwear buildFootwear(ResultSet resultSet) throws DAOException {

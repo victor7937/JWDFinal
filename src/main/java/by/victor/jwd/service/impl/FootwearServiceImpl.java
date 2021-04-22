@@ -19,44 +19,6 @@ public class FootwearServiceImpl implements FootwearService {
         footwearDAO = DAOProvider.getInstance().getFootwearDAO();
     }
 
-//    @Override
-//    public List<Footwear> getByCriteria(FootwearCriteria criteria, String lang) throws ServiceException {
-//        List<Footwear> footwearList;
-//        String category = criteria.getCategory();
-//        String brand = criteria.getBrand();
-//        ForEnum forWhom = criteria.getForWhom();
-//        if (category.equals(FootwearCriteria.ALL) && brand.equals(FootwearCriteria.ALL)) {
-//            try {
-//                footwearList = footwearDAO.getAll(forWhom, lang);
-//            } catch (DAOException e) {
-//                logger.error(e.getMessage(), e);
-//                throw new ServiceException(e);
-//            }
-//        } else if (category.equals(FootwearCriteria.ALL)) {
-//            try {
-//                footwearList = footwearDAO.getByBrand(brand, forWhom, lang);
-//            } catch (DAOException e) {
-//                logger.error(e.getMessage(), e);
-//                throw new ServiceException(e);
-//            }
-//        } else if (brand.equals(FootwearCriteria.ALL)) {
-//            try {
-//                footwearList = footwearDAO.getByCategory(category, forWhom, lang);
-//            } catch (DAOException e) {
-//                logger.error(e.getMessage(), e);
-//                throw new ServiceException(e);
-//            }
-//        } else {
-//            try {
-//                footwearList = footwearDAO.getByCategoryAndBrand(category, brand, forWhom, lang);
-//            } catch (DAOException e) {
-//                logger.error(e.getMessage(), e);
-//                throw new ServiceException(e);
-//            }
-//        }
-//        return footwearList;
-//    }
-
     @Override
     public List<Footwear> getByCriteria(FootwearCriteria criteria, String lang, int offset, int limit) throws ServiceException {
         List<Footwear> footwearList;
@@ -274,6 +236,18 @@ public class FootwearServiceImpl implements FootwearService {
     }
 
     @Override
+    public boolean updateFootwear(Footwear footwear, String lang) throws ServiceException {
+        boolean isUpdated;
+        try {
+            isUpdated = footwearDAO.updateFootwear(footwear, lang);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isUpdated;
+    }
+
+    @Override
     public boolean updateItemStatus(Integer id, ItemStatus status) throws ServiceException {
         boolean isUpdated;
         try {
@@ -283,6 +257,18 @@ public class FootwearServiceImpl implements FootwearService {
             throw new ServiceException(e);
         }
         return isUpdated;
+    }
+
+    @Override
+    public boolean deleteImage(String imageName) throws ServiceException {
+        boolean isDeleted;
+        try {
+            isDeleted = footwearDAO.deleteImage(imageName);
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        return isDeleted;
     }
 
 }

@@ -30,6 +30,7 @@ public interface FootwearDAO {
 
     boolean updateItemStatus (Integer itemId, ItemStatus status) throws DAOException;
     boolean deleteFootwear (String art) throws DAOException;
-    boolean updateFootwear (String art, Footwear footwear) throws DAOException;
+    boolean updateFootwear (Footwear footwear, String lang) throws DAOException;
+    boolean deleteImage (String imageName) throws DAOException;
 
 }
