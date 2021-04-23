@@ -3,6 +3,10 @@ package by.victor.jwd.controller.command;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Builder class that creates path to Controller servlet with necessary command
+ * and adds any parameters
+ */
 public class CommandPath {
 
     private static final String CONTROLLER_COMMAND = "Controller?command=";

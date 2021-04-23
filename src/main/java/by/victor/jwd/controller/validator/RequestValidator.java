@@ -3,6 +3,10 @@ package by.victor.jwd.controller.validator;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
+/**
+ * Interface for validating request
+ * Contains some static methods which helps to validate some request data
+ */
 public interface RequestValidator {
     String EMAIL_PATTERN = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
     String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9-_!@]{7,40}$";

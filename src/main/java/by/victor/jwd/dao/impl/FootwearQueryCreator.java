@@ -7,6 +7,11 @@ import by.victor.jwd.dao.util.SQLConsumer;
 import java.sql.PreparedStatement;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * Class that helps to build a query by criteria
+ * Used by FootwearDAO
+ */
 public class FootwearQueryCreator {
 
     private static final String SQL_BY_CATEGORY = " AND c_name_%s = ?";
@@ -30,10 +35,21 @@ public class FootwearQueryCreator {
         creatingQueryProcess();
     }
 
+    /**
+     * @param criteria - criteria for footwear select
+     * @param query - some base SQL query
+     * @param lang - language for localized data
+     * @param offset - param for SQL LIMIT
+     * @param limit - param for SQL LIMIT
+     * @return new FootwearQueryCreator object with changed query and created consumer
+     */
     public static FootwearQueryCreator create (FootwearCriteria criteria, String query, String lang, int offset, int limit) {
         return new FootwearQueryCreator(criteria, query, lang, offset, limit);
     }
 
+    /**
+     * Process that builds query and consumer for some footwear select actions
+     */
     private void creatingQueryProcess () {
         String category = criteria.getCategory();
         String brand = criteria.getBrand();

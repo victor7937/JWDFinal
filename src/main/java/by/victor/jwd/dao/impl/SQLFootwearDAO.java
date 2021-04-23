@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * DAO that manipulates footwear-related data
+ */
 public class SQLFootwearDAO implements FootwearDAO {
 
     private static final String SQL_GET_FOOTWEAR = "SELECT f_art, f_name, f_price, c_name_%s AS category," +
@@ -389,6 +392,12 @@ public class SQLFootwearDAO implements FootwearDAO {
         return successAdding;
     }
 
+    /**
+     * @param itemId - id of footwear item for updating
+     * @param status - status that would be set
+     * @return successUpdating - true if update is success
+     * @throws DAOException
+     */
     @Override
     public boolean updateItemStatus(Integer itemId, ItemStatus status) throws DAOException {
         boolean successUpdating;
@@ -408,6 +417,12 @@ public class SQLFootwearDAO implements FootwearDAO {
         return false;
     }
 
+    /**
+     * @param footwear - footwear with data for update
+     * @param lang - language for localized fields
+     * @return true if update success, else false
+     * @throws DAOException
+     */
     @Override
     public boolean updateFootwear(Footwear footwear, String lang) throws DAOException {
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){

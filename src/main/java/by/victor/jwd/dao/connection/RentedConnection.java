@@ -19,6 +19,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+
+/**
+ * SQL connection which can be rented.
+ * Used by ConnectionPool class
+ */
 final class RentedConnection implements Connection {
 
     private Connection connection;

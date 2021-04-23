@@ -10,6 +10,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ResourceBundle;
 
+/**
+ * Servlet needed for getting images from container
+ */
 @WebServlet(name = "ImageServlet", value = "/images/*")
 public class ImageServlet extends HttpServlet {
 

@@ -1,10 +1,12 @@
 package by.victor.jwd.controller.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
 
-//@WebFilter(filterName = "EncodingFilter", urlPatterns = "/*")
+
+/**
+ * Changes encoding of request and response to UTF-8
+ */
 public class EncodingFilter implements Filter {
 
     private final static String ENCODING = "UTF-8";

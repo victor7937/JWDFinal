@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * DAO that manipulates customer-related data
+ */
 public class SQLCustomerDAO implements CustomerDAO {
 
 	private static final String SQL_GET_ALL_CUSTOMERS =

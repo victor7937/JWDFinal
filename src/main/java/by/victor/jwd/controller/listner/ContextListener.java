@@ -9,6 +9,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import java.util.ResourceBundle;
 
+/**
+ * This Listener is used to create and destroy connections pool
+ */
 @WebListener
 public class ContextListener implements ServletContextListener {
 

@@ -20,7 +20,6 @@ public class DeleteCustomer implements Command {
 
     private static final String DELETED_PARAM = "deleted";
 
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter(EMAIL_PARAM);

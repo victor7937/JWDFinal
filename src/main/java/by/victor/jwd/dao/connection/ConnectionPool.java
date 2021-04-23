@@ -11,6 +11,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
+
+/**
+ * Connection pool that is needed for getting connections to SQL database and
+ * release them back to pool.
+ * Can create given quantity of connections and destroy them all when it needed
+ */
 public final class ConnectionPool {
 
     private static final String DB_CONNECTION_EXCEPTION_TEXT = "Connection data is incorrect";
@@ -53,7 +59,6 @@ public final class ConnectionPool {
 
     private RentedConnection createNewConnection() throws ConnectionException {
         try {
-            //Locale.setDefault(new Locale(this.locale));
             return new RentedConnection(DriverManager.getConnection(url, user, password));
         } catch (SQLException e) {
             throw new ConnectionException(DB_CONNECTION_EXCEPTION_TEXT, e);

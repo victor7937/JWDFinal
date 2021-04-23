@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Util class for uploading and deleting images.
+ */
 public class ImageUploader {
 
     private static final ResourceBundle db_bundle = ResourceBundle.getBundle("application");
@@ -25,6 +28,14 @@ public class ImageUploader {
     private static final int MIN_LENGTH = 30;
     private static final int MAX_LENGTH = 60;
 
+    /**
+     * Upload method gets images from request, generates unique names for them
+     * and load them to image container.
+     * @param request - request which contains images
+     * @return list with file names
+     * @throws ServletException
+     * @throws IOException
+     */
     public static List<String> upload (HttpServletRequest request) throws ServletException, IOException {
         List<String> fileNames = new ArrayList<>();
         List<Part> fileParts = request.getParts().stream()
@@ -44,6 +55,12 @@ public class ImageUploader {
         return fileNames;
     }
 
+    /**
+     * Delete image by name.
+     * @param filename - name of image
+     * @return - true if image was deleted, else false
+     * @throws IOException
+     */
     public static boolean delete(String filename) throws IOException {
         File file = new File(IMAGE_CONTAINER_PATH, filename);
         return file.delete();

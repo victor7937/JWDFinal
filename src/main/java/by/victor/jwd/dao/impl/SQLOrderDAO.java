@@ -18,6 +18,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * DAO that manipulates order-related data
+ */
 public class SQLOrderDAO implements OrderDAO {
 
     private static final Logger logger = Logger.getLogger(SQLOrderDAO.class);

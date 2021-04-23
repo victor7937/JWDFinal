@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Filter for changing language and setting it to session attribute
+ */
 public class InternationalizationFilter implements Filter {
     private static final String LANG_ATTRIBUTE = "lang";
     private static final ResourceBundle bundle = ResourceBundle.getBundle("application");
