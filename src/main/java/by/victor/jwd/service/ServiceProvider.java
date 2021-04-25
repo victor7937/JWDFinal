@@ -1,5 +1,6 @@
 package by.victor.jwd.service;
 
+import by.victor.jwd.service.impl.ConnectionServiceImpl;
 import by.victor.jwd.service.impl.CustomerServiceImpl;
 import by.victor.jwd.service.impl.FootwearServiceImpl;
 import by.victor.jwd.service.impl.OrderServiceImpl;
@@ -16,6 +17,8 @@ public final class ServiceProvider {
 
 	private final OrderService orderService = new OrderServiceImpl();
 
+	private final ConnectionService connectionService = new ConnectionServiceImpl();
+
 	public static ServiceProvider getInstance() {
 		return instance;
 	}
@@ -30,5 +33,9 @@ public final class ServiceProvider {
 
 	public OrderService getOrderService() {
 		return orderService;
+	}
+
+	public ConnectionService getConnectionService() {
+		return connectionService;
 	}
 }

@@ -125,6 +125,17 @@ footer a {
     font-weight: 600;
 }
 
+.text-categories {
+    font-weight: 600;
+    color: #6f828e;
+    transition: all .5s ease 0s;
+}
+
+.text-categories:hover {
+    color: #343a40;
+    text-decoration: none;
+}
+
 .text-table {
     font-size: 18px;
     font-weight: 500;

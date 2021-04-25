@@ -43,7 +43,7 @@ public class DeleteCartItem implements Command {
                             .split(REGEX_DELIMITER))
                             .collect(Collectors.toList());
                     sizes.remove(size);
-                    cookie.setValue(String.join(DELIMITER,sizes));
+                    cookie.setValue(String.join(DELIMITER, sizes));
                     response.addCookie(cookie);
                 }
             }

@@ -26,7 +26,7 @@ public class AddToCart implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String art = request.getParameter(ART_PARAM);
         String size = request.getParameter(SIZE_PARAM);
-        if (art == null || "".equals(art) || size == null || "".equals(size)) {
+        if (art == null || art.isBlank() || size == null || size.isBlank()) {
             response.sendRedirect(CommandPath.createCommand(CommandName.GOTOPRODUCT)
                     .addParam(ART_PARAM, art)
                     .addParam(SHOW_PARAM, YES_VALUE)

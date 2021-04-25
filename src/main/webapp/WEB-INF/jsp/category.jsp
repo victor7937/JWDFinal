@@ -67,7 +67,7 @@
                 </ul>
             </div>
             <c:if test="${sessionScope.email != null && 'admin'.equals(sessionScope.role)}">
-                <div class="card bg-light">
+                <div class="card bg-light mb-3">
                     <ul class="list-group category_block">
                         <li class="list-group-item"><a href="Controller?command=gotoaddfeatures"><i class="fa fa-plus-circle"></i> Category|Brand|Color</a></li>
                     </ul>

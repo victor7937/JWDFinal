@@ -1,12 +1,19 @@
 package by.victor.jwd.controller.listner;
 
 import by.victor.jwd.controller.exception.ControllerException;
-import by.victor.jwd.dao.connection.ConnectionPool;
-import by.victor.jwd.dao.exception.ConnectionException;
+import by.victor.jwd.service.ConnectionService;
+import by.victor.jwd.service.ServiceProvider;
+import by.victor.jwd.service.exception.ServiceException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import org.apache.log4j.Logger;
 
-import javax.servlet.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+import java.io.*;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -15,42 +22,51 @@ import java.util.ResourceBundle;
 @WebListener
 public class ContextListener implements ServletContextListener {
 
-    private static final ResourceBundle db_bundle = ResourceBundle.getBundle("database");
-    private static final String DB_URL = db_bundle.getString("db.url");
-    private static final String DB_USER = db_bundle.getString("db.user");
-    private static final String DB_PASSWORD = db_bundle.getString("db.password");
-    private static final String DB_DRIVER_NAME = db_bundle.getString("db.driver.name");
-    private static final int CONNECTION_LIMIT = 10;
-    private static final int IDLE_CONNECTION_LIMIT = 5;
-    private final static Logger logger = Logger.getLogger(ContextListener.class);
+    private static final ResourceBundle db_bundle = ResourceBundle.getBundle("application");
+    private static final String BEST_PRODUCTS_PATH = db_bundle.getString("path.to.best.products");
+    private static final String POPULAR_ATTRIBUTE = "popular";
 
+    Logger logger = Logger.getLogger(ContextListener.class);
 
     public ContextListener() { }
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        pool.setUrl(DB_URL);
-        pool.setUser(DB_USER);
-        pool.setPassword(DB_PASSWORD);
-        pool.setDriverName(DB_DRIVER_NAME);
+        ConnectionService connectionService = ServiceProvider.getInstance().getConnectionService();
         try {
-            pool.init(CONNECTION_LIMIT,IDLE_CONNECTION_LIMIT);
-            logger.info("Pool has been created");
-        } catch (ConnectionException e) {
-            logger.fatal("Error while initializing pool " + e.toString());
+           connectionService.initConnectionPool();
+        } catch (ServiceException e) {
             throw new ControllerException("Sorry, we have some technical problems and working to fix them soon.\n Please try to connect later.");
         }
+
+        Map<String, Integer> popularMap;
+        try(BufferedReader reader = new BufferedReader(new FileReader(BEST_PRODUCTS_PATH))) {
+            popularMap = new Gson().fromJson(reader, new TypeToken<Map<String, Integer>>() {}.getType());
+        } catch (IOException e) {
+            logger.error("Error while reading best products", e);
+            throw new ControllerException("Technical problems with getting best products");
+        }
+        sce.getServletContext().setAttribute(POPULAR_ATTRIBUTE, popularMap);
+//
 
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
+        Map<String, Integer> popularMap = (Map<String, Integer>) sce.getServletContext().getAttribute(POPULAR_ATTRIBUTE);
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(BEST_PRODUCTS_PATH))) {
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(popularMap, writer);
+        } catch (IOException e) {
+            logger.error("Error while reading best products", e);
+            throw new ControllerException("Technical problems with writing best products");
+        }
+
+        ConnectionService connectionService = ServiceProvider.getInstance().getConnectionService();
         try {
-            ConnectionPool.getInstance().destroy();
-            logger.info("Pool has been destroyed");
-        } catch (ConnectionException e) {
-            logger.fatal("Error while destroying pool " + e.toString());
+            connectionService.destroyConnectionPool();
+        } catch (ServiceException e) {
             throw new ControllerException("Sorry, we have some technical problems and working to fix them soon.\n Please try to connect later.");
         }
     }

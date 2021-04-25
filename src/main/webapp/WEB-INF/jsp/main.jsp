@@ -21,6 +21,8 @@
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
     <link href="<c:url value='/css/card.css'/>" rel="stylesheet" type="text/css">
+    <c:set var="lastProducts" value="${requestScope.lastList}"/>
+    <c:set var="popularProducts" value="${requestScope.popularList}"/>
 </head>
 <body>
 
@@ -34,9 +36,6 @@
 </section>
 
 <section>
-    <%--   <div class="container-fluid">--%>
-    <%--       <div class="row">--%>
-    <%--          <div class="col">--%>
     <div id="carouselExampleIndicators" class="carousel slide w-100 h-100"  data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -75,27 +74,22 @@
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <c:forEach begin="1" end="3">
-                                <div class="col-md-3 col-sm-6 my-3">
+                            <c:if test="${lastProducts.size() == 0}">
+                                <h2>Visit <a href="Controller?command=gotocategory" class="text-categories">Categories</a> for more products you can enjoy!</h2>
+                            </c:if>
+                            <c:forEach var="footwear" items="${lastProducts}">
+                                <div class="col-md-3 col-sm-4 my-3">
                                     <div class="product-card">
                                         <div class="product-image">
-                                            <img class="pic-1" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008729_1000.jpg">
-                                            <img class="pic-2" src="https://cdn-images.farfetch-contents.com/16/11/50/16/16115016_32008727_1000.jpg">
-                                            <ul class="social">
-                                                <!-- <li><a href="" class="fa fa-search"></a></li>
-                                                 <li><a href="" class="fa fa-shopping-bag"></a></li> -->
-                                                <li><a href="" class="fa fa-shopping-cart"></a></li>
-                                            </ul>
-                                            <!--<span class="product-discount-label">-20%</span>-->
+                                            <img class="pic-1" src="images/${footwear.imageLinks.get(0)}">
+                                            <img class="pic-2" src="images/${footwear.imageLinks.size() > 1 ? footwear.imageLinks.get(1) : footwear.imageLinks.get(0)}">
                                         </div>
                                         <div class="product-content">
-                                            <div class="price">$795.00
-                                                <span>$970.00</span>
-                                            </div>
-                                            <h2 class="brand">Balenciaga</h2>
-                                            <span class="model">Track</span>
-                                            <h3 class="category"><a href="Controller?command=gotoproduct">Sneakers</a></h3>
-                                            <a class="details" href="Controller?command=gotoproduct">More Details<i class="fa fa-angle-right icon"></i></a>
+                                            <div class="price">$ ${footwear.price}</div>
+                                            <h2 class="brand">${footwear.brand}</h2>
+                                            <span class="model">${footwear.name}</span>
+                                            <h3 class="category"><a href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></h3>
+                                            <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fa fa-angle-right icon"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -117,27 +111,19 @@
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <c:forEach begin="1" end="4">
-                                <div class="col-md-3 col-sm-6 my-3">
+                            <c:forEach var="footwear" items="${popularProducts}">
+                                <div class="col-md-3 col-sm-4 my-3">
                                     <div class="product-card">
                                         <div class="product-image">
-                                            <img class="pic-1" src="https://cdn-images.farfetch-contents.com/16/52/13/52/16521352_32325136_1000.jpg">
-                                            <img class="pic-2" src="https://cdn-images.farfetch-contents.com/16/52/13/52/16521352_32324357_1000.jpg">
-                                            <ul class="social">
-                                                <!-- <li><a href="" class="fa fa-search"></a></li>
-                                                 <li><a href="" class="fa fa-shopping-bag"></a></li> -->
-                                                <li><a href="" class="fa fa-shopping-cart"></a></li>
-                                            </ul>
-                                            <!--<span class="product-discount-label">-20%</span>-->
+                                            <img class="pic-1" src="images/${footwear.imageLinks.get(0)}">
+                                            <img class="pic-2" src="images/${footwear.imageLinks.size() > 1 ? footwear.imageLinks.get(1) : footwear.imageLinks.get(0)}">
                                         </div>
                                         <div class="product-content">
-                                            <div class="price">$830
-                                                <span>$900</span>
-                                            </div>
-                                            <h2 class="brand">Balenciaga</h2>
-                                            <span class="model">Track</span>
-                                            <h3 class="category"><a href="Controller?command=gotoproduct">Sneakers</a></h3>
-                                            <a class="details" href="Controller?command=gotoproduct">More Details<i class="fa fa-angle-right icon"></i></a>
+                                            <div class="price">$ ${footwear.price}</div>
+                                            <h2 class="brand">${footwear.brand}</h2>
+                                            <span class="model">${footwear.name}</span>
+                                            <h3 class="category"><a href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></h3>
+                                            <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fa fa-angle-right icon"></i></a>
                                         </div>
                                     </div>
                                 </div>
