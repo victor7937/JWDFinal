@@ -17,7 +17,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * This Listener is used to create and destroy connections pool
+ * This Listener is used to create and destroy connections pool,
+ * getting and updating data about best products.
  */
 @WebListener
 public class ContextListener implements ServletContextListener {

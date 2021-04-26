@@ -22,9 +22,9 @@ import static by.victor.jwd.controller.constant.GlobalParams.*;
 
 public class Authentication implements Command {
 
-	private static final String SESSION_ATTRIBUTE = "email";
 	private static final String AUTH_SUCCESS_REDIRECT = CommandPath.createCommand(CommandName.GOTOMAINPAGE).createPath();
-	private static final String WRONG_VALUE = "wrong_e_or_p";
+	private static final String WRONG_VALUE_MSG = "wrong_e_or_p";
+	private static final String BLOCKED_MSG = "blocked";
 
 
 	@Override
@@ -40,13 +40,20 @@ public class Authentication implements Command {
 			
 			if (customer == null) {
 				response.sendRedirect(CommandPath.createCommand(CommandName.GOTOSIGNINPAGE)
-						.addParam(MESSAGE_PARAM, WRONG_VALUE)
+						.addParam(MESSAGE_PARAM, WRONG_VALUE_MSG)
+						.createPath());
+				return;
+			}
+
+			if (customer.getRole() == UserRole.BLOCK) {
+				response.sendRedirect(CommandPath.createCommand(CommandName.GOTOSIGNINPAGE)
+						.addParam(MESSAGE_PARAM, BLOCKED_MSG)
 						.createPath());
 				return;
 			}
 
 			HttpSession session = request.getSession(true);
-			session.setAttribute(SESSION_ATTRIBUTE, customer.getEmail());
+			session.setAttribute(EMAIL_ATTRIBUTE, customer.getEmail());
 			if (customer.getRole() == UserRole.ADMIN) {
 				session.setAttribute(ROLE_ATTRIBUTE, UserRole.ADMIN.toString().toLowerCase());
 			} else {

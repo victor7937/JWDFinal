@@ -12,29 +12,6 @@ body {
     min-height: 100vh;
 }
 
-.bloc_left_price {
-    color: #c01508;
-    text-align: center;
-    font-weight: bold;
-    font-size: 150%;
-}
-.add_to_cart_block .price {
-    color: #c01508;
-    text-align: center;
-    font-weight: bold;
-    font-size: 200%;
-    margin-bottom: 0;
-}
-.add_to_cart_block .price_discounted {
-    color: #343a40;
-    text-align: center;
-    text-decoration: line-through;
-    font-size: 140%;
-}
-
-.reviews_product .fa-star {
-    color: gold;
-}
 .pagination {
     margin-top: 20px;
 }
@@ -106,10 +83,13 @@ footer a {
     border-right:1px solid #e4e9ef;
     border-bottom:1px solid #e4e9ef;
 }
-#sign-in {
-   height: 62vh;
 
+@media (min-device-height: 1000px) {
+    #sign-in {
+        height: 62vh;
+    }
 }
+
 
 .thead-dark {
     background-color: #343a40!important;

@@ -28,7 +28,9 @@ public class CommandProvider {
 		commands.put(CommandName.ADDTOCART, new AddToCart());
 		commands.put(CommandName.DELETECARTITEM, new DeleteCartItem());
 		commands.put(CommandName.GOTOADMINPAGE, new GoToAdminPage());
-		commands.put(CommandName.DELETECUSTOMER, new DeleteCustomer());
+		commands.put(CommandName.BLOCKUSER, new BlockCustomer());
+		commands.put(CommandName.UNBLOCKUSER, new UnblockCustomer());
+		commands.put(CommandName.MAKEADMIN, new MakeCustomerAdmin());
 		commands.put(CommandName.NEWORDER, new CreateNewOrder());
 		commands.put(CommandName.SHOWORDERS, new ShowOrders());
 		commands.put(CommandName.SHOWUSERS, new ShowUsers());
@@ -48,6 +50,7 @@ public class CommandProvider {
 		commands.put(CommandName.GOTOEDITFOOTWEAR, new GoToEditFootwear());
 		commands.put(CommandName.EDITFOOTWEAR, new EditFootwear());
 		commands.put(CommandName.DELETEIMAGE, new DeleteImage());
+
 	}
 	
 	

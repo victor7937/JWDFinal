@@ -9,6 +9,7 @@
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
     <link href="<c:url value='/css/product.css'/>" rel="stylesheet" type="text/css">
+    <link href="<c:url value='/css/card.css'/>" rel="stylesheet" type="text/css">
     <c:set var="footwear" value="${requestScope.footwear}" scope="request"/>
 
 </head>
@@ -64,8 +65,7 @@
             </div>
         </div>
 
-        <!-- Add to cart -->
-        <div class="col-12 col-lg-6 add_to_cart_block">
+        <div class="col-12 col-lg-6">
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="product-title-brand mb-1">${footwear.brand}</div>
@@ -109,22 +109,12 @@
                             <i class="fa fa-shopping-cart"></i> Add To Cart
                         </button>
                     </form>
-                    <div class="product_rassurance">
+                    <div class="product_fast_panel">
                         <ul class="list-inline">
                             <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Fast delivery</li>
                             <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>Secure payment</li>
                             <li class="list-inline-item"><i class="fa fa-phone fa-2x"></i><br/>+375 29 180-25-50</li>
                         </ul>
-                    </div>
-                    <div class="reviews_product p-3 mb-2 ">
-                        3 reviews
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        (4/5)
-                        <a class="pull-right" href="#reviews">View all reviews</a>
                     </div>
                 </div>
             </div>
@@ -144,44 +134,36 @@
             </div>
         </div>
 
-        <!-- Reviews -->
-        <div class="col-12" id="reviews">
+
+        <div class="col-12">
             <div class="card border-light mb-3">
-                <div class="card-header text-white text-uppercase"><i class="fa fa-comment"></i> Reviews</div>
+                <div class="card-header text-white text-uppercase">
+                    <i class="fa fa-heart"></i> You may also like
+                </div>
                 <div class="card-body">
-                    <div class="review">
-                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        <meta itemprop="datePublished" content="02-11-2020">November 02, 2020
-
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        by Paul Smith
-                        <p class="blockquote">
-                            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, beatae deserunt eveniet excepturi, facilis illo in laboriosam maxime</p>
-                        </p>
-                        <hr>
-                    </div>
-                    <div class="review">
-                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        <meta itemprop="datePublished" content="02-03-2021">March 02, 2021
-
-                        <span class="fa fa-star" aria-hidden="true"></span>
-                        <span class="fa fa-star" aria-hidden="true"></span>
-                        <span class="fa fa-star" aria-hidden="true"></span>
-                        <span class="fa fa-star" aria-hidden="true"></span>
-                        <span class="fa fa-star" aria-hidden="true"></span>
-                        by Paul Smith
-                        <p class="blockquote">
-                            <p class="mb-0"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, beatae deserunt eveniet excepturi, facilis illo in laboriosam maxime</p>
-                        </p>
-                        <hr>
+                    <div class="row justify-content-center">
+                        <c:forEach var="item" items="${requestScope.related}">
+                            <div class="col-md-2 col-sm-3 my-3">
+                                <div class="product-card">
+                                    <div class="product-image">
+                                        <a href="Controller?command=gotoproduct&art=${item.art}">
+                                            <img class="pic-1" src="images/${item.imageLinks.get(0)}">
+                                            <img class="pic-2" src="images/${item.imageLinks.size() > 1 ? item.imageLinks.get(1) : item.imageLinks.get(0)}">
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <h2 class="brand">${item.brand}</h2>
+                                        <span class="model">${item.name}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 

@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
+import static by.victor.jwd.controller.constant.GlobalParams.ERROR_CODE_FORBIDDEN;
 
 public class ShowOrders implements Command {
 
@@ -23,9 +24,12 @@ public class ShowOrders implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
 
         OrderService orderService = ServiceProvider.getInstance().getOrderService();
-
         String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
         List<Order> orders;
         try {

@@ -18,19 +18,19 @@
     background-color: #6f828e;
 }
 
-.product_rassurance {
+.product_fast_panel {
     padding: 10px;
     margin-top: 15px;
     background: #ffffff;
     border: 1px solid #343a40;
     color: #343a40;
 }
-.product_rassurance .list-inline {
+.product_fast_panel .list-inline {
     margin-bottom: 0;
     text-transform: uppercase;
     text-align: center;
 }
-.product_rassurance .list-inline li:hover {
+.product_fast_panel .list-inline li:hover {
     color: #6f828e;
 }
 
@@ -142,12 +142,3 @@
     color: #fff;
     background-color: #343a40;
 }
-
-
-
-/*.product-grid8 .title a {*/
-/*    color: #000;*/
-/*}*/
-/*.product-grid8 .title a:hover {*/
-/*    color: #0081c2;*/
-/*}*/

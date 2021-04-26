@@ -1,6 +1,7 @@
 package by.victor.jwd.service.impl;
 import by.victor.jwd.bean.Customer;
 
+import by.victor.jwd.bean.UserRole;
 import by.victor.jwd.dao.CustomerDAO;
 import by.victor.jwd.dao.DAOProvider;
 import by.victor.jwd.dao.exception.DAOException;
@@ -82,15 +83,15 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public boolean delete(String email) throws ServiceException {
-		boolean successDeleting;
+	public boolean changeRole(String email, UserRole role) throws ServiceException {
+		boolean successBlocking;
 		try {
-			successDeleting = customerDAO.deleteCustomer(email);
+			successBlocking = customerDAO.changeRole(email, role);
 		} catch (DAOException e) {
 			logger.error(e.getMessage(), e);
 			throw new ServiceException(e);
 		}
-		return successDeleting;
+		return successBlocking;
 	}
 
 	@Override

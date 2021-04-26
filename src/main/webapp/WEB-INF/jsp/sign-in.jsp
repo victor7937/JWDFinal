@@ -25,13 +25,17 @@
 <jsp:include page="header.jsp"/>
 
 <div class="card bg-light" id="sign-in">
-    <article class="card-body mx-auto" style="max-width: 400px;">
+    <article class="card-body mb-4 mx-auto" style="max-width: 400px;">
         <h4 class="card-title text-center mb-4 mt-1"><fmt:message key="sign.in.main"/></h4>
         <hr>
         <c:choose>
             <c:when test="${param.message.equals('wrong_e_or_p')}">
                 <p class="text-danger text-center"><fmt:message key="sign.in.wrong.email"/><br/>
                     Please try again</p>
+            </c:when>
+            <c:when test="${param.message.equals('blocked')}">
+                <p class="text-danger text-center">Sorry, but you are blocked<br/>
+                    Please write to support for more information</p>
             </c:when>
             <c:when test="${param.message.equals('register_success')}">
                 <p class="text-success text-center"><fmt:message key="sign.in.register.ok"/></p>

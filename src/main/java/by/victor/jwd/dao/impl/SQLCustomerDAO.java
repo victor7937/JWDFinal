@@ -10,6 +10,7 @@ import by.victor.jwd.dao.util.DAOResourceProvider;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -40,10 +41,13 @@ public class SQLCustomerDAO implements CustomerDAO {
 	private static final String SQL_UPDATE_PASSWORD =
 			"UPDATE customers SET cu_password = ? WHERE cu_email = ?";
 
-	private static final String SQL_DELETE_CUSTOMER_BY_EMAIL =
-			"DELETE FROM customers WHERE cu_email = ?";
+	private static final String SQL_CHANGE_ROLE =
+			"UPDATE customers SET cu_role = ? WHERE cu_email = ?";
 
-	public SQLCustomerDAO() {}
+
+
+	public SQLCustomerDAO() {
+	}
 
 	@Override
 	public List<Customer> getAll() throws DAOException {
@@ -78,9 +82,10 @@ public class SQLCustomerDAO implements CustomerDAO {
 	public Customer getCustomerByEmailAndPassword(String email, String password) throws DAOException {
 		Customer customer = null;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+			AtomicInteger i = new AtomicInteger();
 			ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_CUSTOMER_BY_EMAIL_AND_PASSWORD, ps -> {
-				ps.setString(1, email);
-				ps.setString(2, password);
+				ps.setString(i.incrementAndGet(), email);
+				ps.setString(i.incrementAndGet(), password);
 			});
 			if (resultSet.next()) {
 				customer = buildCustomer(resultSet);
@@ -109,14 +114,15 @@ public class SQLCustomerDAO implements CustomerDAO {
 	public boolean addNewCustomer(Customer customer) throws DAOException {
 		boolean operationSuccess;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+			AtomicInteger i = new AtomicInteger();
 			operationSuccess = resourceProvider.updateAction(SQL_INSERT_CUSTOMER, ps -> {
-				ps.setString(1, customer.getName());
-				ps.setString(2, customer.getEmail());
-				ps.setString(3, customer.getPassword());
-				ps.setString(4, customer.getPhone());
-				ps.setString(5, customer.getCountry());
-				ps.setString(6, customer.getCity());
-				ps.setString(7, customer.getAddress());
+				ps.setString(i.incrementAndGet(), customer.getName());
+				ps.setString(i.incrementAndGet(), customer.getEmail());
+				ps.setString(i.incrementAndGet(), customer.getPassword());
+				ps.setString(i.incrementAndGet(), customer.getPhone());
+				ps.setString(i.incrementAndGet(), customer.getCountry());
+				ps.setString(i.incrementAndGet(), customer.getCity());
+				ps.setString(i.incrementAndGet(), customer.getAddress());
 			});
 		} catch (SQLException | ConnectionException e) {
 			throw new DAOException("Adding new customer error", e);
@@ -125,27 +131,33 @@ public class SQLCustomerDAO implements CustomerDAO {
 	}
 
 	@Override
-	public boolean deleteCustomer(String email) throws DAOException {
+	public boolean changeRole(String email, UserRole role) throws DAOException {
 		boolean operationSuccess;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
-			operationSuccess = resourceProvider.updateAction(SQL_DELETE_CUSTOMER_BY_EMAIL, ps -> ps.setString(1, email));
+			AtomicInteger i = new AtomicInteger();
+			operationSuccess = resourceProvider.updateAction(SQL_CHANGE_ROLE, ps -> {
+				ps.setString(i.incrementAndGet(), role.toString().toLowerCase());
+				ps.setString(i.incrementAndGet(), email);
+			});
 		} catch (SQLException | ConnectionException e) {
-			throw new DAOException("Deleting customer error", e);
+			throw new DAOException("Changing customers role error", e);
 		}
 		return operationSuccess;
 	}
+
 
 	@Override
 	public boolean updateCustomer(Customer customer) throws DAOException {
 		boolean operationSuccess;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+			AtomicInteger i = new AtomicInteger();
 			operationSuccess = resourceProvider.updateAction(SQL_UPDATE_CUSTOMER, ps -> {
-				ps.setString(1, customer.getName());
-				ps.setString(2, customer.getPhone());
-				ps.setString(3, customer.getCountry());
-				ps.setString(4, customer.getCity());
-				ps.setString(5, customer.getAddress());
-				ps.setString(6, customer.getEmail());
+				ps.setString(i.incrementAndGet(), customer.getName());
+				ps.setString(i.incrementAndGet(), customer.getPhone());
+				ps.setString(i.incrementAndGet(), customer.getCountry());
+				ps.setString(i.incrementAndGet(), customer.getCity());
+				ps.setString(i.incrementAndGet(), customer.getAddress());
+				ps.setString(i.incrementAndGet(), customer.getEmail());
 			});
 		} catch (SQLException | ConnectionException e) {
 			throw new DAOException("Updating customer error", e);
@@ -157,9 +169,10 @@ public class SQLCustomerDAO implements CustomerDAO {
 	public boolean updatePassword(String email, String password) throws DAOException {
 		boolean operationSuccess;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+			AtomicInteger i = new AtomicInteger();
 			operationSuccess = resourceProvider.updateAction(SQL_UPDATE_PASSWORD, ps -> {
-				ps.setString(1, password);
-				ps.setString(2, email);
+				ps.setString(i.incrementAndGet(), password);
+				ps.setString(i.incrementAndGet(), email);
 			});
 		} catch (SQLException | ConnectionException e) {
 			throw new DAOException("Updating password error", e);
@@ -193,10 +206,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 			String address = resultSet.getString("cu_address");
 			String role = resultSet.getString("cu_role");
 			customer = new Customer(name, email, password, phone, country, city, address);
-			if (UserRole.ADMIN == UserRole.valueOf(role.toUpperCase())) {
-				customer.setRole(UserRole.ADMIN);
-			}
-
+			customer.setRole(UserRole.valueOf(role.toUpperCase()));
 		} catch (SQLException e) {
 			throw new DAOException("Building customer error", e);
 		}

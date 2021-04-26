@@ -61,7 +61,20 @@
                                 <tbody>
                                     <c:forEach var="customer" items="${requestScope.customers}">
                                         <tr>
-                                            <td> <div class="text-dark"><i class="fa fa-3x fa-user-circle"></i> </div> </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${'BLOCK'.equals(customer.role.toString())}">
+                                                        <div class="text-danger">
+                                                            <i class="fa fa-2x fa-ban"></i>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div class="text-dark">
+                                                            <i class="fa fa-2x fa-user-circle"></i>
+                                                        </div>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td>${customer.name}</td>
                                             <td>${customer.email}</td>
                                             <td>${customer.phone}</td>
@@ -70,11 +83,22 @@
                                             <td>${customer.city}</td>
                                             <td>${customer.address}</td>
                                             <td class="text-center">
-                                               <form method="post" action="Controller">
-                                                    <input type="hidden" name="command" value="deletecustomer">
-                                                    <input type="hidden" name="email" value="${customer.email}">
-                                                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button>
-                                               </form>
+                                                <c:choose>
+                                                    <c:when test="${'BLOCK'.equals(customer.role.toString())}">
+                                                        <form method="post" action="Controller">
+                                                            <input type="hidden" name="command" value="unblockuser">
+                                                            <input type="hidden" name="email" value="${customer.email}">
+                                                            <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-unlock-alt"></i> </button>
+                                                        </form>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <form method="post" action="Controller">
+                                                            <input type="hidden" name="command" value="blockuser">
+                                                            <input type="hidden" name="email" value="${customer.email}">
+                                                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> </button>
+                                                        </form>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -191,11 +215,6 @@
                 </div>
             </div>
         </div>
-<%--        <div class="tab-pane fade" id="nav-footwear" role="tabpanel" aria-labelledby="nav-footwear-tab">--%>
-<%--            <div class="container">--%>
-<%--                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores autem cumque distinctio, dolores dolorum est eum facere harum, impedit iste neque numquam! Exercitationem perspiciatis praesentium quam quis rem suscipit velit!--%>
-<%--            </div>--%>
-<%--        </div>--%>
     </div>
 </section>
 
@@ -208,14 +227,20 @@
     </div>
     <div class="toast-body">
         <c:choose>
-            <c:when test="${'success'.equals(param.get('deleted'))}">
-                <span class="text-success">Successfully deleted</span>
+            <c:when test="${'success'.equals(param.get('blocked'))}">
+                <span class="text-success">Successfully blocked</span>
+            </c:when>
+            <c:when test="${'success'.equals(param.get('unblocked'))}">
+                <span class="text-success">Successfully unblocked</span>
             </c:when>
             <c:when test="${'success'.equals(param.get('change'))}">
                 <span class="text-success">Status successfully changed</span>
             </c:when>
-            <c:when test="${'fail'.equals(param.get('deleted'))}">
-                <span class="text-danger">Fail to delete customer</span>
+            <c:when test="${'fail'.equals(param.get('blocked'))}">
+                <span class="text-danger">Fail to block customer</span>
+            </c:when>
+            <c:when test="${'fail'.equals(param.get('unblocked'))}">
+                <span class="text-danger">Fail to unblock customer</span>
             </c:when>
             <c:when test="${'fail'.equals(param.get('change'))}">
                 <span class="text-danger">Changing status fail</span>
