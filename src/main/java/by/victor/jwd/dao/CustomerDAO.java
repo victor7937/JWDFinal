@@ -17,4 +17,5 @@ public interface CustomerDAO {
     boolean updateCustomer(Customer customer) throws DAOException;
     boolean updatePassword(String email, String password) throws DAOException;
     String getPassword(String email) throws DAOException;
+    boolean deleteCustomer(String email) throws DAOException;
 }

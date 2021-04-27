@@ -44,6 +44,9 @@ public class SQLCustomerDAO implements CustomerDAO {
 	private static final String SQL_CHANGE_ROLE =
 			"UPDATE customers SET cu_role = ? WHERE cu_email = ?";
 
+	private static final String SQL_DELETE_CUSTOMER_BY_EMAIL =
+			"DELETE FROM customers WHERE cu_email = ?";
+
 	private final static int FIRST = 1;
 
 	public SQLCustomerDAO() { }
@@ -191,6 +194,17 @@ public class SQLCustomerDAO implements CustomerDAO {
 			throw new DAOException("Getting password error", e);
 		}
 		return password;
+	}
+
+	@Override
+	public boolean deleteCustomer(String email) throws DAOException {
+		boolean operationSuccess;
+		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
+			operationSuccess = resourceProvider.updateAction(SQL_DELETE_CUSTOMER_BY_EMAIL, ps -> ps.setString(FIRST, email));
+		} catch (SQLException | ConnectionException e) {
+			throw new DAOException("Deleting customer error", e);
+		}
+		return operationSuccess;
 	}
 
 	private Customer buildCustomer(ResultSet resultSet) throws DAOException {
