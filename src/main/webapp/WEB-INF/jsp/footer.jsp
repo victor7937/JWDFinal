@@ -49,17 +49,17 @@
                 <h5>Contact</h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
-                    <li><i class="fa fa-home mr-2"></i> Lei Shoes</li>
-                    <li><i class="fa fa-envelope mr-2"></i> lei-shoes@mail.ru</li>
-                    <li><i class="fa fa-phone mr-2"></i> +375 29 180 25 50</li>
-                    <li><i class="fa fa-print mr-2"></i> +375 33 181 15 70</li>
+                    <li><i class="fas fa-home mr-2"></i> Lei Shoes</li>
+                    <li><i class="fas fa-envelope mr-2"></i> lei-shoes@mail.ru</li>
+                    <li><i class="fas fa-phone mr-2"></i> +375 29 180 25 50</li>
+                    <li><i class="fas fa-print mr-2"></i> +375 33 181 15 70</li>
                 </ul>
             </div>
             <div class="col-12 copyright mt-3">
                 <p class="float-left">
                     <a href="#">Back to top</a>
                 </p>
-                <p class="text-right text-muted">created with <i class="fa fa-heart"></i> by <a href="https://github.com/victor7937/JWDFinal"><i>victor</i></a> for JWD Epam | <span>v. 1.0</span></p>
+                <p class="text-right text-muted">created with <i class="fas fa-heart"></i> by <a href="https://github.com/victor7937/JWDFinal"><i>victor</i></a> for JWD Epam | <span>v. 1.0</span></p>
             </div>
         </div>
     </div>

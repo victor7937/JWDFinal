@@ -34,6 +34,15 @@
     color: #6f828e;
 }
 
+.product_fast_panel .list-inline li a {
+    color: #343a40;
+}
+
+.product_fast_panel .list-inline li a:hover {
+    color: #6f828e;
+    text-decoration: none;
+}
+
 .price-title {
     color: #000;
     font-size: 20px;

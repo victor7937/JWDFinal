@@ -185,7 +185,7 @@
                                     <div id="collapse${order.id}" class="collapse" aria-labelledby="heading${order.id}" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <ul class="list-group row list-group-horizontal delivery justify-content-center">
-                                                <li class="list-group-item col-1"><i class="fa fa-2x fa-truck text-dark"></i></li>
+                                                <li class="list-group-item col-1"><i class="fas fa-2x fa-truck text-dark"></i></li>
                                                 <li class="list-group-item col-2">${order.customer.country}</li>
                                                 <li class="list-group-item col-2">${order.customer.city}</li>
                                                 <li class="list-group-item col-3r">${order.customer.address}</li>

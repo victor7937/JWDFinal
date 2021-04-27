@@ -106,15 +106,86 @@
                             </div>
                         </div>
                         <button type="submit" class="btn add-to-card-btn btn-lg btn-block">
-                            <i class="fa fa-shopping-cart"></i> Add To Cart
+                            <i class="fas fa-shopping-cart"></i> Add To Cart
                         </button>
                     </form>
                     <div class="product_fast_panel">
                         <ul class="list-inline">
-                            <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Fast delivery</li>
-                            <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>Secure payment</li>
-                            <li class="list-inline-item"><i class="fa fa-phone fa-2x"></i><br/>+375 29 180-25-50</li>
+                            <li class="list-inline-item mx-4">
+                                <a type="button" data-toggle="modal" data-target="#FastOrderModal">
+                                    <i class="fas fa-shipping-fast fa-2x"></i><br/>Fast order
+                                </a>
+                            </li>
+                            <li class="list-inline-item mx-4">
+                                <a href="#">
+                                    <i class="fas fa-credit-card fa-2x"></i><br/>payment
+                                </a>
+
+                            </li>
+                            <li class="list-inline-item mx-4">
+                                <a href="tel:+375291802550">
+                                    <i class="fas fa-phone fa-2x"></i><br/>call us
+                                </a>
+                            </li>
                         </ul>
+                    </div>
+                    <!-- Button trigger modal -->
+<%--                    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">--%>
+<%--                        Launch demo modal--%>
+<%--                    </a>--%>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="FastOrderModal" tabindex="-1" aria-labelledby="FastOrderModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form action="Controller" method="post">
+                                    <input type="hidden" name="command" value="fastorder">
+                                    <input type="hidden" name="art" value="${footwear.art}">
+                                    <input type="hidden" name="price" value="${footwear.price}">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title total-cart text-center" id="FastOrderModalLabel"><i class="fas fa-shipping-fast"></i> Fast Order</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group mb-2">
+                                            <h5 class="text-cart text-left text-info">Pick the size</h5>
+                                            <div class="radio-toolbar">
+                                                <c:forEach var="size" items="${requestScope.sizes}">
+                                                    <input type="radio" id="fast${size}" name="size" value="${size}" required>
+                                                    <label for="fast${size}">${size % 1 == 0 ? size.intValue() : size}</label>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">Product</th>
+                                                    <th scope="col">Brand</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col" class="text-right">Price</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="text-cart">
+                                                        <td class="text-center">${footwear.art}</td>
+                                                        <td class="text-center">${footwear.brand}</td>
+                                                        <td class="text-center">1</td>
+                                                        <td class="text-right"><span class="total-cart">$ ${footwear.price}</span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-success text-uppercase">confirm order</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -125,7 +196,7 @@
         <!-- Description -->
         <div class="col-12">
             <div class="card border-light mb-3">
-                <div class="card-header text-white text-uppercase"><i class="fa fa-align-justify"></i> Description</div>
+                <div class="card-header text-white text-uppercase"><i class="fas fa-align-justify"></i> Description</div>
                 <div class="card-body">
                     <p class="card-text">
                        ${footwear.description}
@@ -138,7 +209,7 @@
         <div class="col-12">
             <div class="card border-light mb-3">
                 <div class="card-header text-white text-uppercase">
-                    <i class="fa fa-heart"></i> You may also like
+                    <i class="fas fa-heart"></i> You may also like
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-center">
@@ -183,9 +254,6 @@
                 <div class="modal-body">
                     <img class="img-fluid" src="images/${footwear.imageLinks.get(i)}" data-dismiss="modal" />
                 </div>
-                    <%--            <div class="modal-footer">--%>
-                    <%--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-                    <%--            </div>--%>
             </div>
         </div>
     </div>
@@ -194,7 +262,7 @@
 
 <div class="toast" id="cartToast" style="position: absolute; top: 63px; right: 2px;">
     <div class="toast-header">
-        <strong class="mr-auto"><i class="fa fa-shopping-cart"></i> Cart Message</strong>
+        <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Cart Message</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -204,12 +272,21 @@
             <c:when test="${'no'.equals(param.get('added'))}">
                 <span class="text-success">Item was successfully added to cart!<a href="Controller?command=gotocart"><br/>Check it!</a></span>
             </c:when>
+            <c:when test="${'yes'.equals(param.get('added'))}">
+                <span class="text-warning">The item has already added, please change quantity in the cart<a href="Controller?command=gotocart"><br/>Shopping Cart</a></span>
+            </c:when>
             <c:when test="${'no_size'.equals(param.get('added'))}">
                 <span class="text-warning">Please, pick the size as you want</span>
             </c:when>
-            <c:otherwise>
-                <span class="text-warning">The item has already added, please change quantity in the cart<a href="Controller?command=gotocart"><br/>Shopping Cart</a></span>
-            </c:otherwise>
+            <c:when test="${'success'.equals(param.get('fast'))}">
+                <span class="text-success">Order was created successfully! Please wait for its confirmation<a href="Controller?command=gotoprofile"><br/>Check it!</a></span>
+            </c:when>
+            <c:when test="${'fail'.equals(param.get('fast'))}">
+                <span class="text-danger">Fail to create order, please try again</span>
+            </c:when>
+            <c:when test="${'not_logged_in'.equals(param.get('fast'))}">
+                <span class="text-warning">Please, sign in. You need to be signed in to checkout the order!</span>
+            </c:when>
         </c:choose>
     </div>
 </div>

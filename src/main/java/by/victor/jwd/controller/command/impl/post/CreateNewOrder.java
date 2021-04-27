@@ -8,7 +8,6 @@ import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandName;
 import by.victor.jwd.controller.command.CommandPath;
 import by.victor.jwd.controller.exception.ControllerException;
-import by.victor.jwd.service.CustomerService;
 import by.victor.jwd.service.FootwearService;
 import by.victor.jwd.service.OrderService;
 import by.victor.jwd.service.ServiceProvider;
@@ -20,8 +19,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,17 +29,15 @@ import static by.victor.jwd.controller.constant.GlobalParams.*;
 public class CreateNewOrder implements Command {
 
     private final static Logger logger = Logger.getLogger(CreateNewOrder.class);
-    private static final String TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     private static final String ART_PREFIX = "art_";
     private static final String QUANTITY_PARAM = "quantity";
-    private static final String EMAIL_PARAM = "email";
     private static final String LANG_DEFAULT = "en";
     private static final String NOT_LOGGED_IN_VALUE = "not_logged_in";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String customerEmail = (String) request.getSession().getAttribute(EMAIL_PARAM);
+        String customerEmail = (String) request.getSession().getAttribute(EMAIL_ATTRIBUTE);
 
         if (customerEmail == null || customerEmail.isBlank()) {
             response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, NOT_LOGGED_IN_VALUE).createPath());
@@ -61,7 +56,6 @@ public class CreateNewOrder implements Command {
 
         List<FootwearItem> items = new ArrayList<>();
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
-        CustomerService customerService = ServiceProvider.getInstance().getCustomerService();
 
         try {
             for (int i = 0; i < arts.length; i++) {
@@ -73,37 +67,14 @@ public class CreateNewOrder implements Command {
             throw new ControllerException("Error getting footwear for order", e);
         }
 
-        Customer customer;
-        try {
-            customer = customerService.getByEmail(customerEmail);
-        } catch (ServiceException e) {
-            throw new ControllerException("Error getting customer for order", e);
-        }
-
-        if (customer == null) {
-            logger.error("Customer not found");
-            throw new ControllerException("Customer not found");
-        }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_PATTERN);
-        LocalDateTime currentDate = LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter);
-
-        Order order = new Order(customer, currentDate, items);
+        Order order = new Order(new Customer(customerEmail), items);
         order.setPrice(countPrice(items));
 
         OrderService orderService = ServiceProvider.getInstance().getOrderService();
 
         try {
             if (orderService.createNewOrder(order)) {
-                Cookie[] cookies = request.getCookies();
-                if (cookies != null) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().contains(ART_PREFIX)) {
-                            cookie.setMaxAge(0);
-                            response.addCookie(cookie);
-                        }
-                    }
-                }
+                cleanCookie(request.getCookies(), response);
                 response.sendRedirect(CommandPath.createCommand(CommandName.GOTOCART).addParam(MESSAGE_PARAM, SUCCESS).createPath());
 
             } else {
@@ -111,7 +82,7 @@ public class CreateNewOrder implements Command {
             }
 
         } catch (ServiceException e) {
-            throw new ControllerException("Unable to create order");
+            throw new ControllerException("Unable to create order",e);
         }
 
     }
@@ -122,5 +93,16 @@ public class CreateNewOrder implements Command {
             total += item.getQuantity() * item.getFootwear().getPrice();
         }
         return total;
+    }
+
+    private void cleanCookie (Cookie[] cookies, HttpServletResponse response) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().contains(ART_PREFIX)) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+            }
+        }
     }
 }

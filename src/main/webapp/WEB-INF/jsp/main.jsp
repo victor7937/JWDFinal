@@ -70,7 +70,7 @@
             <div class="col-sm">
                 <div class="card">
                     <div class="card-header text-white text-uppercase">
-                        <i class="fa fa-star"></i> <fmt:message key="main.last"/>
+                        <i class="fas fa-star"></i> <fmt:message key="main.last"/>
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
@@ -89,7 +89,7 @@
                                             <h2 class="brand">${footwear.brand}</h2>
                                             <span class="model">${footwear.name}</span>
                                             <h3 class="category"><a href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></h3>
-                                            <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fa fa-angle-right icon"></i></a>
+                                            <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fas fa-angle-right icon"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
             <div class="col-sm">
                 <div class="card">
                     <div class="card-header text-white text-uppercase">
-                        <i class="fa fa-trophy"></i> <fmt:message key="main.best"/>
+                        <i class="fas fa-trophy"></i> <fmt:message key="main.best"/>
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
@@ -123,7 +123,7 @@
                                             <h2 class="brand">${footwear.brand}</h2>
                                             <span class="model">${footwear.name}</span>
                                             <h3 class="category"><a href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></h3>
-                                            <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fa fa-angle-right icon"></i></a>
+                                            <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fas fa-angle-right icon"></i></a>
                                         </div>
                                     </div>
                                 </div>

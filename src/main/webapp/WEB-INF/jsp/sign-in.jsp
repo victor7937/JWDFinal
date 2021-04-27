@@ -51,7 +51,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        <span class="input-group-text"> <i class="fas fa-user"></i> </span>
                     </div>
                     <input class="form-control" placeholder="<fmt:message key="sign.in.email"/>" type="email" name="email" required="required">
                 </div>
@@ -59,7 +59,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                        <span class="input-group-text"> <i class="fas fa-lock"></i> </span>
                     </div>
                     <input class="form-control" placeholder="<fmt:message key="sign.in.password"/>" type="password" name="password" required="required">
                 </div>

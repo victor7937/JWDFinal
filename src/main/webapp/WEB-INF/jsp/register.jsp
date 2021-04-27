@@ -29,8 +29,8 @@
         <h4 class="card-title mt-3 text-center"><fmt:message key="register.create"/></h4>
         <p class="text-center"><fmt:message key="register.new.account"/></p>
         <p>
-            <a href="" class="btn btn-block btn-twitter"> <i class="fa fa-twitter"></i> <fmt:message key="register.twitter"/></a>
-            <a href="" class="btn btn-block btn-facebook"> <i class="fa fa-facebook"></i> <fmt:message key="register.facebook"/></a>
+            <a href="" class="btn btn-block btn-twitter"> <i class="fas fa-twitter"></i> <fmt:message key="register.twitter"/></a>
+            <a href="" class="btn btn-block btn-facebook"> <i class="fas fa-facebook"></i> <fmt:message key="register.facebook"/></a>
         </p>
         <p class="divider-text">
             <span class="bg-light"><fmt:message key="register.or"/></span>
@@ -42,19 +42,19 @@
             <input type="hidden" name="command" value="savenewcustomer">
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-user"></i> </span>
                 </div>
                 <input name="name" class="form-control" placeholder="<fmt:message key="register.placeholder.name"/>" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.name}" required>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-envelope"></i> </span>
                 </div>
                 <input name="email" class="form-control" placeholder="<fmt:message key="register.placeholder.email"/>" type="email" value="${incorrect_customer == null ? '' : incorrect_customer.email}" required>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-phone"></i> </span>
                 </div>
                 <select name="phone" class="custom-select" style="max-width: 120px;">
                     <c:forEach var="code" items="${r:displayCodes()}">
@@ -65,7 +65,7 @@
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i> </span>
                 </div>
 
                 <select name="country" class="form-control">
@@ -76,19 +76,19 @@
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i> </span>
                 </div>
                 <input name="city" class="form-control" placeholder="<fmt:message key="register.placeholder.city"/>" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.city}">
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-map-marker"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-map-marker-alt"></i> </span>
                 </div>
                 <input name="address" class="form-control" placeholder="<fmt:message key="register.placeholder.address"/>" type="text" value="${incorrect_customer == null ? '' : incorrect_customer.address}">
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-lock"></i> </span>
                 </div>
                 <input name="password" id="password" class="form-control" placeholder="<fmt:message key="register.placeholder.password"/>" type="password" required
                        title="Password should contain only english letters, numbers and symbols such as '-_!@' at least one number and lowercase english letter, 8-40 characters"
@@ -96,7 +96,7 @@
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    <span class="input-group-text"> <i class="fas fa-lock"></i> </span>
                 </div>
                 <input name="password" id="password_repeat" class="form-control" placeholder="<fmt:message key="register.placeholder.password.repeat"/>" type="password" required>
             </div>

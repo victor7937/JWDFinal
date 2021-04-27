@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header text-white"><i class="fa fa-envelope"></i> Contact us.
+                <div class="card-header text-white"><i class="fas fa-envelope"></i> Contact us.
                 </div>
                 <div class="card-body">
                     <form>
@@ -60,7 +60,7 @@
         </div>
         <div class="col-12 col-sm-4">
             <div class="card bg-light mb-3">
-                <div class="card-header text-white text-uppercase"><i class="fa fa-home"></i> Address</div>
+                <div class="card-header text-white text-uppercase"><i class="fas fa-home"></i> Address</div>
                 <div class="card-body">
                     <p>Kalvariyskaya 24</p>
                     <p>Minsk</p>

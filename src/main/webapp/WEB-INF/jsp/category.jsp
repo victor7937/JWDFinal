@@ -49,7 +49,7 @@
                 </ul>
             </div>
             <div class="card bg-light mb-3">
-                <div class="card-header bg-card-header text-white text-uppercase"><i class="fa fa-list"></i> Categories</div>
+                <div class="card-header bg-card-header text-white text-uppercase"><i class="fas fa-list"></i> Categories</div>
                 <ul class="list-group category_block">
                     <li class="list-group-item ${'all'.equals(categoryParam) ? 'active' : ''}"><a href="Controller?command=gotocategory&category=all&brand=${brandParam}&for=${forWhom}">All</a></li>
                     <c:forEach var="category" items="${requestScope.categoryList}" >
@@ -58,7 +58,7 @@
                 </ul>
             </div>
             <div class="card bg-light mb-3">
-                <div class="card-header bg-card-header text-white text-uppercase"><i class="fa fa-list"></i> Brands</div>
+                <div class="card-header bg-card-header text-white text-uppercase"><i class="fas fa-list"></i> Brands</div>
                 <ul class="list-group category_block">
                     <li class="list-group-item ${'all'.equals(brandParam) ? 'active' : ''}"><a href="Controller?command=gotocategory&brand=all&category=${categoryParam}&for=${forWhom}">All</a></li>
                     <c:forEach var="brand" items="${requestScope.brandList}" >
@@ -69,7 +69,7 @@
             <c:if test="${sessionScope.email != null && 'admin'.equals(sessionScope.role)}">
                 <div class="card bg-light mb-3">
                     <ul class="list-group category_block">
-                        <li class="list-group-item"><a href="Controller?command=gotoaddfeatures"><i class="fa fa-plus-circle"></i> Category|Brand|Color</a></li>
+                        <li class="list-group-item"><a href="Controller?command=gotoaddfeatures"><i class="fas fa-plus-circle"></i> Category|Brand|Color</a></li>
                     </ul>
                 </div>
             </c:if>
@@ -86,8 +86,8 @@
                                     <ul class="social">
                                        <!-- <li><a href="" class="fa fa-search"></a></li>
                                         <li><a href="" class="fa fa-shopping-bag"></a></li> -->
-                                        <li><a href="Controller?command=gotoeditfootwear&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Edit footwear" class="social-button fa fa-edit"></a></li>
-                                        <li><a href="Controller?command=gotoitemspage&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Add new size" class="social-button fa fa-plus-circle"></a></li>
+                                        <li><a href="Controller?command=gotoeditfootwear&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Edit footwear" class="social-button fas fa-edit"></a></li>
+                                        <li><a href="Controller?command=gotoitemspage&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Add new size" class="social-button fas fa-plus-circle"></a></li>
                                     </ul>
                                 </c:if>
                                 <!--<span class="product-discount-label">-20%</span>-->
@@ -99,7 +99,7 @@
                                 <h2 class="brand">${footwear.brand}</h2>
                                 <span class="model">${footwear.name}</span>
                                 <h3 class="category"><a href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></h3>
-                                <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fa fa-angle-right icon"></i></a>
+                                <a class="details" href="Controller?command=gotoproduct&art=${footwear.art}">More Details<i class="fas fa-angle-right icon"></i></a>
                             </div>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
 
 <c:if test="${sessionScope.email != null && 'admin'.equals(sessionScope.role)}">
     <a href="Controller?command=addfootwear" data-toggle="tooltip" data-placement="top" title="Add new footwear" class="add-footwear-btn">
-        <i class="fa fa-5x fa-plus"></i>
+        <i class="fas fa-5x fa-plus"></i>
     </a>
 </c:if>
 

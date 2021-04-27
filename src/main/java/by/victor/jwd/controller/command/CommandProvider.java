@@ -50,6 +50,7 @@ public class CommandProvider {
 		commands.put(CommandName.GOTOEDITFOOTWEAR, new GoToEditFootwear());
 		commands.put(CommandName.EDITFOOTWEAR, new EditFootwear());
 		commands.put(CommandName.DELETEIMAGE, new DeleteImage());
+		commands.put(CommandName.FASTORDER, new CreateFastOrder());
 
 	}
 	

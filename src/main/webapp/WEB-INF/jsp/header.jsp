@@ -77,7 +77,7 @@
 <%--                </form>--%>
 
                 <a class="btn btn-success btn-sm my-2" href="Controller?command=gotocart">
-                    <i class="fa fa-shopping-cart"></i> <fmt:message key="header.cart"/>
+                    <i class="fas fa-shopping-cart"></i> <fmt:message key="header.cart"/>
                     <span class="badge badge-light">3</span>
                 </a>
 

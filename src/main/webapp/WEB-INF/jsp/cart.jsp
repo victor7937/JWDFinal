@@ -67,7 +67,7 @@
                                     <td class="text-right">$<span class="price_view">${item.footwear.price}</span></td>
                                     <input type="hidden" class="price_data" name="price" value="${item.footwear.price}">
                                     <td class="text-right">
-                                         <a href="Controller?command=deletecartitem&art=${item.footwear.art}&size=${item.size}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a>
+                                         <a href="Controller?command=deletecartitem&art=${item.footwear.art}&size=${item.size}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> </a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -110,7 +110,7 @@
 
 <div class="toast" id="orderToast" style="position: absolute; top: 53px; right: 2px;">
     <div class="toast-header">
-        <strong class="mr-auto"><i class="fa fa-shopping-cart"></i> Order Message</strong>
+        <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Order Message</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
             <span aria-hidden="true">&times;</span>
         </button>

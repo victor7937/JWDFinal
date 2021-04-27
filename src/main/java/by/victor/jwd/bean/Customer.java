@@ -22,6 +22,12 @@ public class Customer implements Serializable {
         this.role = UserRole.USER;
     }
 
+
+    public Customer(String email) {
+        this.email = email;
+        this.role = UserRole.USER;
+    }
+
     public Customer(String name, String email, String password) {
         this.name = name;
         this.email = email;

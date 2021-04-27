@@ -188,7 +188,7 @@
                           <input type="hidden" name="command" value="deleteimage">
                           <input type="hidden" name="image" value="${image}">
                           <input type="hidden" name="art" value="${footwear.art}">
-                          <button type="submit" data-toggle="tooltip" data-placement="top" class="social-button fa fa-trash-o" title="Delete image"></button>
+                          <button type="submit" data-toggle="tooltip" data-placement="top" class="social-button fas fa-trash-alt" title="Delete image"></button>
                         </form>
                       </li>
                     </ul>
@@ -207,7 +207,7 @@
 
 <div class="toast" id="infoToast" style="position: absolute; top: 63px; right: 5px;">
   <div class="toast-header">
-    <strong class="mr-auto"><i class="fa fa-info-circle"></i> Info</strong>
+    <strong class="mr-auto"><i class="fas fa-info-circle"></i> Info</strong>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
       <span aria-hidden="true">&times;</span>
     </button>

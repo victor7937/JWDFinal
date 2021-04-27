@@ -56,6 +56,7 @@
                                     <th scope="col">City</th>
                                     <th scope="col">Address</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -65,12 +66,17 @@
                                                 <c:choose>
                                                     <c:when test="${'BLOCK'.equals(customer.role.toString())}">
                                                         <div class="text-danger">
-                                                            <i class="fa fa-2x fa-ban"></i>
+                                                            <i class="fas fa-2x fa-ban"></i>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:when test="${'ADMIN'.equals(customer.role.toString())}">
+                                                        <div class="text-info">
+                                                            <i class="fas fa-2x fa-crown"></i>
                                                         </div>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <div class="text-dark">
-                                                            <i class="fa fa-2x fa-user-circle"></i>
+                                                            <i class="fas fa-2x fa-user-circle"></i>
                                                         </div>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -82,24 +88,34 @@
                                                 <%--                            <td><input class="form-control" type="text" value="1" /></td>--%>
                                             <td>${customer.city}</td>
                                             <td>${customer.address}</td>
-                                            <td class="text-center">
+
                                                 <c:choose>
                                                     <c:when test="${'BLOCK'.equals(customer.role.toString())}">
-                                                        <form method="post" action="Controller">
-                                                            <input type="hidden" name="command" value="unblockuser">
-                                                            <input type="hidden" name="email" value="${customer.email}">
-                                                            <button type="submit" class="btn btn-sm btn-info"><i class="fa fa-unlock-alt"></i> </button>
-                                                        </form>
+                                                        <td>
+                                                            <form method="post" action="Controller">
+                                                                <input type="hidden" name="command" value="unblockuser">
+                                                                <input type="hidden" name="email" value="${customer.email}">
+                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="Unblock user" class="btn btn-sm btn-info"><i class="fas fa-unlock-alt"></i> </button>
+                                                            </form>
+                                                        </td>
                                                     </c:when>
-                                                    <c:otherwise>
-                                                        <form method="post" action="Controller">
-                                                            <input type="hidden" name="command" value="blockuser">
-                                                            <input type="hidden" name="email" value="${customer.email}">
-                                                            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> </button>
-                                                        </form>
-                                                    </c:otherwise>
+                                                    <c:when test="${'USER'.equals(customer.role.toString())}">
+                                                        <td class="text-center">
+                                                            <form method="post" action="Controller">
+                                                                <input type="hidden" name="command" value="blockuser">
+                                                                <input type="hidden" name="email" value="${customer.email}">
+                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="Block user" class="btn btn-sm btn-danger"><i class="fas fa-ban"></i> </button>
+                                                            </form>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <form method="post" action="Controller">
+                                                                <input type="hidden" name="command" value="makeadmin">
+                                                                <input type="hidden" name="email" value="${customer.email}">
+                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="Make admin" class="btn btn-sm btn-info"><i class="fas fa-crown"></i> </button>
+                                                            </form>
+                                                        </td>
+                                                    </c:when>
                                                 </c:choose>
-                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -155,7 +171,7 @@
                                     <div id="collapse${order.id}" class="collapse" aria-labelledby="heading${order.id}" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <ul class="list-group row list-group-horizontal delivery justify-content-center">
-                                                <li class="list-group-item col-1"><i class="fa fa-2x fa-truck text-dark"></i></li>
+                                                <li class="list-group-item col-1"><i class="fas fa-2x fa-truck text-dark"></i></li>
                                                 <li class="list-group-item col-2">${order.customer.country}</li>
                                                 <li class="list-group-item col-2">${order.customer.city}</li>
                                                 <li class="list-group-item col-3">${order.customer.address}</li>
@@ -220,7 +236,7 @@
 
 <div class="toast" id="infoToast" style="position: absolute; top: 63px; right: 2px;">
     <div class="toast-header">
-        <strong class="mr-auto"><i class="fa fa-info-circle"></i> Info</strong>
+        <strong class="mr-auto"><i class="fas fa-info-circle"></i> Info</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
             <span aria-hidden="true">&times;</span>
         </button>

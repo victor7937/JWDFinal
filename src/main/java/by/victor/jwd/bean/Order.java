@@ -21,10 +21,8 @@ public class Order implements Serializable {
     private Integer id;
 
 
-
-    public Order (Customer customer, LocalDateTime date, List<FootwearItem> items) {
+    public Order (Customer customer, List<FootwearItem> items) {
         this.customer = customer;
-        this.date = date;
         this.items = items;
         this.orderStatus = OrderStatus.WAITING;
         this.price = 0.0f;
