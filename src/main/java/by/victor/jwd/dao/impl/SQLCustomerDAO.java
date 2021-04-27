@@ -44,10 +44,9 @@ public class SQLCustomerDAO implements CustomerDAO {
 	private static final String SQL_CHANGE_ROLE =
 			"UPDATE customers SET cu_role = ? WHERE cu_email = ?";
 
+	private final static int FIRST = 1;
 
-
-	public SQLCustomerDAO() {
-	}
+	public SQLCustomerDAO() { }
 
 	@Override
 	public List<Customer> getAll() throws DAOException {
@@ -68,7 +67,7 @@ public class SQLCustomerDAO implements CustomerDAO {
 	public Customer getCustomerByEmail(String email) throws DAOException {
 		Customer customer = null;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
-			ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_CUSTOMER_BY_EMAIL, ps -> ps.setString(1, email));
+			ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_CUSTOMER_BY_EMAIL, ps -> ps.setString(FIRST, email));
 			if (resultSet.next()) {
 				customer = buildCustomer(resultSet);
 			}
@@ -100,8 +99,8 @@ public class SQLCustomerDAO implements CustomerDAO {
 	public boolean isCustomerExists(String email) throws DAOException {
 		boolean isEmailExists = false;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
-			ResultSet resultSet = resourceProvider.createResultSet(SQL_CHECK_EMAIL, ps -> ps.setString(1, email));
-			if (resultSet.next() && resultSet.getInt("has_email") == 1) {
+			ResultSet resultSet = resourceProvider.createResultSet(SQL_CHECK_EMAIL, ps -> ps.setString(FIRST, email));
+			if (resultSet.next() && resultSet.getInt(ColumnNames.CU_HAS_EMAIL) == FIRST) {
 				isEmailExists = true;
 			}
 		} catch (SQLException | ConnectionException e) {
@@ -184,9 +183,9 @@ public class SQLCustomerDAO implements CustomerDAO {
 	public String getPassword(String email) throws DAOException {
 		String password = null;
 		try (DAOResourceProvider resourceProvider = new DAOResourceProvider()){
-			ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_PASSWORD_BY_EMAIL, ps -> ps.setString(1, email));
+			ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_PASSWORD_BY_EMAIL, ps -> ps.setString(FIRST, email));
 			if (resultSet.next()) {
-				password = resultSet.getString("cu_password");
+				password = resultSet.getString(ColumnNames.CU_PASSWORD);
 			}
 		} catch (SQLException | ConnectionException e) {
 			throw new DAOException("Getting password error", e);
@@ -197,19 +196,31 @@ public class SQLCustomerDAO implements CustomerDAO {
 	private Customer buildCustomer(ResultSet resultSet) throws DAOException {
 		Customer customer;
 		try {
-			String name = resultSet.getString("cu_name");
-			String email = resultSet.getString("cu_email");
-			String password = resultSet.getString("cu_password");
-			String phone = resultSet.getString("cu_phone");
-			String country = resultSet.getString("cu_country");
-			String city = resultSet.getString("cu_city");
-			String address = resultSet.getString("cu_address");
-			String role = resultSet.getString("cu_role");
+			String name = resultSet.getString(ColumnNames.CU_NAME);
+			String email = resultSet.getString(ColumnNames.CU_EMAIL);
+			String password = resultSet.getString(ColumnNames.CU_PASSWORD);
+			String phone = resultSet.getString(ColumnNames.CU_PHONE);
+			String country = resultSet.getString(ColumnNames.CU_COUNTRY);
+			String city = resultSet.getString(ColumnNames.CU_CITY);
+			String address = resultSet.getString(ColumnNames.CU_ADDRESS);
+			String role = resultSet.getString(ColumnNames.CU_ROLE);
 			customer = new Customer(name, email, password, phone, country, city, address);
 			customer.setRole(UserRole.valueOf(role.toUpperCase()));
 		} catch (SQLException e) {
 			throw new DAOException("Building customer error", e);
 		}
 		return customer;
+	}
+
+	static class ColumnNames {
+		public final static String CU_EMAIL = "cu_email";
+		public static final String CU_NAME = "cu_name";
+		public static final String CU_PASSWORD = "cu_password";
+		public static final String CU_PHONE = "cu_phone";
+		public static final String CU_COUNTRY = "cu_country";
+		public static final String CU_CITY = "cu_city";
+		public static final String CU_ADDRESS = "cu_address";
+		public static final String CU_ROLE = "cu_role";
+		public static final String CU_HAS_EMAIL = "has_email";
 	}
 }

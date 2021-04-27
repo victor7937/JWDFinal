@@ -3,6 +3,7 @@
 *.iml
 *.iws
 Test.java
+test.jsp
 # Maven
 log/
 target/

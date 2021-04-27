@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -49,14 +50,17 @@ public class SQLOrderDAO implements OrderDAO {
             " JOIN footwear_items fi ON fi.fi_id = oi.oi_item_id" +
             " JOIN orders o ON o.ord_id = oi.oi_order_id WHERE ord_id = ?";
 
+    private final static int FIRST = 1;
+
     @Override
     public boolean createOrder(Order order) throws DAOException {
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
             resourceProvider.setAutoCommit(false);
             String email = order.getCustomer().getEmail();
+            AtomicInteger index = new AtomicInteger();
             ResultSet orderRS = resourceProvider.updateActionWithResultSet(SQL_INSERT_ORDER, ps -> {
-                ps.setString(1, email);
-                ps.setFloat(2, order.getPrice());
+                ps.setString(index.incrementAndGet(), email);
+                ps.setFloat(index.incrementAndGet(), order.getPrice());
             });
             if (!orderRS.next()) {
                 resourceProvider.rollback();
@@ -64,13 +68,13 @@ public class SQLOrderDAO implements OrderDAO {
                 return false;
             }
 
-            int orderId = orderRS.getInt(1);
+            int orderId = orderRS.getInt(FIRST);
             for (FootwearItem item : order.getItems()) {
                 for (int i = 0; i < item.getQuantity(); i++) {
-
+                    index.set(0);
                     ResultSet itemsRS = resourceProvider.createResultSet(SQL_GET_ITEM, ps -> {
-                        ps.setString(1, item.getFootwear().getArt());
-                        ps.setFloat(2, item.getSize());
+                        ps.setString(index.incrementAndGet(), item.getFootwear().getArt());
+                        ps.setFloat(index.incrementAndGet(), item.getSize());
                     });
 
                     if (!itemsRS.next()) {
@@ -78,13 +82,13 @@ public class SQLOrderDAO implements OrderDAO {
                         logger.error("Item id not found");
                         return false;
                     }
-                    int itemId = itemsRS.getInt("fi_id");
-
+                    int itemId = itemsRS.getInt(ColumnNames.FI_ID);
+                    index.set(0);
                    resourceProvider.updateAction(SQL_INSERT_ORDER_ITEM, ps -> {
-                        ps.setInt(1, orderId);
-                        ps.setInt(2, itemId);
+                        ps.setInt(index.incrementAndGet(), orderId);
+                        ps.setInt(index.incrementAndGet(), itemId);
                     });
-                    resourceProvider.updateAction(SQL_UPDATE_ITEM_STATUS, ps -> ps.setInt(1, itemId));
+                    resourceProvider.updateAction(SQL_UPDATE_ITEM_STATUS, ps -> ps.setInt(FIRST, itemId));
                 }
             }
             resourceProvider.commit();
@@ -101,12 +105,12 @@ public class SQLOrderDAO implements OrderDAO {
 
     @Override
     public List<Order> showOrdersOfCustomer(String email, String lang) throws DAOException {
-        return getOrdersByParams(SQL_GET_ORDERS_OF_CUSTOMER, ps -> ps.setString(1, email), lang);
+        return getOrdersByParams(SQL_GET_ORDERS_OF_CUSTOMER, ps -> ps.setString(FIRST, email), lang);
     }
 
     @Override
     public List<Order> showOrdersOfStatus(OrderStatus orderStatus, String lang) throws DAOException {
-        return getOrdersByParams(SQL_GET_ORDERS_OF_STATUS, ps -> ps.setString(1, orderStatus.toString()), lang);
+        return getOrdersByParams(SQL_GET_ORDERS_OF_STATUS, ps -> ps.setString(FIRST, orderStatus.toString()), lang);
     }
 
     @Override
@@ -117,9 +121,10 @@ public class SQLOrderDAO implements OrderDAO {
         else {
             boolean successUpdating;
             try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+                AtomicInteger i = new AtomicInteger();
                 successUpdating = resourceProvider.updateAction(SQL_SET_ORDER_STATUS, ps -> {
-                    ps.setString(1, status.toString());
-                    ps.setInt(2, orderId);
+                    ps.setString(i.incrementAndGet(), status.toString());
+                    ps.setInt(i.incrementAndGet(), orderId);
                 });
             } catch (SQLException | ConnectionException e) {
                 throw new DAOException("Setting order status error",e);
@@ -131,19 +136,20 @@ public class SQLOrderDAO implements OrderDAO {
     private boolean declineOrder(Integer orderId) throws DAOException {
         try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
             resourceProvider.setAutoCommit(false);
+            AtomicInteger i = new AtomicInteger();
             boolean isStatusUpd = resourceProvider.updateAction(SQL_SET_ORDER_STATUS, ps -> {
-                ps.setString(1, OrderStatus.DECLINE.toString());
-                ps.setInt(2, orderId);
+                ps.setString(i.incrementAndGet(), OrderStatus.DECLINE.toString());
+                ps.setInt(i.incrementAndGet(), orderId);
             });
             if (!isStatusUpd) {
                 resourceProvider.rollback();
                 logger.error("Order status wasn't updated");
                 return false;
             }
-            ResultSet idsRS = resourceProvider.createResultSet(SQL_GET_ORDER_ITEMS, ps-> ps.setInt(1,orderId));
+            ResultSet idsRS = resourceProvider.createResultSet(SQL_GET_ORDER_ITEMS, ps-> ps.setInt(FIRST, orderId));
             while (idsRS.next()) {
-                int id = idsRS.getInt("oi_item_id");
-                boolean isUpdStatusItem = resourceProvider.updateAction(SQL_SET_ITEM_STATUS, ps -> ps.setInt(1, id));
+                int id = idsRS.getInt(ColumnNames.OI_ITEM_ID);
+                boolean isUpdStatusItem = resourceProvider.updateAction(SQL_SET_ITEM_STATUS, ps -> ps.setInt(FIRST, id));
                 if (!isUpdStatusItem) {
                     resourceProvider.rollback();
                     logger.error("Item status wasn't updated");
@@ -167,13 +173,13 @@ public class SQLOrderDAO implements OrderDAO {
                 ordersRS = resourceProvider.createResultSet(query, consumer);
             }
             while (ordersRS.next()) {
-                int orderId = ordersRS.getInt("ord_id");
+                int orderId = ordersRS.getInt(ColumnNames.ORD_ID);
                 Order order = buildOrder(ordersRS);
                 if (order == null) {
                     continue;
                 }
                 order.setId(orderId);
-                ResultSet itemsRS = resourceProvider.createResultSet(SQL_GET_ITEMS_BY_ORDER_ID, ps -> ps.setInt(1, orderId));
+                ResultSet itemsRS = resourceProvider.createResultSet(SQL_GET_ITEMS_BY_ORDER_ID, ps -> ps.setInt(FIRST, orderId));
                 while (itemsRS.next()) {
                     FootwearItem item =  buildItem(itemsRS, lang);
                     if (item == null) {
@@ -193,10 +199,10 @@ public class SQLOrderDAO implements OrderDAO {
     private Order buildOrder(ResultSet resultSet) throws DAOException {
         Order order = null;
         try {
-            String email = resultSet.getString("ord_customer_email");
-            LocalDateTime date = resultSet.getTimestamp("ord_date").toLocalDateTime();
-            Float price = resultSet.getFloat("ord_price");
-            OrderStatus orderStatus = OrderStatus.valueOf(resultSet.getString("ord_status"));
+            String email = resultSet.getString(ColumnNames.ORD_CUSTOMER_EMAIL);
+            LocalDateTime date = resultSet.getTimestamp(ColumnNames.ORD_DATE).toLocalDateTime();
+            Float price = resultSet.getFloat(ColumnNames.ORD_PRICE);
+            OrderStatus orderStatus = OrderStatus.valueOf(resultSet.getString(ColumnNames.ORD_STATUS));
             SQLCustomerDAO customerDAO = new SQLCustomerDAO();
             Customer customer = customerDAO.getCustomerByEmail(email);
             if (customer != null) {
@@ -213,12 +219,12 @@ public class SQLOrderDAO implements OrderDAO {
     private FootwearItem buildItem(ResultSet resultSet, String lang) throws DAOException {
         FootwearItem item = null;
         try {
-            String art = resultSet.getString("fi_art");
-            Float size = resultSet.getFloat("fi_size");
+            String art = resultSet.getString(ColumnNames.FI_ART);
+            Float size = resultSet.getFloat(ColumnNames.FI_SIZE);
             SQLFootwearDAO footwearDAO = new SQLFootwearDAO();
             Footwear footwear = footwearDAO.getFootwearByArt(art, lang);
             if (footwear != null) {
-               item = new FootwearItem(footwear, size, 1);
+               item = new FootwearItem(footwear, size, FIRST);
             }
         } catch (SQLException e) {
             throw new DAOException("Error while creating footwear item",e);
@@ -238,6 +244,18 @@ public class SQLOrderDAO implements OrderDAO {
             });
             order.setItems(newItems);
         }
+    }
+
+    static class ColumnNames {
+        public static final String FI_SIZE = "fi_size";
+        public static final String FI_ART = "fi_art";
+        public static final String ORD_STATUS = "ord_status";
+        public static final String ORD_PRICE = "ord_price";
+        public static final String ORD_DATE = "ord_date";
+        public static final String ORD_CUSTOMER_EMAIL = "ord_customer_email";
+        public static final String ORD_ID = "ord_id";
+        public static final String OI_ITEM_ID = "oi_item_id";
+        public static final String FI_ID = "fi_id";
     }
 
 }

@@ -249,6 +249,9 @@
             <c:when test="${'success'.equals(param.get('unblocked'))}">
                 <span class="text-success">Successfully unblocked</span>
             </c:when>
+            <c:when test="${'success'.equals(param.get('make_admin'))}">
+                <span class="text-success">User became admin!</span>
+            </c:when>
             <c:when test="${'success'.equals(param.get('change'))}">
                 <span class="text-success">Status successfully changed</span>
             </c:when>
@@ -260,6 +263,9 @@
             </c:when>
             <c:when test="${'fail'.equals(param.get('change'))}">
                 <span class="text-danger">Changing status fail</span>
+            </c:when>
+            <c:when test="${'fail'.equals(param.get('make_admin'))}">
+                <span class="text-danger">Fail to set admin</span>
             </c:when>
         </c:choose>
     </div>
