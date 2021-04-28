@@ -65,17 +65,6 @@
                     </c:choose>
                 </ul>
 
-<%--                <form class="form-inline my-2 " style="max-width: 100px">--%>
-<%--                    <div class="input-group input-group-sm">--%>
-<%--                        <input type="text" class="form-control" placeholder="Search...">--%>
-<%--                        <div class="input-group-append">--%>
-<%--                            <button type="button" class="btn btn-secondary btn-number">--%>
-<%--                                <i class="fa fa-search"></i>--%>
-<%--                            </button>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </form>--%>
-
                 <a class="btn btn-success btn-sm my-2" href="Controller?command=gotocart">
                     <i class="fas fa-shopping-cart"></i> <fmt:message key="header.cart"/>
                     <span class="badge badge-light">3</span>
@@ -83,24 +72,33 @@
 
                 <ul class="navbar-nav offset-1">
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="addUrlParameter('lang', 'en')"><fmt:message key="header.en"/></a>
+                        <form method="get" class="my-auto" action="${requestScope['javax.servlet.forward.request_uri']}">
+                            <c:forEach var="key" items="${param.keySet()}">
+                                <c:if test="${!('lang'.equals(key) || 'show'.equals(key))}">
+                                    <input type="hidden" name="${key}" value="${param.get(key)}">
+                                </c:if>
+                            </c:forEach>
+                            <input type="hidden" name="lang" value="ru">
+                            <button class="btn bg-dark text-light font-weight-normal" type="submit"><fmt:message key="header.ru"/></button>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="addUrlParameter('lang', 'ru')"><fmt:message key="header.ru"/></a>
+                        <form method="get" class="my-auto" action="${requestScope['javax.servlet.forward.request_uri']}">
+                            <c:forEach var="key" items="${param.keySet()}">
+                                <c:if test="${!('lang'.equals(key) || 'show'.equals(key))}">
+                                    <input type="hidden" name="${key}" value="${param.get(key)}">
+                                </c:if>
+                            </c:forEach>
+                            <input type="hidden" name="lang" value="en">
+                            <button class="btn bg-dark text-light font-weight-normal" type="submit"><fmt:message key="header.en"/></button>
+                        </form>
                     </li>
                 </ul>
+
             </div>
         </div>
     </nav>
 </header>
-
-<script>
-    function addUrlParameter(name, value) {
-        let searchParams = new URLSearchParams(window.location.search)
-        searchParams.set(name, value)
-        window.location.search = searchParams.toString()
-    }
-</script>
 
 </body>
 </html>

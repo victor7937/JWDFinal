@@ -28,6 +28,11 @@ public class CreateFootwear implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         RequestValidator validator = ValidationProvider.getInstance().getFootwearValidator();
         if (!validator.validate(request)) {
             response.sendRedirect(CommandPath.createCommand(CommandName.ADDFOOTWEAR)

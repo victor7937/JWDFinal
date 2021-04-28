@@ -36,6 +36,24 @@
     <title>Hello, world!</title>
 </head>
 <body>
+<form method="get" action="${requestScope['javax.servlet.forward.request_uri']}">
+    <c:forEach var="key" items="${param.keySet()}">
+       <c:if test="${!('lang'.equals(key) || 'show'.equals(key))}">
+            <input type="hidden" name="${key}" value="${param.get(key)}">
+       </c:if>
+    </c:forEach>
+        <input type="hidden" name="lang" value="ru">
+    <button type="submit">ru</button>
+</form>
+<form method="get" action="${requestScope['javax.servlet.forward.request_uri']}">
+    <c:forEach var="key" items="${param.keySet()}">
+        <c:if test="${!('lang'.equals(key) || 'show'.equals(key))}">
+            <input type="hidden" name="${key}" value="${param.get(key)}">
+        </c:if>
+    </c:forEach>
+    <input type="hidden" name="lang" value="en">
+    <button type="submit">en</button>
+</form>
 
 <%--<div class="bs-example">--%>
 

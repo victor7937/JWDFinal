@@ -260,7 +260,7 @@
 </c:forEach>
 
 
-<div class="toast" id="cartToast" style="position: absolute; top: 63px; right: 2px;">
+<div class="toast" id="cartToast" style="position: absolute; top: 70px; right: 2px;">
     <div class="toast-header">
         <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Cart Message</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">

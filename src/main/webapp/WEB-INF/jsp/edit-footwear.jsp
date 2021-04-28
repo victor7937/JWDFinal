@@ -205,7 +205,7 @@
 
 <jsp:include page="footer.jsp"/>
 
-<div class="toast" id="infoToast" style="position: absolute; top: 63px; right: 5px;">
+<div class="toast" id="infoToast" style="position: absolute; top: 70px; right: 5px;">
   <div class="toast-header">
     <strong class="mr-auto"><i class="fas fa-info-circle"></i> Info</strong>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">

@@ -13,6 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
+    <c:set var="pageCount" value="${requestScope.pageCount}"/>
+    <c:set var="currentPage" value="${requestScope.currentPage}"/>
     <title>Admin page</title>
 </head>
 
@@ -229,12 +231,55 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+    <c:if test="${pageCount != 1 && 'showorders'.equals(param.get('command'))}">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <nav class="d-flex justify-content-center" aria-label="...">
+                        <ul class="pagination">
+                            <c:choose>
+                                <c:when test="${currentPage == 1}">
+                                    <li class="page-item disabled">
+                                        <a class="page-link " href="#" tabindex="-1">Previous</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" href="Controller?command=showorders&page=${requestScope.currentPage - 1}">Previous</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:forEach var="i" begin="1" end="${pageCount}">
+                                <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                    <a class="page-link" href="Controller?command=showorders&page=${i}">${i}</a>
+                                </li>
+                            </c:forEach>
+                            <c:choose>
+                                <c:when test="${currentPage == pageCount}">
+                                    <li class="page-item disabled">
+                                        <a class="page-link " href="#" tabindex="-1">Next</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" href="Controller?command=showorders&page=${currentPage + 1}">Next</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </c:if>
 </section>
 
-<div class="toast" id="infoToast" style="position: absolute; top: 63px; right: 2px;">
+<div class="toast" id="infoToast" style="position: absolute; top: 70px; right: 5px;">
     <div class="toast-header">
         <strong class="mr-auto"><i class="fas fa-info-circle"></i> Info</strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">

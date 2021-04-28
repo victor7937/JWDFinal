@@ -27,6 +27,11 @@ public class AddNewCategory implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String category_en = request.getParameter(CATEGORY_EN_PARAM);
         String category_ru = request.getParameter(CATEGORY_RU_PARAM);
 

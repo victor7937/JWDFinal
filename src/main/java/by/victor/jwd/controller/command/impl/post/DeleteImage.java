@@ -20,15 +20,19 @@ import static by.victor.jwd.controller.constant.GlobalParams.*;
 public class DeleteImage implements Command {
 
     private static final String DELETE_PARAM = "delete";
-    private static final int ERROR_CODE = 404;
     private static final String IMAGE_PARAM = "image";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String image = request.getParameter(IMAGE_PARAM);
         String art = request.getParameter(ART_PARAM);
         if (art == null || art.isBlank()) {
-            response.sendError(ERROR_CODE);
+            response.sendError(ERROR_CODE_NOT_FOUND);
             return;
         }
         String failPath = CommandPath.createCommand(CommandName.GOTOEDITFOOTWEAR)

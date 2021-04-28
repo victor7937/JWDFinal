@@ -24,6 +24,11 @@ public class AddNewBrand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String brand = request.getParameter(BRAND_PARAM);
 
         if (brand == null || brand.isBlank()){

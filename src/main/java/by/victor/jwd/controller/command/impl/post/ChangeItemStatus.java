@@ -28,6 +28,11 @@ public class ChangeItemStatus implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String art = request.getParameter(ART_PARAM);
         String idString = request.getParameter(ID_PARAM);
         String statusString = request.getParameter(STATUS_PARAM);

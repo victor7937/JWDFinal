@@ -34,10 +34,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrders(String lang) throws ServiceException {
+    public List<Order> getAllOrders(String lang, int offset, int limit) throws ServiceException {
         List<Order> orders;
         try {
-            orders = orderDAO.showOrders(lang);
+            orders = orderDAO.showOrders(lang, offset, limit);
         } catch (DAOException e) {
             logger.error(e.getMessage(), e);
             throw new ServiceException(e);
@@ -67,6 +67,22 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException(e);
         }
         return orders;
+    }
+
+    @Override
+    public Integer getOrdersCount() throws ServiceException {
+        Integer count;
+        try {
+            count = orderDAO.getOrdersCount();
+        } catch (DAOException e) {
+            logger.error(e.getMessage(), e);
+            throw new ServiceException(e);
+        }
+        if (count == null) {
+            logger.error("Count is null");
+            throw new ServiceException("Count is null");
+        }
+        return count;
     }
 
     @Override

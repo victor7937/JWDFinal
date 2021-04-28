@@ -25,13 +25,17 @@ import static by.victor.jwd.controller.constant.GlobalParams.*;
 public class EditFootwear implements Command {
 
     private static final String EDIT_PARAM = "edit";
-    private static final int ERROR_CODE = 404;
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String art = request.getParameter(ART_PARAM);
         if (art == null || art.isBlank()) {
-            response.sendError(ERROR_CODE);
+            response.sendError(ERROR_CODE_NOT_FOUND);
             return;
         }
         String failPath = CommandPath.createCommand(CommandName.GOTOEDITFOOTWEAR)

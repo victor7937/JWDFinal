@@ -16,21 +16,25 @@ import java.io.IOException;
 import java.util.List;
 
 import static by.victor.jwd.controller.constant.FootwearParams.ART_PARAM;
-import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
 
 public class GoToItemsPage implements Command {
 
     private static final String FORWARD_PATH = "/WEB-INF/jsp/items.jsp";
-    private static final int ERROR_CODE = 404;
     private static final String ITEMS_ATTRIBUTE = "items";
     private static final String FOOTWEAR_ATTRIBUTE = "footwear";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String art = request.getParameter(ART_PARAM);
         String lang = (String)request.getSession().getAttribute(LANG_ATTRIBUTE);
         if (art == null || art.isBlank()) {
-            response.sendError(ERROR_CODE);
+            response.sendError(ERROR_CODE_NOT_FOUND);
             return;
         }
 

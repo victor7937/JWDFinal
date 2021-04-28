@@ -34,7 +34,9 @@ public class SQLOrderDAO implements OrderDAO {
 
     private static final String SQL_GET_ITEM = "SELECT fi_id FROM footwear_items WHERE fi_art = ? AND fi_size = ? AND fi_status = 'STOCK' LIMIT 1";
 
-    private static final String SQL_GET_ORDERS = "SELECT * FROM orders ORDER BY ord_date DESC";
+    private static final String SQL_GET_ORDERS = "SELECT * FROM orders ORDER BY ord_date DESC LIMIT ?,?";
+
+    private static final String SQL_GET_ORDERS_COUNT = "SELECT COUNT(*) as count FROM orders";
 
     private static final String SQL_GET_ORDERS_OF_CUSTOMER = "SELECT * FROM orders WHERE ord_customer_email = ? ORDER BY ord_date DESC";
 
@@ -99,8 +101,12 @@ public class SQLOrderDAO implements OrderDAO {
     }
 
     @Override
-    public List<Order> showOrders(String lang) throws DAOException {
-        return getOrdersByParams(SQL_GET_ORDERS, null, lang);
+    public List<Order> showOrders(String lang, int offset, int limit) throws DAOException {
+        AtomicInteger i = new AtomicInteger();
+        return getOrdersByParams(SQL_GET_ORDERS, ps -> {
+            ps.setInt(i.incrementAndGet(), offset);
+            ps.setInt(i.incrementAndGet(), limit);
+        }, lang);
     }
 
     @Override
@@ -131,6 +137,20 @@ public class SQLOrderDAO implements OrderDAO {
             }
             return successUpdating;
         }
+    }
+
+    @Override
+    public Integer getOrdersCount() throws DAOException {
+        Integer count = null;
+        try (DAOResourceProvider resourceProvider = new DAOResourceProvider()) {
+            ResultSet resultSet = resourceProvider.createResultSet(SQL_GET_ORDERS_COUNT);
+            if (resultSet.next()) {
+                count = resultSet.getInt(ColumnNames.ORD_COUNT);
+            }
+        } catch (SQLException | ConnectionException e) {
+            throw new DAOException("Getting orders count error", e);
+        }
+        return count;
     }
 
     private boolean declineOrder(Integer orderId) throws DAOException {
@@ -256,6 +276,7 @@ public class SQLOrderDAO implements OrderDAO {
         public static final String ORD_ID = "ord_id";
         public static final String OI_ITEM_ID = "oi_item_id";
         public static final String FI_ID = "fi_id";
+        public static final String ORD_COUNT = "count";
     }
 
 }

@@ -27,6 +27,11 @@ public class AddNewColor implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String color_en = request.getParameter(COLOR_EN_PARAM);
         String color_ru = request.getParameter(COLOR_RU_PARAM);
 

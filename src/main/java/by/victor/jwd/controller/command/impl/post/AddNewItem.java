@@ -24,6 +24,11 @@ public class AddNewItem implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
+
         String art = request.getParameter(ART_PARAM);
         String sizeString = request.getParameter(SIZE_PARAM);
 

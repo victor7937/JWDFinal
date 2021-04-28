@@ -24,6 +24,10 @@ public class ChangeOrderStatus implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
         String statusValue = request.getParameter(STATUS_PARAM);
         String orderIdValue = request.getParameter(ORDER_ID_PARAM);
         if (statusValue == null || statusValue.isBlank() || orderIdValue == null || orderIdValue.isBlank()) {

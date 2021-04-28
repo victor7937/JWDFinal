@@ -84,10 +84,17 @@
                                     <img class="pic-2" src="images/${footwear.imageLinks.size() > 1 ? footwear.imageLinks.get(1) : footwear.imageLinks.get(0)}">
                                 <c:if test="${sessionScope.email != null && 'admin'.equals(sessionScope.role)}">
                                     <ul class="social">
-                                       <!-- <li><a href="" class="fa fa-search"></a></li>
+                                        <!-- <li><a href="" class="fa fa-search"></a></li>
                                         <li><a href="" class="fa fa-shopping-bag"></a></li> -->
-                                        <li><a href="Controller?command=gotoeditfootwear&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Edit footwear" class="social-button fas fa-edit"></a></li>
-                                        <li><a href="Controller?command=gotoitemspage&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Add new size" class="social-button fas fa-plus-circle"></a></li>
+                                        <li>
+                                            <a href="Controller?command=gotoeditfootwear&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Edit footwear" class="social-button fas fa-edit"></a>
+                                        </li>
+                                        <li>
+                                            <a href="Controller?command=gotoitemspage&art=${footwear.art}" data-toggle="tooltip" data-placement="top" title="Add new size" class="social-button fas fa-plus-circle"></a>
+                                        </li>
+                                        <li>
+                                           <i class="fa fa-eye"></i> ${applicationScope.popular.get(footwear.art) == null ? 0 : applicationScope.popular.get(footwear.art)}
+                                        </li>
                                     </ul>
                                 </c:if>
                                 <!--<span class="product-discount-label">-20%</span>-->
@@ -106,8 +113,8 @@
                 </c:forEach>
 
                 <c:if test="${pageCount != 1}">
-                    <div class="col-12">
-                        <nav aria-label="...">
+                    <div class="col-12 mt-2 mb-4">
+                        <nav class="d-flex justify-content-center" aria-label="...">
                             <ul class="pagination">
                                 <c:choose>
                                     <c:when test="${currentPage == 1}">

@@ -21,14 +21,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static by.victor.jwd.controller.constant.FootwearParams.ART_PARAM;
-import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
 
 public class GoToProduct implements Command {
 
     private static final String FOOTWEAR_ATTRIBUTE = "footwear";
     private static final String SIZES_ATTRIBUTE = "sizes";
     private static final String FORWARD_PATH = "/WEB-INF/jsp/product.jsp";
-    private static final int ERROR_CODE = 404;
     private static final int MAX_AGE = 60 * 60;
     private static final String LAST_VALUE = "last";
     private static final int MAX_LAST_PRODUCTS_SIZE = 4;
@@ -40,7 +39,7 @@ public class GoToProduct implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String art = request.getParameter(ART_PARAM);
         if (art == null || art.isBlank()) {
-            response.sendError(ERROR_CODE);
+            response.sendError(ERROR_CODE_NOT_FOUND);
             return;
         }
 
@@ -56,14 +55,16 @@ public class GoToProduct implements Command {
         }
 
         if (footwear == null) {
-            response.sendError(ERROR_CODE);
+            response.sendError(ERROR_CODE_NOT_FOUND);
         } else {
             List<Footwear> related = createRelated(footwear, lang);
             request.setAttribute(FOOTWEAR_ATTRIBUTE, footwear);
             request.setAttribute(SIZES_ATTRIBUTE, sizes);
             request.setAttribute(RELATED_ATTRIBUTE, related);
             addCookie(request.getCookies(), response, art);
-            addVisit(art, request.getServletContext());
+            if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+                addVisit(art, request.getServletContext());
+            }
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(FORWARD_PATH);
             requestDispatcher.forward(request, response);
         }

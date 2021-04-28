@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static by.victor.jwd.controller.constant.GlobalParams.LANG_ATTRIBUTE;
+import static by.victor.jwd.controller.constant.GlobalParams.*;
+import static by.victor.jwd.controller.constant.GlobalParams.ERROR_CODE_FORBIDDEN;
 
 public class GoToAddingFootwear implements Command {
 
@@ -24,6 +25,10 @@ public class GoToAddingFootwear implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!ADMIN_VALUE.equals(request.getSession().getAttribute(ROLE_ATTRIBUTE))) {
+            response.sendError(ERROR_CODE_FORBIDDEN);
+            return;
+        }
         FootwearService footwearService = ServiceProvider.getInstance().getFootwearService();
         List<String> brands;
         List<String> categories;
