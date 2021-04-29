@@ -7,6 +7,10 @@ import by.victor.jwd.dao.exception.DAOException;
 
 import java.util.List;
 
+
+/**
+ * DAO that manipulates customer-related data
+ */
 public interface CustomerDAO {
     List<Customer> getAll() throws DAOException;
     Customer getCustomerByEmail(String email) throws DAOException;

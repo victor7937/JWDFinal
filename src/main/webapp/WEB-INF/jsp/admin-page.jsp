@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -15,7 +16,9 @@
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
     <c:set var="pageCount" value="${requestScope.pageCount}"/>
     <c:set var="currentPage" value="${requestScope.currentPage}"/>
-    <title>Admin page</title>
+    <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+    <fmt:setBundle basename="application"/>
+    <title><fmt:message key="admin.title"/></title>
 </head>
 
 <body>
@@ -24,7 +27,7 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">ADMIN PAGE</h1>
+        <h1 class="jumbotron-heading text-uppercase"><fmt:message key="admin.title"/></h1>
     </div>
 </section>
 
@@ -32,8 +35,8 @@
     <div class="container">
         <nav>
             <div class="nav nav-tabs row" id="nav-tab" role="tablist">
-                    <a class="nav-link col-6 text-center ${"showusers".equals(param.get("command")) ? 'active' : ''}" id="nav-users-tab"  href="Controller?command=gotoadminpage"  aria-selected="${"showusers".equals(param.get("command")) ? 'true' : 'false'}">Users</a>
-                    <a class="nav-link col-6 text-center ${"showorders".equals(param.get("command")) ? 'active' : ''}" id="nav-orders-tab"  href="Controller?command=showorders" aria-selected="${"showorders".equals(param.get("command")) ? 'true' : 'false'}">Orders</a>
+                    <a class="nav-link col-6 text-center ${"showusers".equals(param.get("command")) ? 'active' : ''}" id="nav-users-tab"  href="Controller?command=gotoadminpage"  aria-selected="${"showusers".equals(param.get("command")) ? 'true' : 'false'}"><fmt:message key="admin.users"/></a>
+                    <a class="nav-link col-6 text-center ${"showorders".equals(param.get("command")) ? 'active' : ''}" id="nav-orders-tab"  href="Controller?command=showorders" aria-selected="${"showorders".equals(param.get("command")) ? 'true' : 'false'}"><fmt:message key="admin.orders"/></a>
 <%--                    <a class="nav-link col-3 text-center" id="nav-footwear-tab" data-toggle="tab" href="#nav-footwear" role="tab" aria-controls="nav-footwear" aria-selected="false">Footwear</a>--%>
             </div>
         </nav>
@@ -50,13 +53,13 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th scope="col"> </th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Phone</th>
-                                    <th scope="col">Country</th>
+                                    <th scope="col"><fmt:message key="table.name"/></th>
+                                    <th scope="col"><fmt:message key="table.email"/></th>
+                                    <th scope="col"><fmt:message key="table.phone"/></th>
+                                    <th scope="col"><fmt:message key="profile.country"/></th>
                                     <%--                            <th scope="col" class="text-center">Quantity</th>--%>
-                                    <th scope="col">City</th>
-                                    <th scope="col">Address</th>
+                                    <th scope="col"><fmt:message key="profile.city"/></th>
+                                    <th scope="col"><fmt:message key="profile.address"/></th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -97,7 +100,7 @@
                                                             <form method="post" action="Controller">
                                                                 <input type="hidden" name="command" value="unblockuser">
                                                                 <input type="hidden" name="email" value="${customer.email}">
-                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="Unblock user" class="btn btn-sm btn-info"><i class="fas fa-unlock-alt"></i> </button>
+                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="<fmt:message key="admin.action.unblock"/>" class="btn btn-sm btn-info"><i class="fas fa-unlock-alt"></i> </button>
                                                             </form>
                                                         </td>
                                                     </c:when>
@@ -106,14 +109,14 @@
                                                             <form method="post" action="Controller">
                                                                 <input type="hidden" name="command" value="blockuser">
                                                                 <input type="hidden" name="email" value="${customer.email}">
-                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="Block user" class="btn btn-sm btn-danger"><i class="fas fa-ban"></i> </button>
+                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="<fmt:message key="admin.action.block"/>" class="btn btn-sm btn-danger"><i class="fas fa-ban"></i> </button>
                                                             </form>
                                                         </td>
                                                         <td class="text-center">
                                                             <form method="post" action="Controller">
                                                                 <input type="hidden" name="command" value="makeadmin">
                                                                 <input type="hidden" name="email" value="${customer.email}">
-                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="Make admin" class="btn btn-sm btn-info"><i class="fas fa-crown"></i> </button>
+                                                                <button type="submit" data-toggle="tooltip" data-placement="top" title="<fmt:message key="admin.action.make.admin"/>" class="btn btn-sm btn-info"><i class="fas fa-crown"></i> </button>
                                                             </form>
                                                         </td>
                                                     </c:when>
@@ -132,12 +135,12 @@
                 <div class="row">
                     <div class="col-12">
                         <ul class="list-group row list-group-horizontal order-main-header px-4 my-3">
-                            <li class="list-group-item col-2">Order #</li>
-                            <li class="list-group-item col-2">For</li>
-                            <li class="list-group-item col-2">Email</li>
-                            <li class="list-group-item col-2">Price</li>
-                            <li class="list-group-item col-2">Created at</li>
-                            <li class="list-group-item col-2">Status</li>
+                            <li class="list-group-item col-2"><fmt:message key="table.order.number"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.for"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.email"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.price"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.created.at"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.status"/></li>
                         </ul>
                         <div class="accordion mb-4" id="accordionExample">
                             <c:forEach var="order" items="${requestScope.orders}">
@@ -153,16 +156,16 @@
                                                     <li class="list-group-item col-2">${order.date.toLocalDate().toString()} <br/>${order.date.toLocalTime().toString()}</li>
                                                     <c:choose>
                                                         <c:when test="${order.orderStatus.toString().equals('WAITING')}">
-                                                            <li class="list-group-item col-2 text-warning">Waiting</li>
+                                                            <li class="list-group-item col-2 text-warning"><fmt:message key="table.orders.waiting"/></li>
                                                         </c:when>
                                                         <c:when test="${order.orderStatus.toString().equals('APPROVED')}">
-                                                            <li class="list-group-item col-2 text-success">Approved</li>
+                                                            <li class="list-group-item col-2 text-success"><fmt:message key="table.orders.approved"/></li>
                                                         </c:when>
                                                         <c:when test="${order.orderStatus.toString().equals('DECLINE')}">
-                                                            <li class="list-group-item col-2 text-danger">Decline</li>
+                                                            <li class="list-group-item col-2 text-danger"><fmt:message key="table.orders.decline"/></li>
                                                         </c:when>
                                                         <c:when test="${order.orderStatus.toString().equals('COMPLETE')}">
-                                                            <li class="list-group-item col-2 text-info">Complete</li>
+                                                            <li class="list-group-item col-2 text-info"><fmt:message key="table.orders.complete"/></li>
                                                         </c:when>
                                                     </c:choose>
                                                 </ul>
@@ -185,13 +188,13 @@
                                                                    <input type="hidden" name="command" value="changestatus">
                                                                    <input type="hidden" name="order_id" value="${order.id}">
                                                                    <select name="status" class="form-control">
-                                                                       <option value="waiting" class="text-warning">Waiting</option>
-                                                                       <option value="approved" class="text-success">Approved</option>
-                                                                       <option value="decline" class="text-danger">Decline</option>
-                                                                       <option value="complete" class="text-info">Complete</option>
+                                                                       <option value="waiting" class="text-warning"><fmt:message key="table.orders.waiting"/></option>
+                                                                       <option value="approved" class="text-success"><fmt:message key="table.orders.approved"/></option>
+                                                                       <option value="decline" class="text-danger"><fmt:message key="table.orders.decline"/></option>
+                                                                       <option value="complete" class="text-info"><fmt:message key="table.orders.complete"/></option>
                                                                    </select>
                                                                    <div class="input-group-append">
-                                                                       <button type="submit" class="btn btn-primary">Set status</button>
+                                                                       <button type="submit" class="btn btn-primary"><fmt:message key="admin.set.status"/></button>
                                                                    </div>
                                                                </div>
                                                            </form>
@@ -202,12 +205,12 @@
                                                 <table class="table table-bordered">
                                                     <thead class="thead-light">
                                                     <tr>
-                                                        <th scope="col">Product</th>
-                                                        <th scope="col">Brand</th>
-                                                        <th scope="col">Quantity</th>
-                                                        <th scope="col">Size</th>
+                                                        <th scope="col"><fmt:message key="table.product"/></th>
+                                                        <th scope="col"><fmt:message key="table.brand"/></th>
+                                                        <th scope="col"><fmt:message key="table.quantity"/></th>
+                                                        <th scope="col"><fmt:message key="table.size"/></th>
                                                             <%--                            <th scope="col" class="text-center">Quantity</th>--%>
-                                                        <th scope="col" class="text-right">Price</th>
+                                                        <th scope="col" class="text-right"><fmt:message key="table.price"/></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -244,12 +247,12 @@
                             <c:choose>
                                 <c:when test="${currentPage == 1}">
                                     <li class="page-item disabled">
-                                        <a class="page-link " href="#" tabindex="-1">Previous</a>
+                                        <a class="page-link " href="#" tabindex="-1"><fmt:message key="pagination.previous"/></a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item">
-                                        <a class="page-link" href="Controller?command=showorders&page=${requestScope.currentPage - 1}">Previous</a>
+                                        <a class="page-link" href="Controller?command=showorders&page=${requestScope.currentPage - 1}"><fmt:message key="pagination.previous"/></a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
@@ -262,12 +265,12 @@
                             <c:choose>
                                 <c:when test="${currentPage == pageCount}">
                                     <li class="page-item disabled">
-                                        <a class="page-link " href="#" tabindex="-1">Next</a>
+                                        <a class="page-link " href="#" tabindex="-1"><fmt:message key="pagination.next"/></a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item">
-                                        <a class="page-link" href="Controller?command=showorders&page=${currentPage + 1}">Next</a>
+                                        <a class="page-link" href="Controller?command=showorders&page=${currentPage + 1}"><fmt:message key="pagination.next"/></a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
@@ -281,7 +284,7 @@
 
 <div class="toast" id="infoToast" style="position: absolute; top: 70px; right: 5px;">
     <div class="toast-header">
-        <strong class="mr-auto"><i class="fas fa-info-circle"></i> Info</strong>
+        <strong class="mr-auto"><i class="fas fa-info-circle"></i> <fmt:message key="info.toast.title"/></strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -289,28 +292,28 @@
     <div class="toast-body">
         <c:choose>
             <c:when test="${'success'.equals(param.get('blocked'))}">
-                <span class="text-success">Successfully blocked</span>
+                <span class="text-success"><fmt:message key="admin.toast.msg.blocked.success"/></span>
             </c:when>
             <c:when test="${'success'.equals(param.get('unblocked'))}">
-                <span class="text-success">Successfully unblocked</span>
+                <span class="text-success"><fmt:message key="admin.toast.msg.unblocked.success"/></span>
             </c:when>
             <c:when test="${'success'.equals(param.get('make_admin'))}">
-                <span class="text-success">User became admin!</span>
+                <span class="text-success"><fmt:message key="admin.toast.msg.make.admin.success"/></span>
             </c:when>
             <c:when test="${'success'.equals(param.get('change'))}">
-                <span class="text-success">Status successfully changed</span>
+                <span class="text-success"><fmt:message key="admin.toast.msg.status.success"/></span>
             </c:when>
             <c:when test="${'fail'.equals(param.get('blocked'))}">
-                <span class="text-danger">Fail to block customer</span>
+                <span class="text-danger"><fmt:message key="admin.toast.msg.block.fail"/></span>
             </c:when>
             <c:when test="${'fail'.equals(param.get('unblocked'))}">
-                <span class="text-danger">Fail to unblock customer</span>
+                <span class="text-danger"><fmt:message key="admin.toast.msg.unblock.fail"/></span>
             </c:when>
             <c:when test="${'fail'.equals(param.get('change'))}">
-                <span class="text-danger">Changing status fail</span>
+                <span class="text-danger"><fmt:message key="admin.toast.msg.status.fail"/></span>
             </c:when>
             <c:when test="${'fail'.equals(param.get('make_admin'))}">
-                <span class="text-danger">Fail to set admin</span>
+                <span class="text-danger"><fmt:message key="admin.toast.msg.make.admin.fail"/></span>
             </c:when>
         </c:choose>
     </div>

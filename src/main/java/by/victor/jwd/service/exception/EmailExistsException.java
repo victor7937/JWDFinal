@@ -2,6 +2,10 @@ package by.victor.jwd.service.exception;
 
 import java.io.Serial;
 
+/**
+ * Service level exception.
+ * Tell that such email exists in database.
+ */
 public class EmailExistsException extends ServiceException{
     @Serial
     private static final long serialVersionUID = -4879249364945765741L;

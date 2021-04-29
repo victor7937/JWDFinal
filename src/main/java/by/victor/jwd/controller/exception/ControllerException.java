@@ -2,6 +2,10 @@ package by.victor.jwd.controller.exception;
 
 import java.io.Serial;
 
+
+/**
+ * Exception thrown at the controller level
+ */
 public class ControllerException extends RuntimeException {
 
     @Serial

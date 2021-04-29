@@ -28,13 +28,14 @@
     <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title mt-3 text-center"><fmt:message key="register.create"/></h4>
         <p class="text-center"><fmt:message key="register.new.account"/></p>
-        <p>
-            <a href="" class="btn btn-block btn-twitter"> <i class="fas fa-twitter"></i> <fmt:message key="register.twitter"/></a>
-            <a href="" class="btn btn-block btn-facebook"> <i class="fas fa-facebook"></i> <fmt:message key="register.facebook"/></a>
-        </p>
-        <p class="divider-text">
-            <span class="bg-light"><fmt:message key="register.or"/></span>
-        </p>
+        <hr class="my-2">
+        <%--        <p>--%>
+<%--            <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i> <fmt:message key="register.twitter"/></a>--%>
+<%--            <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook"></i> <fmt:message key="register.facebook"/></a>--%>
+<%--        </p>--%>
+<%--        <p class="divider-text">--%>
+<%--            <span class="bg-light"><fmt:message key="register.or"/></span>--%>
+<%--        </p>--%>
         <c:if test="${err_message != null}">
             <p class="text-danger text-center">${err_message}</p>
         </c:if>

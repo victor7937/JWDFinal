@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import static by.victor.jwd.controller.constant.CustomerParams.NEW_PASSWORD_PARAM;
 import static by.victor.jwd.controller.constant.CustomerParams.PASSWORD_PARAM;
 
+/**
+ * Validates password changing form
+ */
 public class PasswordValidator implements RequestValidator {
 
     @Override

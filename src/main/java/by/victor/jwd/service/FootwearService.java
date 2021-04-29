@@ -7,7 +7,9 @@ import by.victor.jwd.bean.ItemStatus;
 import by.victor.jwd.service.exception.ServiceException;
 
 import java.util.List;
-
+/**
+ * Service for getting access to footwear dao level
+ */
 public interface FootwearService {
     List<Footwear> getByCriteria(FootwearCriteria criteria, String lang, int offset, int limit) throws ServiceException;
     List<Footwear> getByCriteriaActual(FootwearCriteria criteria, String lang, int offset, int limit) throws ServiceException;

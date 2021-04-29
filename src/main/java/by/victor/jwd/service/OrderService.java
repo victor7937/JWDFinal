@@ -6,6 +6,9 @@ import by.victor.jwd.service.exception.ServiceException;
 
 import java.util.List;
 
+/**
+ * Service for getting access to order dao level
+ */
 public interface OrderService {
     boolean createNewOrder(Order order) throws ServiceException;
     List<Order> getAllOrders(String lang, int offset, int limit) throws ServiceException;

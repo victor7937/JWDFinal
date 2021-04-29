@@ -1,11 +1,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Product Page</title>
+    <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+    <fmt:setBundle basename="application"/>
+    <title><fmt:message key="product.page.name"/></title>
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
     <link href="<c:url value='/css/product.css'/>" rel="stylesheet" type="text/css">
@@ -19,8 +22,8 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">PRODUCT PAGE</h1>
-        <p class="lead text-muted mb-0">Select sizes as you like and enjoy shopping!</p>
+        <h1 class="jumbotron-heading text-uppercase"><fmt:message key="product.page.name"/></h1>
+        <p class="lead text-muted mb-0"><fmt:message key="product.heading"/></p>
     </div>
 </section>
 <div class="container">
@@ -28,8 +31,8 @@
         <div class="col">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="Controller?command=gotomainpage">Home</a></li>
-                    <li class="breadcrumb-item"><a href="Controller?command=gotocategory">Category</a></li>
+                    <li class="breadcrumb-item"><a href="Controller?command=gotomainpage"><fmt:message key="header.home"/></a></li>
+                    <li class="breadcrumb-item"><a href="Controller?command=gotocategory"><fmt:message key="header.categories"/></a></li>
                     <li class="breadcrumb-item active" aria-current="page">${footwear.art}</li>
                 </ol>
             </nav>
@@ -56,11 +59,11 @@
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon bg-secondary" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
+                    <span class="sr-only"><fmt:message key="pagination.previous"/></span>
                 </a>
                 <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
                     <span class="carousel-control-next-icon bg-secondary" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
+                    <span class="sr-only"><fmt:message key="pagination.previous"/></span>
                 </a>
             </div>
         </div>
@@ -78,15 +81,15 @@
                         <table class="table table-sm table-borderless mb-0">
                             <tbody>
                             <tr>
-                                <th class="pl-0 w-25" scope="row"><div class="product-header">Model</div></th>
+                                <th class="pl-0 w-25" scope="row"><div class="product-header"><fmt:message key="product.model"/></div></th>
                                 <td><div class="product-value">${footwear.art}</div></td>
                             </tr>
                             <tr>
-                                <th class="pl-0 w-25" scope="row"><div class="product-header">Color</div></th>
+                                <th class="pl-0 w-25" scope="row"><div class="product-header"><fmt:message key="product.color"/></div></th>
                                 <td><div class="product-value">${footwear.color}</div></td>
                             </tr>
                             <tr>
-                                <th class="pl-0 w-25" scope="row"><div class="product-header">Category</div></th>
+                                <th class="pl-0 w-25" scope="row"><div class="product-header"><fmt:message key="category.category"/></div></th>
                                 <td><a class="product-value" href="Controller?command=gotocategory&category=${footwear.category}">${footwear.category}</a></td>
                             </tr>
                             </tbody>
@@ -106,35 +109,30 @@
                             </div>
                         </div>
                         <button type="submit" class="btn add-to-card-btn btn-lg btn-block">
-                            <i class="fas fa-shopping-cart"></i> Add To Cart
+                            <i class="fas fa-shopping-cart"></i> <fmt:message key="product.add.to.cart"/>
                         </button>
                     </form>
                     <div class="product_fast_panel">
                         <ul class="list-inline">
                             <li class="list-inline-item mx-4">
                                 <a type="button" data-toggle="modal" data-target="#FastOrderModal">
-                                    <i class="fas fa-shipping-fast fa-2x"></i><br/>Fast order
+                                    <i class="fas fa-shipping-fast fa-2x"></i><br/><fmt:message key="product.fast.order"/>
                                 </a>
                             </li>
                             <li class="list-inline-item mx-4">
                                 <a href="#">
-                                    <i class="fas fa-credit-card fa-2x"></i><br/>payment
+                                    <i class="fas fa-credit-card fa-2x"></i><br/><fmt:message key="product.payment"/>
                                 </a>
 
                             </li>
                             <li class="list-inline-item mx-4">
                                 <a href="tel:+375291802550">
-                                    <i class="fas fa-phone fa-2x"></i><br/>call us
+                                    <i class="fas fa-phone fa-2x"></i><br/><fmt:message key="product.call.us"/>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <!-- Button trigger modal -->
-<%--                    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">--%>
-<%--                        Launch demo modal--%>
-<%--                    </a>--%>
 
-                    <!-- Modal -->
                     <div class="modal fade" id="FastOrderModal" tabindex="-1" aria-labelledby="FastOrderModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -143,14 +141,14 @@
                                     <input type="hidden" name="art" value="${footwear.art}">
                                     <input type="hidden" name="price" value="${footwear.price}">
                                     <div class="modal-header">
-                                        <h4 class="modal-title total-cart text-center" id="FastOrderModalLabel"><i class="fas fa-shipping-fast"></i> Fast Order</h4>
+                                        <h4 class="modal-title total-cart text-center" id="FastOrderModalLabel"><i class="fas fa-shipping-fast"></i> <fmt:message key="product.fast.order"/></h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group mb-2">
-                                            <h5 class="text-cart text-left text-info">Pick the size</h5>
+                                            <h5 class="text-cart text-left text-info"><fmt:message key="product.fast.pick.size"/></h5>
                                             <div class="radio-toolbar">
                                                 <c:forEach var="size" items="${requestScope.sizes}">
                                                     <input type="radio" id="fast${size}" name="size" value="${size}" required>
@@ -162,10 +160,10 @@
                                             <table class="table">
                                                 <thead class="thead-dark">
                                                 <tr>
-                                                    <th scope="col">Product</th>
-                                                    <th scope="col">Brand</th>
-                                                    <th scope="col">Quantity</th>
-                                                    <th scope="col" class="text-right">Price</th>
+                                                    <th scope="col"><fmt:message key="table.product"/></th>
+                                                    <th scope="col"><fmt:message key="table.brand"/></th>
+                                                    <th scope="col"><fmt:message key="table.quantity"/></th>
+                                                    <th scope="col" class="text-right"><fmt:message key="table.price"/></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -180,8 +178,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-success text-uppercase">confirm order</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"><fmt:message key="product.fast.cancel"/></button>
+                                        <button type="submit" class="btn btn-success text-uppercase"><fmt:message key="product.fast.confirm"/></button>
                                     </div>
                                 </form>
                             </div>
@@ -196,7 +194,7 @@
         <!-- Description -->
         <div class="col-12">
             <div class="card border-light mb-3">
-                <div class="card-header text-white text-uppercase"><i class="fas fa-align-justify"></i> Description</div>
+                <div class="card-header text-white text-uppercase"><i class="fas fa-align-justify"></i> <fmt:message key="product.description"/></div>
                 <div class="card-body">
                     <p class="card-text">
                        ${footwear.description}
@@ -209,7 +207,7 @@
         <div class="col-12">
             <div class="card border-light mb-3">
                 <div class="card-header text-white text-uppercase">
-                    <i class="fas fa-heart"></i> You may also like
+                    <i class="fas fa-heart"></i> <fmt:message key="product.also.like"/>
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-center">
@@ -246,7 +244,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-center" id="productModalLabel${i}">Product title</h5>
+                    <h5 class="modal-title text-center" id="productModalLabel${i}">${footwear.brand} ${footwear.name}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -262,7 +260,7 @@
 
 <div class="toast" id="cartToast" style="position: absolute; top: 70px; right: 2px;">
     <div class="toast-header">
-        <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Cart Message</strong>
+        <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> <fmt:message key="product.toast"/></strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -270,22 +268,22 @@
     <div class="toast-body">
         <c:choose>
             <c:when test="${'no'.equals(param.get('added'))}">
-                <span class="text-success">Item was successfully added to cart!<a href="Controller?command=gotocart"><br/>Check it!</a></span>
+                <span class="text-success"><fmt:message key="product.toast.message.added"/><a href="Controller?command=gotocart"><br/><fmt:message key="product.toast.check.it"/></a></span>
             </c:when>
             <c:when test="${'yes'.equals(param.get('added'))}">
-                <span class="text-warning">The item has already added, please change quantity in the cart<a href="Controller?command=gotocart"><br/>Shopping Cart</a></span>
+                <span class="text-warning"><fmt:message key="product.toast.message.already.added"/><a href="Controller?command=gotocart"><br/>Shopping Cart</a></span>
             </c:when>
             <c:when test="${'no_size'.equals(param.get('added'))}">
-                <span class="text-warning">Please, pick the size as you want</span>
+                <span class="text-warning"><fmt:message key="product.toast.message.no.size"/></span>
             </c:when>
             <c:when test="${'success'.equals(param.get('fast'))}">
-                <span class="text-success">Order was created successfully! Please wait for its confirmation<a href="Controller?command=gotoprofile"><br/>Check it!</a></span>
+                <span class="text-success"><fmt:message key="product.toast.message.fast.success"/><a href="Controller?command=gotoprofile"><br/><fmt:message key="product.toast.check.it"/></a></span>
             </c:when>
             <c:when test="${'fail'.equals(param.get('fast'))}">
-                <span class="text-danger">Fail to create order, please try again</span>
+                <span class="text-danger"><fmt:message key="product.toast.message.fast.fail"/></span>
             </c:when>
             <c:when test="${'not_logged_in'.equals(param.get('fast'))}">
-                <span class="text-warning">Please, sign in. You need to be signed in to checkout the order!</span>
+                <span class="text-warning"><fmt:message key="product.toast.message.fast.not.loggedin"/></span>
             </c:when>
         </c:choose>
     </div>

@@ -6,6 +6,10 @@ import by.victor.jwd.service.exception.ServiceException;
 
 import java.util.List;
 
+
+/**
+ * Service for getting access to customers dao level
+ */
 public interface CustomerService {
 	Customer authorization(String email, String passport) throws ServiceException;
 	Customer getByEmail (String email) throws ServiceException;

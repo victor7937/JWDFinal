@@ -9,6 +9,9 @@ import by.victor.jwd.controller.command.impl.post.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class for getting necessary Command object by command string given
+ */
 public class CommandProvider {
 	private Map<CommandName, Command> commands = new HashMap<>();
 	

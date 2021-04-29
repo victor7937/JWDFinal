@@ -1,13 +1,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Lei Shoes</title>
+    <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+    <fmt:setBundle basename="application"/>
     <jsp:include page="includes.jsp"/>
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
+    <title><fmt:message key="cart.title"/></title>
 </head>
 <body>
 
@@ -15,7 +18,7 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">CART</h1>
+        <h1 class="jumbotron-heading text-uppercase"><fmt:message key="cart.title"/></h1>
      </div>
 </section>
 <form method="post" action="Controller">
@@ -28,12 +31,12 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col"> </th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Brand</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Size</th>
+                                <th scope="col"><fmt:message key="table.product"/></th>
+                                <th scope="col"><fmt:message key="table.brand"/></th>
+                                <th scope="col"><fmt:message key="table.quantity"/></th>
+                                <th scope="col"><fmt:message key="table.size"/></th>
     <%--                            <th scope="col" class="text-center">Quantity</th>--%>
-                                <th scope="col" class="text-right">Price</th>
+                                <th scope="col" class="text-right"><fmt:message key="table.price"/></th>
                                 <th> </th>
                             </tr>
                         </thead>
@@ -85,7 +88,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><span class="total-cart">Total</span></td>
+                                <td><span class="total-cart"><fmt:message key="cart.total"/></span></td>
                                 <td class="text-right total-cart">$<span class="total-cart" id="total_val"></span></td>
                                 <td></td>
                             </tr>
@@ -96,10 +99,10 @@
             <div class="col mb-2">
                 <div class="row">
                     <div class="col-sm-12  col-md-6">
-                        <a href="Controller?command=gotocategory" class="btn btn-block btn-light">Continue Shopping</a>
+                        <a href="Controller?command=gotocategory" class="btn btn-block btn-light"><fmt:message key="cart.continue"/></a>
                     </div>
                     <div class="col-sm-12 col-md-6 text-right">
-                        <button class="btn btn-lg btn-block btn-success text-uppercase" type="submit">Checkout</button>
+                        <button class="btn btn-lg btn-block btn-success text-uppercase" type="submit"><fmt:message key="cart.checkout"/></button>
                     </div>
                 </div>
             </div>
@@ -110,7 +113,7 @@
 
 <div class="toast" id="orderToast" style="position: absolute; top: 53px; right: 2px;">
     <div class="toast-header">
-        <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> Order Message</strong>
+        <strong class="mr-auto"><i class="fas fa-shopping-cart"></i> <fmt:message key="cart.toast.message"/></strong>
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -118,13 +121,13 @@
     <div class="toast-body">
         <c:choose>
             <c:when test="${'success'.equals(param.get('message'))}">
-                <span class="text-success">Order was created successfully! Please wait for its confirmation<a href="Controller?command=gotoprofile"><br/>Check it!</a></span>
+                <span class="text-success"><fmt:message key="cart.toast.success"/><a href="Controller?command=gotoprofile"><br/><fmt:message key="product.toast.check.it"/></a></span>
             </c:when>
             <c:when test="${'not_logged_in'.equals(param.get('message'))}">
-                <span class="text-warning">Please, sign in. You need to be signed in to checkout the order!</span>
+                <span class="text-warning"><fmt:message key="cart.toast.not.logged.in"/></span>
             </c:when>
             <c:when test="${'fail'.equals(param.get('message'))}">
-                <span class="text-danger">Fail while creating the order, please try again.</span>
+                <span class="text-danger"><fmt:message key="cart.toast.fail"/></span>
             </c:when>
         </c:choose>
     </div>

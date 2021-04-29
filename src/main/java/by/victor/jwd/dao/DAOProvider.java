@@ -4,6 +4,9 @@ import by.victor.jwd.dao.impl.SQLCustomerDAO;
 import by.victor.jwd.dao.impl.SQLFootwearDAO;
 import by.victor.jwd.dao.impl.SQLOrderDAO;
 
+/**
+ * Provider class for getting reference to necessary dao objects
+ */
 public final class DAOProvider {
 
 	private static final DAOProvider instance = new DAOProvider();	

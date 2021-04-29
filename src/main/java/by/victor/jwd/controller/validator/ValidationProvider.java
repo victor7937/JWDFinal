@@ -5,6 +5,9 @@ import by.victor.jwd.controller.validator.impl.PasswordValidator;
 import by.victor.jwd.controller.validator.impl.ProfileValidator;
 import by.victor.jwd.controller.validator.impl.RegistrationValidator;
 
+/**
+ * Provider class for getting reference to necessary validator objects
+ */
 public class ValidationProvider {
     private static final ValidationProvider instance = new ValidationProvider();
 

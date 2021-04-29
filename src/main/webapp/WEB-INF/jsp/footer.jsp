@@ -5,9 +5,12 @@
   Time: 23:49
   To change this template use File | Settings | File Templates.
 --%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+    <fmt:setBundle basename="application"/>
     <title>footer</title>
 </head>
 <body>
@@ -16,37 +19,37 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-lg-4 col-xl-3">
-                <h5>About</h5>
+                <h5><fmt:message key="footer.about"/></h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <p class="mb-0">
-                   Premium brands retail. Choose footwear as you like, add it to cart and make the order!
+                    <fmt:message key="footer.description"/>
                 </p>
             </div>
 
             <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
-                <h5>Information</h5>
+                <h5><fmt:message key="footer.info"/></h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Categories</a></li>
-                    <li><a href="">Contact</a></li>
-                    <li><a href="">Cart</a></li>
+                    <li><a href=""><fmt:message key="header.home"/></a></li>
+                    <li><a href=""><fmt:message key="header.categories"/></a></li>
+                    <li><a href=""><fmt:message key="header.contact"/></a></li>
+                    <li><a href=""><fmt:message key="cart.title"/></a></li>
                 </ul>
             </div>
 
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto">
-                <h5>Others links</h5>
+                <h5><fmt:message key="footer.other"/></h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Categories</a></li>
-                    <li><a href="">Contact</a></li>
-                    <li><a href="">Cart</a></li>
+                    <li><a href=""><fmt:message key="header.home"/></a></li>
+                    <li><a href=""><fmt:message key="header.categories"/></a></li>
+                    <li><a href=""><fmt:message key="header.contact"/></a></li>
+                    <li><a href=""><fmt:message key="cart.title"/></a></li>
                 </ul>
             </div>
 
             <div class="col-md-4 col-lg-3 col-xl-3">
-                <h5>Contact</h5>
+                <h5><fmt:message key="footer.contact"/></h5>
                 <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
                 <ul class="list-unstyled">
                     <li><i class="fas fa-home mr-2"></i> Lei Shoes</li>
@@ -57,7 +60,7 @@
             </div>
             <div class="col-12 copyright mt-3">
                 <p class="float-left">
-                    <a href="#">Back to top</a>
+                    <a href="#"><fmt:message key="footer.back.to.top"/></a>
                 </p>
                 <p class="text-right text-muted">created with <i class="fas fa-heart"></i> by <a href="https://github.com/victor7937/JWDFinal"><i>victor</i></a> for JWD Epam | <span>v. 1.0</span></p>
             </div>

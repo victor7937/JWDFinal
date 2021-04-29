@@ -2,6 +2,10 @@ package by.victor.jwd.dao.exception;
 
 import java.io.Serial;
 
+
+/**
+ * Exception thrown at the dao level
+ */
 public class DAOException extends Exception {
 
 	@Serial

@@ -2,14 +2,19 @@ package by.victor.jwd.controller;
 
 import by.victor.jwd.controller.command.Command;
 import by.victor.jwd.controller.command.CommandProvider;
-import by.victor.jwd.controller.exception.ControllerException;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
-
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Controller is used to associate actual request with necessary command
+ */
 @WebServlet(name = "Controller", value = "/Controller")
 @MultipartConfig
 public class Controller extends HttpServlet {

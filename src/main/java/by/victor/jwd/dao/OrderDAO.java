@@ -6,6 +6,9 @@ import by.victor.jwd.dao.exception.DAOException;
 
 import java.util.List;
 
+/**
+ * DAO that manipulates order-related data
+ */
 public interface OrderDAO {
     boolean createOrder (Order order) throws DAOException;
     List<Order> showOrders (String lang, int offset, int limit) throws DAOException;

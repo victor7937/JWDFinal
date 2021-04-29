@@ -5,6 +5,9 @@ import by.victor.jwd.dao.exception.DAOException;
 
 import java.util.List;
 
+/**
+ * DAO that manipulates footwear-related data
+ */
 public interface FootwearDAO {
 
     List<Footwear> getFootwearByCriteria (FootwearCriteria criteria, String lang, int offset, int limit) throws DAOException;

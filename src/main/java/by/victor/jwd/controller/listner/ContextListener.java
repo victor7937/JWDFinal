@@ -47,9 +47,8 @@ public class ContextListener implements ServletContextListener {
             logger.error("Error while reading best products", e);
             throw new ControllerException("Technical problems with getting best products");
         }
-        sce.getServletContext().setAttribute(POPULAR_ATTRIBUTE, popularMap);
-//
 
+        sce.getServletContext().setAttribute(POPULAR_ATTRIBUTE, popularMap);
     }
 
     @Override

@@ -67,7 +67,7 @@
 
                 <a class="btn btn-success btn-sm my-2" href="Controller?command=gotocart">
                     <i class="fas fa-shopping-cart"></i> <fmt:message key="header.cart"/>
-                    <span class="badge badge-light">3</span>
+                    <span class="badge badge-light text-info"><i class="fab fa-shopify"></i></span>
                 </a>
 
                 <ul class="navbar-nav offset-1">

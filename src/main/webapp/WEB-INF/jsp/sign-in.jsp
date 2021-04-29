@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: victor
@@ -7,8 +8,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Sign-in</title>
@@ -69,7 +68,7 @@
             </div>
         </form>
         <p class="text-center"><a href="#" class="btn"><fmt:message key="sign.in.forgot"/></a></p>
-        <p class="text-center">Don't have an account? <a href="Controller?command=registration"><fmt:message key="sign.in.register"/></a> </p>
+        <p class="text-center"><fmt:message key="sign.in.dont.have"/> <a href="Controller?command=registration"><fmt:message key="sign.in.register"/></a> </p>
 
     </article>
 </div>

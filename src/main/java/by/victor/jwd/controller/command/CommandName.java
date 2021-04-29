@@ -1,5 +1,9 @@
 package by.victor.jwd.controller.command;
 
+/**
+ * Names of commands.
+ * Needs for association with Command objects
+ */
 public enum CommandName {
 	AUTH, REGISTRATION, SAVENEWCUSTOMER, GOTOMAINPAGE,
 	LOGOUT, GOTOCART, GOTOCATEGORY, GOTOCONTACT, GOTOPRODUCT, GOTOSIGNINPAGE,

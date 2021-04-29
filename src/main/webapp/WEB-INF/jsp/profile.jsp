@@ -5,17 +5,20 @@
   Time: 15:28
   To change this template use File | Settings | File Templates.
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="r" uri="http://lei-shoes/region-functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Profile</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <jsp:include page="includes.jsp"/>
+    <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
+    <fmt:setBundle basename="application"/>
     <link href="<c:url value='/css/register.css'/>" rel="stylesheet" type="text/css">
     <link href="<c:url value='/css/style.css'/>" rel="stylesheet" type="text/css">
+    <title><fmt:message key="profile.title"/></title>
 </head>
 <body>
 
@@ -27,7 +30,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2>Profile</h2>
+                        <h2><fmt:message key="profile.title"/></h2>
                         <hr>
                     </div>
                 </div>
@@ -35,38 +38,38 @@
                     <div class="col-md-12">
                         <form action="Controller" method="post">
                             <c:if test="${param.message.equals('err_empty')}">
-                                <p class="text-danger text-center">Fields couldn't be empty</p>
+                                <p class="text-danger text-center"><fmt:message key="profile.message.not.empty"/></p>
                             </c:if>
                             <c:if test="${param.message.equals('err_email')}">
-                                <p class="text-danger text-center">Email is incorrect</p>
+                                <p class="text-danger text-center"><fmt:message key="profile.message.email.incorrect"/></p>
                             </c:if>
                             <c:if test="${param.message.equals('err_phone')}">
-                                <p class="text-danger text-center">Such phone is not valid</p>
+                                <p class="text-danger text-center"><fmt:message key="profile.message.phone.not.valid"/></p>
                             </c:if>
                             <c:if test="${param.message.equals('not_upd')}">
-                                <p class="text-danger text-center">Can't update profile</p>
+                                <p class="text-danger text-center"><fmt:message key="profile.message.cant.update"/></p>
                             </c:if>
                             <c:if test="${param.message.equals('upd_success')}">
-                                <p class="text-success text-center">Profile was updated successfully</p>
+                                <p class="text-success text-center"><fmt:message key="profile.message.update.success"/></p>
                             </c:if>
                             <c:if test="${param.message.equals('change_psw_success')}">
-                                <p class="text-success text-center">Password was changed successfully</p>
+                                <p class="text-success text-center"><fmt:message key="profile.message.password.success"/></p>
                             </c:if>
                             <input type="hidden" name="command" value="updateprofile">
                             <div class="form-group row">
-                                <label for="email" class="col-4 col-form-label">Email</label>
+                                <label for="email" class="col-4 col-form-label"><fmt:message key="profile.email"/></label>
                                 <div class="col-6">
                                     <input id="email" name="email"  value="${requestScope.customer.email}" readonly class="form-control-plaintext" required type="email">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="name" class="col-4 col-form-label">Name</label>
+                                <label for="name" class="col-4 col-form-label"><fmt:message key="profile.name"/></label>
                                 <div class="col-6">
-                                    <input id="name" name="name" value="${requestScope.customer.name}" placeholder="Name" class="form-control" type="text" required>
+                                    <input id="name" name="name" value="${requestScope.customer.name}" placeholder="<fmt:message key="profile.name"/>" class="form-control" type="text" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="country" class="col-4 col-form-label">Country</label>
+                                <label for="country" class="col-4 col-form-label"><fmt:message key="profile.country"/></label>
                                 <div class="col-6">
                                     <select id="country" name="country" class="form-control" type="text">
                                         <c:forEach var="re" items="${r:displayCountries(sessionScope.lang)}">
@@ -83,29 +86,29 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="city" class="col-4 col-form-label">City</label>
+                                <label for="city" class="col-4 col-form-label"><fmt:message key="profile.city"/></label>
                                 <div class="col-6">
-                                    <input id="city" name="city" placeholder="City" class="form-control" type="text" value="${customer.city}">
+                                    <input id="city" name="city" placeholder="<fmt:message key="profile.city"/>" class="form-control" type="text" value="${customer.city}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="address" class="col-4 col-form-label">Address</label>
+                                <label for="address" class="col-4 col-form-label"><fmt:message key="profile.address"/></label>
                                 <div class="col-6">
-                                    <input id="address" name="address" placeholder="Address" class="form-control" type="text" value="${customer.address}">
+                                    <input id="address" name="address" placeholder="<fmt:message key="profile.address"/>" class="form-control" type="text" value="${customer.address}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-4 col-form-label">Phone number</label>
+                                <label class="col-4 col-form-label"><fmt:message key="profile.phone"/></label>
                                 <div class="col-6" >
-                                    <input name="phone" id="phonenum" placeholder="Phone number" class="form-control" type="text" value="${customer.phone}" maxlength="15">
+                                    <input name="phone" id="phonenum" placeholder="<fmt:message key="profile.phone"/>" class="form-control" type="text" value="${customer.phone}" maxlength="15">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="offset-4 col-3">
-                                    <button name="submit" type="submit" class="btn btn-primary">Update My Profile</button>
+                                    <button name="submit" type="submit" class="btn btn-primary"><fmt:message key="profile.update"/></button>
                                 </div>
                                 <div class="col-3">
-                                    <a href="Controller?command=gotochangepassword" class="btn btn-primary">Change Password</a>
+                                    <a href="Controller?command=gotochangepassword" class="btn btn-primary"><fmt:message key="profile.change.password"/></a>
                                 </div>
                             </div>
                         </form>
@@ -122,21 +125,21 @@
     <div class="container my-4 card">
         <div class="row my-2">
             <div class="col-12">
-                <h2>My orders</h2>
+                <h2><fmt:message key="profile.orders.title"/></h2>
                 <hr>
             </div>
         </div>
         <c:if test="${'success'.equals(param.get('change'))}">
-            <p class="text-success text-center">Status was changed successfully!</p>
+            <p class="text-success text-center"><fmt:message key="profile.orders.message.success"/></p>
         </c:if>
         <c:if test="${'fail'.equals(param.get('change'))}">
-            <p class="text-success text-center">Fail to change status</p>
+            <p class="text-success text-center"><fmt:message key="profile.orders.message,fail"/></p>
         </c:if>
         <c:choose>
             <c:when test="${requestScope.orders.size() == 0}">
                 <div class="row my-2">
                     <div class="col-12">
-                        <h3 class="text-info">No orders yet</h3>
+                        <h3 class="text-info"><fmt:message key="profile.orders.no"/></h3>
                     </div>
                 </div>
             </c:when>
@@ -144,12 +147,12 @@
                 <div class="row">
                     <div class="col-12">
                         <ul class="list-group row list-group-horizontal order-main-header px-4 my-3">
-                            <li class="list-group-item col-2">Order #</li>
-                            <li class="list-group-item col-2">For</li>
-                            <li class="list-group-item col-2">Email</li>
-                            <li class="list-group-item col-2">Price</li>
-                            <li class="list-group-item col-2">Created at</li>
-                            <li class="list-group-item col-2">Status</li>
+                            <li class="list-group-item col-2"><fmt:message key="table.order.number"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.for"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.email"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.price"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.created.at"/></li>
+                            <li class="list-group-item col-2"><fmt:message key="table.status"/></li>
                         </ul>
                         <div class="accordion mb-4" id="accordionExample">
                             <c:forEach var="order" items="${requestScope.orders}">
@@ -165,16 +168,16 @@
                                                     <li class="list-group-item col-2">${order.date.toLocalDate().toString()} <br/>${order.date.toLocalTime().toString()}</li>
                                                     <c:choose>
                                                         <c:when test="${order.orderStatus.toString().equals('WAITING')}">
-                                                            <li class="list-group-item col-2 text-warning">Waiting</li>
+                                                            <li class="list-group-item col-2 text-warning"><fmt:message key="table.orders.waiting"/></li>
                                                         </c:when>
                                                         <c:when test="${order.orderStatus.toString().equals('APPROVED')}">
-                                                            <li class="list-group-item col-2 text-success">Approved</li>
+                                                            <li class="list-group-item col-2 text-success"><fmt:message key="table.orders.approved"/></li>
                                                         </c:when>
                                                         <c:when test="${order.orderStatus.toString().equals('DECLINE')}">
-                                                            <li class="list-group-item col-2 text-danger">Decline</li>
+                                                            <li class="list-group-item col-2 text-danger"><fmt:message key="table.orders.decline"/></li>
                                                         </c:when>
                                                         <c:when test="${order.orderStatus.toString().equals('COMPLETE')}">
-                                                            <li class="list-group-item col-2 text-info">Complete</li>
+                                                            <li class="list-group-item col-2 text-info"><fmt:message key="table.orders.complete"/></li>
                                                         </c:when>
                                                     </c:choose>
                                                 </ul>
@@ -195,7 +198,7 @@
                                                             <input type="hidden" name="command" value="userdecline">
                                                             <input type="hidden" name="order_id" value="${order.id}">
                                                             <div class="input-group justify-content-center">
-                                                                <button type="submit" class="btn btn-danger">Decline Order</button>
+                                                                <button type="submit" class="btn btn-danger"><fmt:message key="profile.orders.decline"/></button>
                                                             </div>
                                                         </form>
                                                     </li>
@@ -205,12 +208,12 @@
                                                 <table class="table table-bordered">
                                                     <thead class="thead-light">
                                                     <tr>
-                                                        <th scope="col">Product</th>
-                                                        <th scope="col">Brand</th>
-                                                        <th scope="col">Quantity</th>
-                                                        <th scope="col">Size</th>
+                                                        <th scope="col"><fmt:message key="table.product"/></th>
+                                                        <th scope="col"><fmt:message key="table.brand"/></th>
+                                                        <th scope="col"><fmt:message key="table.quantity"/></th>
+                                                        <th scope="col"><fmt:message key="table.size"/></th>
                                                             <%--                            <th scope="col" class="text-center">Quantity</th>--%>
-                                                        <th scope="col" class="text-right">Price</th>
+                                                        <th scope="col" class="text-right"><fmt:message key="table.price"/></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>

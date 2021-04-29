@@ -5,6 +5,9 @@ import by.victor.jwd.service.impl.CustomerServiceImpl;
 import by.victor.jwd.service.impl.FootwearServiceImpl;
 import by.victor.jwd.service.impl.OrderServiceImpl;
 
+/**
+ * Provider class for getting reference to necessary service objects
+ */
 public final class ServiceProvider {
 	
 	private static final ServiceProvider instance = new ServiceProvider(); 

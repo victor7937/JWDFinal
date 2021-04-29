@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.victor.jwd.controller.constant.FootwearParams.*;
 
+/**
+ * Validates footwear adding form
+ */
 public class FootwearValidator implements RequestValidator {
     @Override
     public boolean validate(HttpServletRequest request) {

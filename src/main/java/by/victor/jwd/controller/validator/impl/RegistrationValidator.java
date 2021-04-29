@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.victor.jwd.controller.constant.CustomerParams.*;
 
+/**
+ * Validates registration form
+ */
 public class RegistrationValidator implements RequestValidator {
 
     private static final String ERROR_MSG_ATTRIBUTE = "err_message";
